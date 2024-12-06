@@ -1,0 +1,360 @@
+{
+  "searchMethod": "fnmatch",
+  "descriptions": [
+    {
+      "id": "wb",
+      "datatype": "anat",
+      "suffix": "T1w",
+      "criteria": {
+        "SeriesDescription": "*mp2rage*"
+      }
+    },
+    {
+      "id": "hpc",
+      "datatype": "anat",
+      "suffix": "T2w",
+      "criteria": {
+        "SeriesDescription": "*t2_tse*"
+      }
+    },
+    {
+      "id": "fmap_magnitude1",
+      "datatype": "fmap",
+      "suffix": "magnitude1",
+      "criteria": {
+        "SeriesDescription": "gre_field_mapping_axial",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "DIS3D", "DIS2D"],
+        "EchoNumber": 1
+      }
+    },
+    {
+      "id": "fmap_magnitude2",
+      "datatype": "fmap",
+      "suffix": "magnitude2",
+      "criteria": {
+        "SeriesDescription": "gre_field_mapping_axial",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "DIS3D", "DIS2D"],
+        "EchoNumber": 2
+      }
+    },
+    {
+      "id": "fmap_phasediff",
+      "datatype": "fmap",
+      "suffix": "phasediff",
+      "criteria": {
+        "SeriesDescription": "gre_field_mapping_axial",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "P", "DIS3D", "DIS2D"]
+      }
+    },
+    {
+      "id": "rest",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-01_task-rest",
+      "entities": {
+        "task": "rest",
+        "acq": "rest"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*rest*",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "autobio",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-02_task-autobio",
+      "entities": {
+        "task": "autobio",
+        "acq": "autobio"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*auto*",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "enc-orig",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-03_task-origenc",
+      "entities": {
+        "task": "encoding",
+        "rec": "orig",
+        "acq": "enc-orig"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*enc*",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "rec-orig",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-04_task-origrec",
+      "entities": {
+        "task": "recognition",
+        "rec": "orig",
+        "acq": "rec-orig"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*rec*",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "dwi_AP",
+      "datatype": "dwi",
+      "suffix": "dwi",
+      "custom_entities": "b1pt0k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*AP"
+      }
+    },
+    {
+      "id": "dwi_PA",
+      "datatype": "dwi",
+      "suffix": "dwi",
+      "custom_entities": "b1pt0k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*PA"
+      }
+    },
+    {
+      "id": "dwi_adc_AP",
+      "datatype": "dwi",
+      "suffix": "adc",
+      "custom_entities": "b1pt0k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*AP_ADC"
+      }
+    },
+    {
+      "id": "dwi_adc_PA",
+      "datatype": "dwi",
+      "suffix": "adc",
+      "custom_entities": "b1pt0k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*PA_ADC"
+      }
+    },
+    {
+      "id": "dwi_tracew_AP",
+      "datatype": "dwi",
+      "suffix": "tracew",
+      "custom_entities": "b1pt0k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*AP_TRACEW"
+      }
+    },
+    {
+      "id": "dwi_tracew_PA",
+      "datatype": "dwi",
+      "suffix": "tracew",
+      "custom_entities": "b1pt0k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*PA_TRACEW"
+      }
+    },
+    {
+      "id": "dwi_fa_AP",
+      "datatype": "dwi",
+      "suffix": "fa",
+      "custom_entities": "b1pt0k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*AP_FA"
+      }
+    },
+    {
+      "id": "dwi_fa_PA",
+      "datatype": "dwi",
+      "suffix": "fa",
+      "custom_entities": "b1pt0k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*PA_FA"
+      }
+    },
+    {
+      "id": "dwi_colfa_AP",
+      "datatype": "dwi",
+      "suffix": "colfa",
+      "custom_entities": "b1pt0k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*AP_ColFA"
+      }
+    },
+    {
+      "id": "dwi_colfa_PA",
+      "datatype": "dwi",
+      "suffix": "colfa",
+      "custom_entities": "b1pt0k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*PA_ColFA"
+      }
+    },
+    {
+      "id": "dwi_tensor_AP",
+      "datatype": "dwi",
+      "suffix": "tensor",
+      "custom_entities": "b1pt0k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*AP_TENSOR"
+      }
+    },
+    {
+      "id": "dwi_tensor_PA",
+      "datatype": "dwi",
+      "suffix": "tensor",
+      "custom_entities": "b1pt0k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*PA_TENSOR"
+      }
+    },
+    {
+      "id": "dwi_tensor_b0_AP",
+      "datatype": "dwi",
+      "suffix": "tensor_b0",
+      "custom_entities": "b1pt0k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*AP_TENSOR_B0"
+      }
+    },
+    {
+      "id": "dwi_tensor_b0_PA",
+      "datatype": "dwi",
+      "suffix": "tensor_b0",
+      "custom_entities": "b1pt0k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*PA_TENSOR_B0"
+      }
+    },
+    {
+      "id": "dwi_AP",
+      "datatype": "dwi",
+      "suffix": "dwi",
+      "custom_entities": "b2pt5k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*AP"
+      }
+    },
+    {
+      "id": "dwi_PA",
+      "datatype": "dwi",
+      "suffix": "dwi",
+      "custom_entities": "b2pt5k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*PA"
+      }
+    },
+    {
+      "id": "dwi_adc_AP",
+      "datatype": "dwi",
+      "suffix": "adc",
+      "custom_entities": "b2pt5k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*AP_ADC"
+      }
+    },
+    {
+      "id": "dwi_adc_PA",
+      "datatype": "dwi",
+      "suffix": "adc",
+      "custom_entities": "b2pt5k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*PA_ADC"
+      }
+    },
+    {
+      "id": "dwi_tracew_AP",
+      "datatype": "dwi",
+      "suffix": "tracew",
+      "custom_entities": "b2pt5k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*AP_TRACEW"
+      }
+    },
+    {
+      "id": "dwi_tracew_PA",
+      "datatype": "dwi",
+      "suffix": "tracew",
+      "custom_entities": "b2pt5k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*PA_TRACEW"
+      }
+    },
+    {
+      "id": "dwi_fa_AP",
+      "datatype": "dwi",
+      "suffix": "fa",
+      "custom_entities": "b2pt5k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*AP_FA"
+      }
+    },
+    {
+      "id": "dwi_fa_PA",
+      "datatype": "dwi",
+      "suffix": "fa",
+      "custom_entities": "b2pt5k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*PA_FA"
+      }
+    },
+    {
+      "id": "dwi_colfa_AP",
+      "datatype": "dwi",
+      "suffix": "colfa",
+      "custom_entities": "b2pt5k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*AP_ColFA"
+      }
+    },
+    {
+      "id": "dwi_colfa_PA",
+      "datatype": "dwi",
+      "suffix": "colfa",
+      "custom_entities": "b2pt5k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*PA_ColFA"
+      }
+    },
+    {
+      "id": "dwi_tensor_AP",
+      "datatype": "dwi",
+      "suffix": "tensor",
+      "custom_entities": "b2pt5k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*AP_TENSOR"
+      }
+    },
+    {
+      "id": "dwi_tensor_PA",
+      "datatype": "dwi",
+      "suffix": "tensor",
+      "custom_entities": "b2pt5k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*PA_TENSOR"
+      }
+    },
+    {
+      "id": "dwi_tensor_b0_AP",
+      "datatype": "dwi",
+      "suffix": "tensor_b0",
+      "custom_entities": "b2pt5k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*AP_TENSOR_B0"
+      }
+    },
+    {
+      "id": "dwi_tensor_b0_PA",
+      "datatype": "dwi",
+      "suffix": "tensor_b0",
+      "custom_entities": "b2pt5k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*PA_TENSOR_B0"
+      }
+    }
+  ]
+}

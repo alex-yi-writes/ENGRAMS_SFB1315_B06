@@ -1,18 +1,19 @@
 #!/bin/bash
 
+# separate subjects into single scripts for parallel computing
+SUBJECT="sub-102"
+
 # places
-DATA_DIR="/Users/alex/Dropbox/paperwriting/1315/data/mri_control/sub-102/dwi"
-OUTPUT_DIR="/Users/alex/Dropbox/paperwriting/1315/data/mri_control/sub-102/preproc/dwi"
+DATA_DIR="/Users/alex/Dropbox/paperwriting/1315/data/mri_control/${SUBJECT}/dwi"
+OUTPUT_DIR="/Users/alex/Dropbox/paperwriting/1315/data/mri_control/${SUBJECT}/preproc/dwi"
 
 mkdir -p "$OUTPUT_DIR"
 
-# separate subjects into single scripts for parallel computing
-SUBJECT="sub-102"
 
 ##########################################################################
 # start with TOPUP, assuming the images are already converted to niftii  #
 # 22-10-2024: all dwi images are now in BIDS format - use that one!!!!   #
-# scripts/engrams_bids_pipeline_vFinal.sh (main pipeline)                #
+# scripts/ENGRAMS_BIDS_pipeline_vFinal.sh (main pipeline)                #
 # & scripts/ENGRAMS_dcm2bids_new.json (config) : uses dcm2bids           #
 ##########################################################################
 
@@ -76,9 +77,11 @@ echo 'TOPUP done'
 # FSL tutorial: We will first generate a brain mask using the corrected b0. We compute the average image of the corrected b0 volumes using fslmaths. Figure out the correct command, calling the output file hifi_nodif.
 echo "extracting tissue"
 fslmaths "$OUTPUT_DIR/${SUBJECT}_hifi_b0_tmp.nii.gz" -Tmean "$OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz"
-bet "$OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz" "$OUTPUT_DIR/${SUBJECT}_nodif_brain.nii.gz" -m
+matlab -nodisplay -nosplash -r "run('/Users/alex/Dropbox/paperwriting/alextools/yy_skullstripping_SPM_20200211.m'); yy_skullstripping_SPM_20200211($OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz, $OUTPUT_DIR/${SUBJECT}_nodif_brain_mask.nii.gz); exit;"
+# bet is performing terrible for this step - i'm creating mask with my own codeset (yy_skullstripping_SPM_20200211.m)
+# bet "$OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz" "$OUTPUT_DIR/${SUBJECT}_nodif_brain.nii.gz" -m -f 0.15
 
-####### ===== STEP 5: Concatenate DWI data (b1pt0k and b2pt5k from run-01 only) ===== #######
+# ####### ===== STEP 5: Concatenate DWI data (b1pt0k and b2pt5k from run-01 only) ===== #######
 echo "merging DWI data"
 fslmerge -t "$OUTPUT_DIR/${SUBJECT}_all_dwi.nii.gz" \
     "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-AP_dwi.nii.gz" \
@@ -88,17 +91,22 @@ fslmerge -t "$OUTPUT_DIR/${SUBJECT}_all_dwi.nii.gz" \
 
 ####### ===== STEP 6: Concatenate bvecs and bvals (run-01 only) ===== #######
 echo "concatenating bvecs and bvals"
-cat "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-AP_dwi.bvec" \
-    "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-PA_dwi.bvec" \
-    "$DATA_DIR/${SUBJECT}_run-01_b2pt5k-AP_dwi.bvec" \
-    "$DATA_DIR/${SUBJECT}_run-01_b2pt5k-PA_dwi.bvec" > "$OUTPUT_DIR/${SUBJECT}_all.bvec"
+paste -d ' ' "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-AP_dwi.bvec" \
+              "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-PA_dwi.bvec" \
+              "$DATA_DIR/${SUBJECT}_run-01_b2pt5k-AP_dwi.bvec" \
+              "$DATA_DIR/${SUBJECT}_run-01_b2pt5k-PA_dwi.bvec" > "$OUTPUT_DIR/${SUBJECT}_all.bvec"
 
 cat "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-AP_dwi.bval" \
     "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-PA_dwi.bval" \
     "$DATA_DIR/${SUBJECT}_run-01_b2pt5k-AP_dwi.bval" \
     "$DATA_DIR/${SUBJECT}_run-01_b2pt5k-PA_dwi.bval" > "$OUTPUT_DIR/${SUBJECT}_all.bval"
-# 01-12-2024: something's not working... dimension mismatch
+awk '{printf "%s ", $0} END {print ""}' "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-AP_dwi.bval" \
+                                        "$DATA_DIR/${SUBJECT}_run-01_b1pt0k-PA_dwi.bval" \
+                                        "$DATA_DIR/${SUBJECT}_run-01_b2pt5k-AP_dwi.bval" \
+                                        "$DATA_DIR/${SUBJECT}_run-01_b2pt5k-PA_dwi.bval" > "$OUTPUT_DIR/${SUBJECT}_all.bval"
+echo "validating concatenated files"
 awk '{print NF}' "$OUTPUT_DIR/${SUBJECT}_all.bvec"
+awk '{print NF}' "$OUTPUT_DIR/${SUBJECT}_all.bval"
 fslval "$OUTPUT_DIR/${SUBJECT}_all_dwi.nii.gz" dim4
 ##########################################################################
 
@@ -154,12 +162,22 @@ echo 'EDDY done'
 # When you have entered all of the file name, press Go.
 
 ####### ===== STEP 8: fit diffusion tensor ===== #######
-echo "Fitting diffusion tensor and generating MD..."
+echo "fitting diffusion tensor and generating MD..."
+# this works, this command line was generated via GUI
 dtifit --data="$OUTPUT_DIR/${SUBJECT}_eddy_corrected.nii.gz" \
+       --out="$OUTPUT_DIR/${SUBJECT}_dti" \
        --mask="$OUTPUT_DIR/${SUBJECT}_nodif_brain_mask.nii.gz" \
-       --bvecs="$DATA_DIR/${SUBJECT}_all.bvec" \
-       --bvals="$DATA_DIR/${SUBJECT}_all.bval" \
-       --out="$OUTPUT_DIR/${SUBJECT}_dti"
+       --bvecs="$OUTPUT_DIR/${SUBJECT}_all_corrected.bvec" \
+       --bvals="$OUTPUT_DIR/${SUBJECT}_all_corrected.bval" \
+       --sse \
+       --save_tensor
+
+# this didn't work. should have known when it took almost 50 hours to run. but why though? bummer...
+# dtifit --data="$OUTPUT_DIR/${SUBJECT}_eddy_corrected.nii.gz" \
+#        --mask="$OUTPUT_DIR/${SUBJECT}_nodif_brain_mask.nii.gz" \
+#        --bvecs="$DATA_DIR/${SUBJECT}_all.bvec" \
+#        --bvals="$DATA_DIR/${SUBJECT}_all.bval" \
+#        --out="$OUTPUT_DIR/${SUBJECT}_dti"
 
 # outputs from DTIFIT
 # ${SUBJECT}_dti_FA.nii.gz - fractional anisotropy

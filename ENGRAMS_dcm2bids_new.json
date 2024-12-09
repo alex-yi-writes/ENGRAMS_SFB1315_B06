@@ -98,6 +98,19 @@
         "acq": "rest"
       },
       "criteria": {
+        "ProtocolName": "*ep2d*_rs_*MoCo"
+      }
+    },
+    {
+      "id": "rest",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-01_task-rest",
+      "entities": {
+        "task": "rest",
+        "acq": "rest"
+      },
+      "criteria": {
         "ProtocolName": "*ep2d_bold_*_rs_*",
         "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
       }

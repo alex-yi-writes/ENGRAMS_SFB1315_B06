@@ -18,6 +18,14 @@
       }
     },
     {
+      "id": "hpc",
+      "datatype": "anat",
+      "suffix": "T2w",
+      "criteria": {
+        "SeriesDescription": "*t2_blade*"
+      }
+    },
+    {
       "id": "fmap_magnitude1",
       "datatype": "fmap",
       "suffix": "magnitude1",
@@ -33,6 +41,26 @@
       "suffix": "magnitude2",
       "criteria": {
         "SeriesDescription": "gre_field_mapping_axial",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "DIS3D", "DIS2D"],
+        "EchoNumber": 2
+      }
+    },
+    {
+      "id": "fmap_magnitude1",
+      "datatype": "fmap",
+      "suffix": "magnitude1",
+      "criteria": {
+        "SeriesDescription": "gre_field_mapping_sag",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "DIS3D", "DIS2D"],
+        "EchoNumber": 1
+      }
+    },
+    {
+      "id": "fmap_magnitude2",
+      "datatype": "fmap",
+      "suffix": "magnitude2",
+      "criteria": {
+        "SeriesDescription": "gre_field_mapping_sag",
         "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "DIS3D", "DIS2D"],
         "EchoNumber": 2
       }
@@ -57,6 +85,20 @@
       },
       "criteria": {
         "ProtocolName": "*ep2d_bold_*rest*",
+        "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "rest",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-01_task-rest",
+      "entities": {
+        "task": "rest",
+        "acq": "rest"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*_rs_*",
         "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
       }
     },

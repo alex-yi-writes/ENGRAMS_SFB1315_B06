@@ -49,8 +49,8 @@ fslmerge -t "$OUTPUT_DIR/${SUBJECT}_b0_AP_PA.nii.gz" "$OUTPUT_DIR/${SUBJECT}_AP_
 # ******************** #
 echo "creating acquisition parameters file"
 cat <<EOT > "$OUTPUT_DIR/acqparams.txt"
-0 -1 0 0.05
 0 1 0 0.05
+0 -1 0 0.05
 EOT
 # ******************** #
 
@@ -77,9 +77,9 @@ echo 'TOPUP done'
 # FSL tutorial: We will first generate a brain mask using the corrected b0. We compute the average image of the corrected b0 volumes using fslmaths. Figure out the correct command, calling the output file hifi_nodif.
 echo "extracting tissue"
 fslmaths "$OUTPUT_DIR/${SUBJECT}_hifi_b0_tmp.nii.gz" -Tmean "$OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz"
-matlab -nodisplay -nosplash -r "run('/Users/alex/Dropbox/paperwriting/alextools/yy_skullstripping_SPM_20200211.m'); yy_skullstripping_SPM_20200211($OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz, $OUTPUT_DIR/${SUBJECT}_nodif_brain_mask.nii.gz); exit;"
+# matlab -nodisplay -nosplash -r "run('/Users/alex/Dropbox/paperwriting/alextools/yy_skullstripping_SPM_20200211.m'); yy_skullstripping_SPM_20200211($OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz, $OUTPUT_DIR/${SUBJECT}_nodif_brain_mask.nii.gz); exit;"
 # bet is performing terrible for this step - i'm creating mask with my own codeset (yy_skullstripping_SPM_20200211.m)
-# bet "$OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz" "$OUTPUT_DIR/${SUBJECT}_nodif_brain.nii.gz" -m -f 0.15
+bet "$OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz" "$OUTPUT_DIR/${SUBJECT}_nodif_brain.nii.gz" -m -f 0.15
 
 # ####### ===== STEP 5: Concatenate DWI data (b1pt0k and b2pt5k from run-01 only) ===== #######
 echo "merging DWI data"

@@ -78,7 +78,6 @@ echo 'TOPUP done'
 echo "extracting tissue"
 fslmaths "$OUTPUT_DIR/${SUBJECT}_hifi_b0_tmp.nii.gz" -Tmean "$OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz"
 # matlab -nodisplay -nosplash -r "run('/Users/alex/Dropbox/paperwriting/alextools/yy_skullstripping_SPM_20200211.m'); yy_skullstripping_SPM_20200211($OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz, $OUTPUT_DIR/${SUBJECT}_nodif_brain_mask.nii.gz); exit;"
-# bet is performing terrible for this step - i'm creating mask with my own codeset (yy_skullstripping_SPM_20200211.m)
 bet "$OUTPUT_DIR/${SUBJECT}_hifi_b0.nii.gz" "$OUTPUT_DIR/${SUBJECT}_nodif_brain.nii.gz" -m -f 0.15
 
 # ####### ===== STEP 5: Concatenate DWI data (b1pt0k and b2pt5k from run-01 only) ===== #######

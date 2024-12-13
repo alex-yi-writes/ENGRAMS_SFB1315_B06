@@ -130,6 +130,20 @@
       }
     },
     {
+      "id": "autobio",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-02_task-autobio",
+      "entities": {
+        "task": "autobio",
+        "acq": "autobio"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*auto*",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+    {
       "id": "enc-orig",
       "datatype": "func",
       "suffix": "bold",
@@ -145,6 +159,21 @@
       }
     },
     {
+      "id": "enc-orig",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-03_task-origenc",
+      "entities": {
+        "task": "encoding",
+        "rec": "orig",
+        "acq": "enc-orig"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*enc*",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+    {
       "id": "rec-orig",
       "datatype": "func",
       "suffix": "bold",
@@ -157,6 +186,21 @@
       "criteria": {
         "ProtocolName": "*ep2d_bold_*rec*",
         "ImageTypeText": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "rec-orig",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-04_task-origrec",
+      "entities": {
+        "task": "recognition",
+        "rec": "orig",
+        "acq": "rec-orig"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*rec*",
+        "SeriesDescription": "MoCoSeries"
       }
     },
     {

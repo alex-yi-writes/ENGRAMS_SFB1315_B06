@@ -3,6 +3,9 @@ import nibabel as nb
 import numpy as np
 from scipy.ndimage import morphology, generate_binary_structure
 
+####### modified from ofgulban's script #######
+# original script: https://github.com/ofgulban/LAYNII_extras/blob/38e607edbd6601b5893e519af3f791059fbe190d/demo-freesurfer_segmentation_to_rim/freesurfer_segmentation_to_rim.py
+
 # ----------------------------------------------------------------------------- #
 # 0) preparation
 # ----------------------------------------------------------------------------- #

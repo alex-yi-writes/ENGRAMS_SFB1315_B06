@@ -12,15 +12,19 @@ path_subject = "sub-102v1s1/102_dwi/"
 IMG_stem = "mT1_0pt5" # what are the input image name stem? need this for saving the outputs later
 
 # ----------------------------------------------------------------------------- # 
-# STEP 1: run SPM segment first and then load probabilistic tissue classes (need two):
-#    c1* = GM
-#    c2* = WM
+# STEP 1: run CAT12 first and then load probabilistic tissue classes (need two):
+#    p1* = GM
+#    p2* = WM
+# * note: originally, i ran spm12 segment for this step, but the performance was
+#        suboptimal - cat12 takes much longer, but performs better
 # ----------------------------------------------------------------------------- #
-c1_file = path_analysis + path_subject + "c1" + IMG_stem + ".nii" # GM
-c2_file = path_analysis + path_subject + "c2" + IMG_stem + ".nii" # WM
+#c1_file = path_analysis + path_subject + "c1" + IMG_stem + ".nii" # GM
+# c2_file = path_analysis + path_subject + "c2" + IMG_stem + ".nii" # WM
+c1_file = path_analysis + path_subject + "mri/p1" + IMG_stem + ".nii" # GM
+c2_file = path_analysis + path_subject + "mri/p2" + IMG_stem + ".nii" # WM
 
 # probability threshold for binarisation
-THRESHOLD = 0.05 
+THRESHOLD = 0.3 
 
 c1_img = nb.load(c1_file)
 c2_img = nb.load(c2_file)

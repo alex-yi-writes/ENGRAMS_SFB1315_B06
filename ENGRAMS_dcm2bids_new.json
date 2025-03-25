@@ -323,6 +323,20 @@
       }
     },
     {
+      "id": "sale",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-04_task-sale",
+      "entities": {
+        "task": "sale",
+        "acq": "sale"
+      },
+      "criteria": {
+        "ProtocolName": "ep2d_bold_*sale",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+    {
       "id": "dwi_AP",
       "datatype": "dwi",
       "suffix": "dwi",

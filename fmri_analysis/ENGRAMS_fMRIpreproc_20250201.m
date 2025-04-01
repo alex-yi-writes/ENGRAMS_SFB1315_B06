@@ -2,6 +2,8 @@
 
 %% prep
 
+clear;
+
 % paths
 paths_results='/Users/yyi/Desktop/ENGRAMS/analyses/';
 paths_source ='/Users/yyi/Desktop/ENGRAMS/preproc/';
@@ -24,7 +26,7 @@ flags=[];
 %% Memory: realign, unwarp, and SOcorrect
 
 
-for id=1:length(ids)
+for id=3:length(ids)
 
     fprintf(['\n****************** \n processing ' ids{id} '! \n ******************\n'])
 
@@ -34,7 +36,7 @@ for id=1:length(ids)
 
     clear fMRI phasemap magnitudemap nvols tmp
 
-    eval(['!gzip -d ' paths_source ids{id} '/func/' ids{id} '_task-autobio_run-*_bold.nii.gz'])
+    eval(['!gzip -f -d ' paths_source ids{id} '/func/' ids{id} '_task-autobio_run-*_bold.nii.gz'])
 
     tmp=dir([paths_source ids{id} '/func/' ids{id} '_task-autobio_run-*_bold.nii']);
 
@@ -46,20 +48,22 @@ for id=1:length(ids)
     end
 
     % fieldmaps
-    try
-        phasemap        =  [paths_source ids{id} '/fmap/' ids{id} '_phasediff.nii,1'];
-        magnitudemap    =  [paths_source ids{id} '/fmap/' ids{id} '_magnitude1.nii,1'];
-        VDM             =  [paths_source ids{id} '/fmap/vdm5_sc' ids{id} '_phasediff.nii,1'];
-
-        eval(['!gzip -d ' paths_source ids{id} '/fmap/' ids{id} '_phasediff.nii.gz'])
-        eval(['!gzip -d ' paths_source ids{id} '/fmap/' ids{id} '_magnitude1.nii.gz'])
-    catch
+    if id == 3
         phasemap        =  [paths_source ids{id} '/fmap/' ids{id} '_run-01_phasediff.nii,1'];
         magnitudemap    =  [paths_source ids{id} '/fmap/' ids{id} '_run-01_magnitude1.nii,1'];
         VDM             =  [paths_source ids{id} '/fmap/vdm5_sc' ids{id} '_run-01_phasediff.nii,1'];
 
-        eval(['!gzip -d ' paths_source ids{id} '/fmap/' ids{id} '_run-01_phasediff.nii.gz'])
-        eval(['!gzip -d ' paths_source ids{id} '/fmap/' ids{id} '_run-01_magnitude1.nii.gz'])
+        eval(['!gzip -f -d ' paths_source ids{id} '/fmap/' ids{id} '_run-01_phasediff.nii.gz'])
+        eval(['!gzip -f -d ' paths_source ids{id} '/fmap/' ids{id} '_run-01_magnitude1.nii.gz'])
+
+    else
+        phasemap        =  [paths_source ids{id} '/fmap/' ids{id} '_phasediff.nii,1'];
+        magnitudemap    =  [paths_source ids{id} '/fmap/' ids{id} '_magnitude1.nii,1'];
+        VDM             =  [paths_source ids{id} '/fmap/vdm5_sc' ids{id} '_phasediff.nii,1'];
+
+        eval(['!gzip -f -d ' paths_source ids{id} '/fmap/' ids{id} '_phasediff.nii.gz'])
+        eval(['!gzip -f -d ' paths_source ids{id} '/fmap/' ids{id} '_magnitude1.nii.gz'])
+        
     end
 
 
@@ -145,7 +149,7 @@ for id=1:length(ids)
     clear fMRI nvols tmp
 
     try
-        eval(['!gzip -d ' paths_source ids{id} '/func/' ids{id} '_task-origrec_run-*_bold.nii.gz'])
+        eval(['!gzip -f -d ' paths_source ids{id} '/func/' ids{id} '_task-origrec_run-*_bold.nii.gz'])
         tmp=dir([paths_source ids{id} '/func/' ids{id} '_task-origrec_run-*_bold.nii']);
 
         if length(tmp) ==1
@@ -295,7 +299,7 @@ for id=1:length(ids)
 
     try
 
-        eval(['!gzip -d ' paths_source ids{id} '/func/' ids{id} '_task-origenc_run-*_bold.nii.gz'])
+        eval(['!gzip -f -d ' paths_source ids{id} '/func/' ids{id} '_task-origenc_run-*_bold.nii.gz'])
         tmp=dir([paths_source ids{id} '/func/' ids{id} '_task-origenc_run-*_bold.nii']);
 
         % fmri
@@ -352,7 +356,7 @@ for id=1:length(ids)
         end
         clear matlabbatch
         spm_jobman('initcfg')
-        matlabbatch{1}.spm.temporal.st.scans = fMRI;
+        matlabbatch{1}.spm.temporal.st.scans = {fMRI};
         matlabbatch{1}.spm.temporal.st.nslices = numSlice;
         matlabbatch{1}.spm.temporal.st.tr = TR;
         matlabbatch{1}.spm.temporal.st.ta = TR-(TR/numSlice);
@@ -367,9 +371,9 @@ for id=1:length(ids)
 
     %% housekeeping
 
-    eval(['!gzip ' paths_source ids{id} '/func/mean*.nii'])
-    eval(['!gzip ' paths_source ids{id} '/func/usub*.nii'])
-    eval(['!gzip ' paths_source ids{id} '/func/sub*.nii'])
+    eval(['!gzip -f ' paths_source ids{id} '/func/mean*.nii'])
+    eval(['!gzip -f ' paths_source ids{id} '/func/usub*.nii'])
+    eval(['!gzip -f ' paths_source ids{id} '/func/sub*.nii'])
 
     disp('done')
 
@@ -378,7 +382,7 @@ end
 %% smoothing
 
 
-for id=1:length(ids)
+for id=1%:length(ids)
 
     fprintf(['\n****************** \n smooting ' ids{id} '! \n ******************\n'])
 
@@ -395,11 +399,11 @@ for id=1:length(ids)
 
     spm_jobman('initcfg')
 
-    matlabbatch{1}.spm.spatial.smooth.data = {fMRI};
+    matlabbatch{1}.spm.spatial.smooth.data = cellstr(fMRI);
     matlabbatch{1}.spm.spatial.smooth.fwhm = [smoothingKernel smoothingKernel smoothingKernel];
     matlabbatch{1}.spm.spatial.smooth.dtype = 0;
     matlabbatch{1}.spm.spatial.smooth.im = 0;
-    matlabbatch{1}.spm.spatial.smooth.prefix = 's';
+    matlabbatch{1}.spm.spatial.smooth.prefix = 's1pt2';
 
     spm_jobman('run',matlabbatch)
 
@@ -487,6 +491,6 @@ for id=1:length(ids)
 
     %% housekeeping
 
-    eval(['!gzip ' paths_source ids{id} '/func/au*.nii'])
+%     eval(['!gzip -f ' paths_source ids{id} '/func/au*.nii'])
 
 end

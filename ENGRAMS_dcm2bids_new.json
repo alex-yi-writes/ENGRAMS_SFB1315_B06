@@ -303,7 +303,37 @@
         "acq": "rec-orig"
       },
       "criteria": {
-        "ProtocolName": "*ep2d_bold_*rec*",
+        "ProtocolName": "ep2d_bold_*rec",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+    {
+      "id": "enc-orig",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-03_task-origenc",
+      "entities": {
+        "task": "encoding",
+        "rec": "orig",
+        "acq": "enc-orig"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*origenc*",
+        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "enc-orig",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-03_task-origenc",
+      "entities": {
+        "task": "encoding",
+        "rec": "orig",
+        "acq": "enc-orig"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*origenc*",
         "SeriesDescription": "MoCoSeries"
       }
     },
@@ -318,7 +348,97 @@
         "acq": "rec-orig"
       },
       "criteria": {
-        "ProtocolName": "ep2d_bold_*rec",
+        "ProtocolName": "*ep2d_bold_*origrec*",
+        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "rec-orig",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-04_task-origrec",
+      "entities": {
+        "task": "recognition",
+        "rec": "orig",
+        "acq": "rec-orig"
+      },
+      "criteria": {
+        "ProtocolName": "ep2d_bold_*origrec",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+    {
+      "id": "enc-recombi",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-03_task-recombienc",
+      "entities": {
+        "task": "encoding",
+        "rec": "recombi",
+        "acq": "enc-recombi"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*recombienc*",
+        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "enc-recombi",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-03_task-recombienc",
+      "entities": {
+        "task": "encoding",
+        "rec": "recombi",
+        "acq": "enc-recombi"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*recombienc*",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+    {
+      "id": "rec-recombi",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-04_task-recombirec",
+      "entities": {
+        "task": "recognition",
+        "rec": "recombi",
+        "acq": "rec-recombi"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*recombirec*",
+        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+      }
+    },
+    {
+      "id": "rec-recombi",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-04_task-recombirec",
+      "entities": {
+        "task": "recognition",
+        "rec": "recombi",
+        "acq": "rec-recombi"
+      },
+      "criteria": {
+        "ProtocolName": "ep2d_bold_*recombirec",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+
+    {
+      "id": "sale",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-04_task-sale",
+      "entities": {
+        "task": "sale",
+        "acq": "sale"
+      },
+      "criteria": {
+        "ProtocolName": "ep2d_bold_*sale*",
         "SeriesDescription": "MoCoSeries"
       }
     },
@@ -332,7 +452,21 @@
         "acq": "sale"
       },
       "criteria": {
-        "ProtocolName": "ep2d_bold_*sale",
+        "ProtocolName": "ep2d_bold_*SaLe*",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+    {
+      "id": "sale",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-04_task-sale",
+      "entities": {
+        "task": "sale",
+        "acq": "sale"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*SaLe*",
         "SeriesDescription": "MoCoSeries"
       }
     },

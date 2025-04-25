@@ -258,8 +258,8 @@
         "acq": "enc-orig"
       },
       "criteria": {
-        "ProtocolName": "*ep2d_bold_*enc*",
-        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
+        "ProtocolName": "*ep2d_bold_*enc",
+        "SeriesDescription": "MoCoSeries"
       }
     },
     {
@@ -274,7 +274,7 @@
       },
       "criteria": {
         "ProtocolName": "*ep2d_bold_*enc*",
-        "SeriesDescription": "MoCoSeries"
+        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
       }
     },
     {
@@ -303,7 +303,7 @@
         "acq": "rec-orig"
       },
       "criteria": {
-        "ProtocolName": "ep2d_bold_*rec",
+        "ProtocolName": "*ep2d_bold_*rec",
         "SeriesDescription": "MoCoSeries"
       }
     },
@@ -333,7 +333,7 @@
         "acq": "enc-orig"
       },
       "criteria": {
-        "ProtocolName": "*ep2d_bold_*origenc*",
+        "ProtocolName": "*ep2d_bold_*origenc",
         "SeriesDescription": "MoCoSeries"
       }
     },
@@ -363,7 +363,22 @@
         "acq": "rec-orig"
       },
       "criteria": {
-        "ProtocolName": "ep2d_bold_*origrec",
+        "ProtocolName": "*ep2d_bold_*origrec",
+        "SeriesDescription": "MoCoSeries"
+      }
+    },
+    {
+      "id": "rec-orig",
+      "datatype": "func",
+      "suffix": "bold",
+      "custom_entities": "run-05_task-origrec2",
+      "entities": {
+        "task": "recognition",
+        "rec": "orig",
+        "acq": "rec-orig"
+      },
+      "criteria": {
+        "ProtocolName": "*ep2d_bold_*origrec2",
         "SeriesDescription": "MoCoSeries"
       }
     },
@@ -423,7 +438,7 @@
         "acq": "rec-recombi"
       },
       "criteria": {
-        "ProtocolName": "ep2d_bold_*recombirec",
+        "ProtocolName": "*ep2d_bold_*recombirec",
         "SeriesDescription": "MoCoSeries"
       }
     },

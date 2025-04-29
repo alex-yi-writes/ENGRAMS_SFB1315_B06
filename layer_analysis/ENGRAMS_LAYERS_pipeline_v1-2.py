@@ -5,6 +5,15 @@ import numpy as np
 from scipy.ndimage import morphology, generate_binary_structure
 
 # ----------------------------------------------------------------------------- #
+# work log:
+# 29-04-2025: 
+#   - alex started working on this pipeline (to-do: include coregistration step)
+#   - decided to write a separate pipeline for coregistration. perhaps it's 
+#     better to include a little bit of manual registration with itk-snap           
+# ----------------------------------------------------------------------------- #
+
+
+# ----------------------------------------------------------------------------- #
 # prep
 # ----------------------------------------------------------------------------- #
 

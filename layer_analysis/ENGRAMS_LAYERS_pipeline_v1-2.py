@@ -9,7 +9,7 @@ from scipy.ndimage import morphology, generate_binary_structure
 # 29-04-2025: 
 #   - alex started working on this pipeline (to-do: include coregistration step)
 #   - decided to write a separate pipeline for coregistration. perhaps it's 
-#     better to include a little bit of manual registration with itk-snap           
+#     better to include a little bit of manual registration with itk-snap        
 # ----------------------------------------------------------------------------- #
 
 
@@ -20,15 +20,18 @@ from scipy.ndimage import morphology, generate_binary_structure
 path_analysis = "/Volumes/korokdorf/ENGRAMS/preproc/"
 laynii_path = "/Users/alex/LayNii_v2.7.0_Mac_M/"
 
+# subjects = [
+#     "sub-102v1s1",
+#     "sub-104v1s1",
+#     "sub-105v1s1",
+#     "sub-106v1s1",
+#     "sub-107v1s1",
+#     "sub-108v1s1",
+#     "sub-109v1s1",
+#     "sub-202v1s1"
+# ]
 subjects = [
-    "sub-102v1s1",
-    "sub-104v1s1",
-    "sub-105v1s1",
-    "sub-106v1s1",
-    "sub-107v1s1",
-    "sub-108v1s1",
-    "sub-109v1s1",
-    "sub-202v1s1",
+    "sub-101v1s1",
 ]
 
 # ----------------------------------------------------------------------------- #
@@ -123,6 +126,29 @@ for subject in subjects:
             subprocess.run(cmd, check=True)
 
         print(f"layers generated for: {subject}")
+
+        # ----------------------------------------------------------------------------- #
+        # STEP 7: combine layers into 3 bins (deep/mid/superficial, like sharoh et al. [2019, PNAS] did) 
+        # ----------------------------------------------------------------------------- #
+        print(f"binning layers into 3 bins for: {subject}")
+
+        layer_img = nb.load(layers_file)
+        layer_data = layer_img.get_fdata()
+
+        n_layers = np.max(layer_data)
+        deep_threshold = n_layers // 3
+        middle_threshold = 2 * n_layers // 3
+
+        binned_layers = np.zeros_like(layer_data, dtype=np.int8)
+        binned_layers[(layer_data > 0) & (layer_data <= deep_threshold)] = 1  # Deep
+        binned_layers[(layer_data > deep_threshold) & (layer_data <= middle_threshold)] = 2  # Middle
+        binned_layers[(layer_data > middle_threshold)] = 3  # Superficial
+
+        binned_outfile = layers_file.replace("_layers.nii.gz", "_3bins.nii.gz")
+        binned_img = nb.Nifti1Image(binned_layers, affine=layer_img.affine, header=layer_img.header)
+        nb.save(binned_img, binned_outfile)
+
+        print(f"Saved 3-bin layers to: {binned_outfile}")
 
     except Exception as e:
         print(f"!!! error with {subject}: {e}") # catch in case something goes wrong but proceed to the next subject anyway

@@ -116,7 +116,7 @@ for subject in subjects:
         cmds = [
             ["LN_GROW_LAYERS", "-rim", rim_file, "-N", "1000", "-vinc", "60", "-threeD"],
             ["LN_LEAKY_LAYERS", "-rim", rim_file, "-nr_layers", "1000", "-iterations", "100"],
-            ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "1", "-nr_layers", "10", "-output", path_subject]
+            ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "1", "-nr_layers", "10", "-output", IMG_stem]
         ]
 
         for cmd in cmds:

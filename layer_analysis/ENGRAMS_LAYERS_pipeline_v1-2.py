@@ -118,10 +118,12 @@ for subject in subjects:
         final_output_name = out_fname = path_analysis + path_subject + IMG_stem
 
         cmds = [
-            ["LN_GROW_LAYERS", "-rim", rim_file, "-N", "1000", "-vinc", "60", "-threeD"],
-            ["LN_LEAKY_LAYERS", "-rim", rim_file, "-nr_layers", "1000", "-iterations", "100"],
-            ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "1", "-nr_layers", "10", "-output", final_output_name]
+            ["LN_GROW_LAYERS", "-rim", rim_file, "-N", "300", "-vinc", "20", "-threeD"],
+            ["LN_LEAKY_LAYERS", "-rim", rim_file, "-nr_layers", "300", "-iterations", "100"],
+            ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "0.5", "-nr_layers", "10", "-output", final_output_name]
         ]
+        # why those parameters:
+        # after multiple testings with various values and seeing the test dataset provided by laynii (with 0.2mm isotropic voxel sizes), i needed to adjust (1) LN_GROW_LAYERS -N into 300, because it made rims too thin and noisy; (2) LN_GROW_LAYERS -vinc to 20 because i have bigger voxel dimensions; (3) LN_LOITUMA -FWHM to 0.5 to avoid blurring layers together
 
         for cmd in cmds:
             subprocess.run(cmd, check=True)

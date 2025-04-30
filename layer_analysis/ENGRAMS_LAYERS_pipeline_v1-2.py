@@ -46,7 +46,7 @@ for subject in subjects:
         print(f"--- processing {subject} ---")
 
         path_subject = f"{subject}/anat/"
-        IMG_stem = f"{subject}_run-01_T1w"
+        IMG_stem = f"{subject}_run-01_T1w_0pt35"
 
         # ----------------------------------------------------------------------------- #
         # STEP 1: load tissue classes
@@ -118,12 +118,12 @@ for subject in subjects:
         final_output_name = out_fname = path_analysis + path_subject + IMG_stem
 
         cmds = [
-            ["LN_GROW_LAYERS", "-rim", rim_file, "-N", "300", "-vinc", "20", "-threeD"],
-            ["LN_LEAKY_LAYERS", "-rim", rim_file, "-nr_layers", "300", "-iterations", "100"],
-            ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "0.5", "-nr_layers", "10", "-output", final_output_name]
+            # ["LN_GROW_LAYERS", "-rim", rim_file, "-N", "500", "-vinc", "40", "-threeD"],
+            # ["LN_LEAKY_LAYERS", "-rim", rim_file, "-nr_layers", "500", "-iterations", "100"],
+            # ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "0.7", "-nr_layers", "13", "-output", final_output_name]
         ]
         # why those parameters:
-        # after multiple testings with various values and seeing the test dataset provided by laynii (with 0.2mm isotropic voxel sizes), i needed to adjust (1) LN_GROW_LAYERS -N into 300, because it made rims too thin and noisy; (2) LN_GROW_LAYERS -vinc to 20 because i have bigger voxel dimensions; (3) LN_LOITUMA -FWHM to 0.5 to avoid blurring layers together
+        # after multiple testings with various values and seeing the test dataset provided by laynii (with 0.2mm isotropic voxel sizes), i needed to adjust (1) LN_GROW_LAYERS -N into 500, because it made rims too thin and noisy; (2) LN_GROW_LAYERS -vinc to 40 because i have bigger voxel dimensions; (3) LN_LOITUMA -FWHM to 0.7 to avoid blurring layers together; and (4) LN_LOITUMA -nr_layers to 13 because sharoh et al also used 13
 
         for cmd in cmds:
             subprocess.run(cmd, check=True)
@@ -135,20 +135,40 @@ for subject in subjects:
         # ----------------------------------------------------------------------------- #
         print(f"binning layers into 3 bins for: {subject}")
 
+        # # approach 1
+        # layer_img = nb.load(layers_file)
+        # layer_data = layer_img.get_fdata()
+
+        # n_layers = np.max(layer_data)
+        # deep_threshold = n_layers // 3
+        # middle_threshold = 2 * n_layers // 3
+
+        # binned_layers = np.zeros_like(layer_data, dtype=np.int8)
+        # binned_layers[(layer_data > 0) & (layer_data <= deep_threshold)] = 1  # Deep
+        # binned_layers[(layer_data > deep_threshold) & (layer_data <= middle_threshold)] = 2  # Middle
+        # binned_layers[(layer_data > middle_threshold)] = 3  # Superficial
+
+        # out_file = layers_file.replace("_layers.nii.gz", "_bined_3layers.nii")
+        # binned_img = nb.Nifti1Image(binned_layers, affine=layer_img.affine, header=layer_img.header)
+        # nb.save(binned_img, out_file)
+
+        # approach 2
         layers_file = final_output_name + "_equi_volume_layers.nii"
         layer_img = nb.load(layers_file)
         layer_data = layer_img.get_fdata()
 
-        # Combine into 3 bins
+        # combine into 3 bins
+        # how i selected these thresholds: visually inspect, and bin layer I, II, and III into superficial layer; IV into middle layer; and V and VI into deep layer
         binned_layers = np.zeros_like(layer_data, dtype=np.int8)
         # binned_layers[(layer_data >= 4) & (layer_data <= 5)] = 1  # deep
-        binned_layers[(layer_data == 5)] = 1  # deep: this one looks too conservative but less wrong than the other option
-        binned_layers[(layer_data >= 6) & (layer_data <= 7)] = 2  # middle
-        binned_layers[(layer_data >= 8)] = 3               # superficial
+        binned_layers[(layer_data >= 4) & (layer_data <= 6)] = 1  # deep: this one looks too conservative but it is less wrong than the other option
+        binned_layers[(layer_data >= 7) & (layer_data <= 10)] = 2  # middle
+        binned_layers[(layer_data >= 11) & (layer_data <= 12)] = 3  # superficial
 
-        # Save
+        # save
         out_file = layers_file.replace(".nii", "_bined_3layers.nii")
         nb.save(nb.Nifti1Image(binned_layers, layer_img.affine, layer_img.header), out_file)
+
         print(f"saved layers to: {out_file}")
 
     except Exception as e:

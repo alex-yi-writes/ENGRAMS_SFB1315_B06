@@ -118,9 +118,9 @@ for subject in subjects:
         final_output_name = out_fname = path_analysis + path_subject + IMG_stem
 
         cmds = [
-            # ["LN_GROW_LAYERS", "-rim", rim_file, "-N", "500", "-vinc", "40", "-threeD"],
-            # ["LN_LEAKY_LAYERS", "-rim", rim_file, "-nr_layers", "500", "-iterations", "100"],
-            # ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "0.7", "-nr_layers", "13", "-output", final_output_name]
+            ["LN_GROW_LAYERS", "-rim", rim_file, "-N", "500", "-vinc", "40", "-threeD"],
+            ["LN_LEAKY_LAYERS", "-rim", rim_file, "-nr_layers", "500", "-iterations", "100"],
+            ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "0.7", "-nr_layers", "13", "-output", final_output_name]
         ]
         # why those parameters:
         # after multiple testings with various values and seeing the test dataset provided by laynii (with 0.2mm isotropic voxel sizes), i needed to adjust (1) LN_GROW_LAYERS -N into 500, because it made rims too thin and noisy; (2) LN_GROW_LAYERS -vinc to 40 because i have bigger voxel dimensions; (3) LN_LOITUMA -FWHM to 0.7 to avoid blurring layers together; and (4) LN_LOITUMA -nr_layers to 13 because sharoh et al also used 13

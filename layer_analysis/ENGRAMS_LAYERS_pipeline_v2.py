@@ -65,8 +65,8 @@ for subject in subjects:
         # ----------------------------------------------------------------------------- #
         # STEP 2: create discrete GM=3, WM=2 labels for the masks
         # ----------------------------------------------------------------------------- #
-        wm_mask = (c2_data > THRESHOLD).astype(np.int32)
-        gm_mask = (c1_data > THRESHOLD).astype(np.int32)
+        wm_mask = (c2_data > THRESHOLD_GM).astype(np.int32)
+        gm_mask = (c1_data > THRESHOLD_WM).astype(np.int32)
 
         wm_mask[wm_mask == 1] = 2
         gm_mask[gm_mask == 1] = 3

@@ -1,1 +1,1 @@
-Todo: (20250214) - update DCM2BIDS file
+In this repository you can find my struggles

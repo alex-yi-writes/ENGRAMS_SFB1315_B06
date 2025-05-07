@@ -73,73 +73,73 @@ for id=1:length(ids)
     onset_orig_rcg_early{id,1} = [];
 
     % general
-    onset_orig_rcg_early{id,1}.scenes       = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
-    onset_orig_rcg_early{id,1}.objects      = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ- expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
-    onset_orig_rcg_early{id,1}.confidence   = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
-    onset_orig_rcg_early{id,1}.feedback     = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together    - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
-    onset_orig_rcg_early{id,1}.fixationX    = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.fixationX   - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes       = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
+    onset_orig_rcg_early{id,1}.objects      = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ- expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
+    onset_orig_rcg_early{id,1}.confidence   = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
+    onset_orig_rcg_early{id,1}.feedback     = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together    - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
+    onset_orig_rcg_early{id,1}.fixationX    = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.fixationX   - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % responses
-    onset_orig_rcg_early{id,1}.objects_resp = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.resp_RecognitionQ - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
-    onset_orig_rcg_early{id,1}.confidence_resp = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.resp_confidenceQ - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_resp = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.resp_RecognitionQ - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
+    onset_orig_rcg_early{id,1}.confidence_resp = expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.resp_confidenceQ - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % accuracy-related onsets
 
     % corrects
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_corr       = tmp(corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_corr       = tmp(corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_corr      = tmp(corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_corr      = tmp(corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_corr   = tmp(corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_corr   = tmp(corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_corr     = tmp(corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_corr     = tmp(corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % internal FA
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_IntFA       = tmp(IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_IntFA       = tmp(IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_IntFA      = tmp(IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_IntFA      = tmp(IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_IntFA   = tmp(IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_IntFA   = tmp(IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_IntFA     = tmp(IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_IntFA     = tmp(IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % external FA
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_ExtFA       = tmp(ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_ExtFA       = tmp(ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_ExtFA      = tmp(ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_ExtFA      = tmp(ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_ExtFA   = tmp(ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_ExtFA   = tmp(ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_ExtFA     = tmp(ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_ExtFA     = tmp(ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % incorrects together
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_incorr       = tmp(ExtFA_orig_rcg_early{id,1}==1 | IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_incorr       = tmp(ExtFA_orig_rcg_early{id,1}==1 | IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_incorr      = tmp(ExtFA_orig_rcg_early{id,1}==1 | IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_incorr      = tmp(ExtFA_orig_rcg_early{id,1}==1 | IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_incorr   = tmp(ExtFA_orig_rcg_early{id,1}==1 | IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_incorr   = tmp(ExtFA_orig_rcg_early{id,1}==1 | IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_incorr     = tmp(ExtFA_orig_rcg_early{id,1}==1 | IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_incorr     = tmp(ExtFA_orig_rcg_early{id,1}==1 | IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
 
 
@@ -148,30 +148,30 @@ for id=1:length(ids)
     % highconf
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_highConf       = tmp(highconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_highConf       = tmp(highconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_highConf      = tmp(highconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_highConf      = tmp(highconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_highConf   = tmp(highconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_highConf   = tmp(highconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_highConf     = tmp(highconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_highConf     = tmp(highconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % lowconf
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_lowConf       = tmp(lowconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_lowConf       = tmp(lowconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_lowConf      = tmp(lowconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_lowConf      = tmp(lowconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_lowConf   = tmp(lowconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_lowConf   = tmp(lowconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_lowConf     = tmp(lowconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_lowConf     = tmp(lowconf_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
 
     % confidence and accuracy
@@ -179,89 +179,89 @@ for id=1:length(ids)
     % highconf correct
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_corr_highConf       = tmp(highconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1) - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_corr_highConf       = tmp(highconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1) - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_corr_highConf      = tmp(highconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_corr_highConf      = tmp(highconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_corr_highConf   = tmp(highconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_corr_highConf   = tmp(highconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_corr_highConf     = tmp(highconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_corr_highConf     = tmp(highconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % lowconf correct
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_corr_lowConf       = tmp(lowconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_corr_lowConf       = tmp(lowconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_corr_lowConf      = tmp(lowconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_corr_lowConf      = tmp(lowconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_corr_lowConf   = tmp(lowconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_corr_lowConf   = tmp(lowconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_corr_lowConf     = tmp(lowconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_corr_lowConf     = tmp(lowconf_orig_rcg_early{id,1}==1 & corrects_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
 
     % highconf internal FA
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_IntFA_highConf       = tmp(highconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1) - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_IntFA_highConf       = tmp(highconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1) - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_IntFA_highConf      = tmp(highconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_IntFA_highConf      = tmp(highconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_IntFA_highConf   = tmp(highconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_IntFA_highConf   = tmp(highconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_IntFA_highConf     = tmp(highconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_IntFA_highConf     = tmp(highconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % lowconf internal FA
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_IntFA_lowConf       = tmp(lowconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_IntFA_lowConf       = tmp(lowconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_IntFA_lowConf      = tmp(lowconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_IntFA_lowConf      = tmp(lowconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_IntFA_lowConf   = tmp(lowconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_IntFA_lowConf   = tmp(lowconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_IntFA_lowConf     = tmp(lowconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_IntFA_lowConf     = tmp(lowconf_orig_rcg_early{id,1}==1 & IntFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
 
 
     % highconf external FA
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_ExtFA_highConf       = tmp(highconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1) - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_ExtFA_highConf       = tmp(highconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1) - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_ExtFA_highConf      = tmp(highconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_ExtFA_highConf      = tmp(highconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_ExtFA_highConf   = tmp(highconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_ExtFA_highConf   = tmp(highconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_ExtFA_highConf     = tmp(highconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_ExtFA_highConf     = tmp(highconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
     % lowconf external FA
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.scene; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.scenes_ExtFA_lowConf       = tmp(lowconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.scenes_ExtFA_lowConf       = tmp(lowconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.RecognitionQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.objects_ExtFA_lowConf      = tmp(lowconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.objects_ExtFA_lowConf      = tmp(lowconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.ConfidenceQ; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.confidence_ExtFA_lowConf   = tmp(lowconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.confidence_ExtFA_lowConf   = tmp(lowconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
     clear tmp
     tmp=expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.together; tmp(missed_acc{id,1}==1 | missed_cnf{id,1}==1)=[];
-    onset_orig_rcg_early{id,1}.feedback_ExtFA_lowConf     = tmp(lowconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1;
+    onset_orig_rcg_early{id,1}.feedback_ExtFA_lowConf     = tmp(lowconf_orig_rcg_early{id,1}==1 & ExtFA_orig_rcg_early{id,1}==1)       - expdat{id,1}.orig.rcg1.dat.rcg.results.SOT.trig1+TR;
 
 
 

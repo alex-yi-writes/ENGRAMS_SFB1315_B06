@@ -152,7 +152,7 @@ done
 
 echo "running EDDY - takes even longer time! this might take up to 55 hours, so don't worry, leave it be"
 singularity run -B /mnt/work/yyi /share/apps/images/fsl_6.0.0.simg eddy_openmp --imain="$OUTPUT_DIR/${SUBJECT}_all_dwi.nii.gz" \
-     --mask="$OUTPUT_DIR/${SUBJECT}_nodif_brain_mask.nii.gz" \
+     --mask="$OUTPUT_DIR/${SUBJECT}_nodif_hifi_b0_brain_mask.nii.gz" \
      --acqp="$OUTPUT_DIR/acqparams.txt" \
      --index="$OUTPUT_DIR/index.txt" \
      --bvecs="$OUTPUT_DIR/${SUBJECT}_all.bvec" \
@@ -195,7 +195,7 @@ echo "fitting diffusion tensor and generating MD..."
 # this works, this command line was generated via GUI
 dtifit --data="$OUTPUT_DIR/${SUBJECT}_eddy_corrected.nii.gz" \
        --out="$OUTPUT_DIR/${SUBJECT}_dti" \
-       --mask="$OUTPUT_DIR/${SUBJECT}_nodif_brain_mask.nii.gz" \
+       --mask="$OUTPUT_DIR/${SUBJECT}_nodif_hifi_b0_brain_mask.nii.gz" \
        --bvecs="$OUTPUT_DIR/${SUBJECT}_all.bvec" \
        --bvals="$OUTPUT_DIR/${SUBJECT}_all.bval" \
        --sse \

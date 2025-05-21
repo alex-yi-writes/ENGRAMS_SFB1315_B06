@@ -134,15 +134,143 @@ for id=4:length(ids) % do 2:3 again
 
     %% recognition
 
-    fprintf('\n****************** \n recognition(original) set \n ******************\n')
+    if strcmp('sub-105v1s1',ids{id})
+        warning(['no memory tests for ' ids2{id}])
+    else
+        fprintf('\n****************** \n recognition(original) set \n ******************\n')
 
-    clear fMRI nvols tmp
+        clear fMRI nvols tmp
 
-    try
-        eval(['!gzip -f -d ' paths_source ids2{id} '/func/' ids2{id} '_task-origrec_run-*_bold.nii.gz'])
-        tmp=dir([paths_source ids2{id} '/func/' ids2{id} '_task-origrec_run-*_bold.nii']);
+        try
+            eval(['!gzip -f -d ' paths_source ids2{id} '/func/' ids2{id} '_task-origrec_run-*_bold.nii.gz'])
+            tmp=dir([paths_source ids2{id} '/func/' ids2{id} '_task-origrec_run-*_bold.nii']);
 
-        if length(tmp) ==1
+            if length(tmp) ==1
+
+                % fmri
+                nvols           = length( spm_vol( [paths_source ids2{id} '/func/' tmp.name] ) );
+                fMRI=[];
+                for cc = 1:nvols
+                    fMRI{cc,1}  = [paths_source ids2{id} '/func/' tmp.name ',' num2str(cc)];
+                end
+
+                % run
+                clear matlabbatch
+                spm_jobman('initcfg')
+                matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
+                matlabbatch{1}.spm.spatial.realignunwarp.data.pmscan = cellstr(VDM);
+                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.quality = 0.9;
+                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.sep = 1;
+                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.fwhm = 2;
+                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.rtm = 0;
+                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.einterp = 4;
+                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.ewrap = [0 0 0];
+                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.weight = '';
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.basfcn = [12 12];
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.regorder = 1;
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.lambda = 100000;
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.jm = 0;
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.fot = [4 5];
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.sot = [];
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.uwfwhm = 4;
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.rem = 1;
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.noi = 5;
+                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.expround = 'Average';
+                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.uwwhich = [2 1];
+                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.rinterp = 4;
+                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.wrap = [0 0 0];
+                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
+                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
+                spm_jobman('run',matlabbatch)
+
+                fMRI=[];
+                for cc = 1:nvols
+                    fMRI{cc,1}  = [paths_source ids2{id} '/func/u' tmp.name ',' num2str(cc)];
+                end
+                clear matlabbatch
+                spm_jobman('initcfg')
+                matlabbatch{1}.spm.temporal.st.scans = {fMRI};
+                matlabbatch{1}.spm.temporal.st.nslices = numSlice;
+                matlabbatch{1}.spm.temporal.st.tr = TR;
+                matlabbatch{1}.spm.temporal.st.ta = TR-(TR/numSlice);
+                matlabbatch{1}.spm.temporal.st.so = ENGRAMS_SliceOrder;
+                matlabbatch{1}.spm.temporal.st.refslice = refSlice;
+                matlabbatch{1}.spm.temporal.st.prefix = 'a';
+                spm_jobman('run',matlabbatch)
+
+            else
+                disp('multiple runs detected')
+
+                for runs=1:length(tmp)
+
+                    % fmri
+                    nvols           = length( spm_vol( [paths_source ids2{id} '/func/' tmp(runs).name] ) );
+                    fMRI=[];
+                    for cc = 1:nvols
+                        fMRI{cc,1}  = [paths_source ids2{id} '/func/' tmp(runs).name ',' num2str(cc)];
+                    end
+
+                    % run
+
+                    clear matlabbatch
+                    spm_jobman('initcfg')
+                    matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
+                    matlabbatch{1}.spm.spatial.realignunwarp.data.pmscan = cellstr(VDM);
+                    matlabbatch{1}.spm.spatial.realignunwarp.eoptions.quality = 0.9;
+                    matlabbatch{1}.spm.spatial.realignunwarp.eoptions.sep = 1;
+                    matlabbatch{1}.spm.spatial.realignunwarp.eoptions.fwhm = 2;
+                    matlabbatch{1}.spm.spatial.realignunwarp.eoptions.rtm = 0;
+                    matlabbatch{1}.spm.spatial.realignunwarp.eoptions.einterp = 4;
+                    matlabbatch{1}.spm.spatial.realignunwarp.eoptions.ewrap = [0 0 0];
+                    matlabbatch{1}.spm.spatial.realignunwarp.eoptions.weight = '';
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.basfcn = [12 12];
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.regorder = 1;
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.lambda = 100000;
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.jm = 0;
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.fot = [4 5];
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.sot = [];
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.uwfwhm = 4;
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.rem = 1;
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.noi = 5;
+                    matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.expround = 'Average';
+                    matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.uwwhich = [2 1];
+                    matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.rinterp = 4;
+                    matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.wrap = [0 0 0];
+                    matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
+                    matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
+                    spm_jobman('run',matlabbatch)
+
+                    fMRI=[];
+                    for cc = 1:nvols
+                        fMRI{cc,1}  = [paths_source ids2{id} '/func/u' tmp(runs).name ',' num2str(cc)];
+                    end
+                    clear matlabbatch
+                    spm_jobman('initcfg')
+                    matlabbatch{1}.spm.temporal.st.scans = {fMRI};
+                    matlabbatch{1}.spm.temporal.st.nslices = numSlice;
+                    matlabbatch{1}.spm.temporal.st.tr = TR;
+                    matlabbatch{1}.spm.temporal.st.ta = TR-(TR/numSlice);
+                    matlabbatch{1}.spm.temporal.st.so = ENGRAMS_SliceOrder;
+                    matlabbatch{1}.spm.temporal.st.refslice = refSlice;
+                    matlabbatch{1}.spm.temporal.st.prefix = 'a';
+                    spm_jobman('run',matlabbatch)
+
+                end
+            end
+        catch
+            warning(['no data origrec for ' ids2{id}])
+        end
+
+        %% encoding
+
+        fprintf('\n****************** \n encoding(original) set \n ******************\n')
+
+        clear fMRI nvols tmp
+
+        try
+
+            eval(['!gzip -f -d ' paths_source ids2{id} '/func/' ids2{id} '_task-origenc_run-*_bold.nii.gz'])
+            tmp=dir([paths_source ids2{id} '/func/' ids2{id} '_task-origenc_run-*_bold.nii']);
 
             % fmri
             nvols           = length( spm_vol( [paths_source ids2{id} '/func/' tmp.name] ) );
@@ -152,6 +280,7 @@ for id=4:length(ids) % do 2:3 again
             end
 
             % run
+
             clear matlabbatch
             spm_jobman('initcfg')
             matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
@@ -195,137 +324,12 @@ for id=4:length(ids) % do 2:3 again
             matlabbatch{1}.spm.temporal.st.prefix = 'a';
             spm_jobman('run',matlabbatch)
 
-        else
-            disp('multiple runs detected')
-
-            for runs=1:length(tmp)
-
-                % fmri
-                nvols           = length( spm_vol( [paths_source ids2{id} '/func/' tmp(runs).name] ) );
-                fMRI=[];
-                for cc = 1:nvols
-                    fMRI{cc,1}  = [paths_source ids2{id} '/func/' tmp(runs).name ',' num2str(cc)];
-                end
-
-                % run
-
-                clear matlabbatch
-                spm_jobman('initcfg')
-                matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
-                matlabbatch{1}.spm.spatial.realignunwarp.data.pmscan = cellstr(VDM);
-                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.quality = 0.9;
-                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.sep = 1;
-                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.fwhm = 2;
-                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.rtm = 0;
-                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.einterp = 4;
-                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.ewrap = [0 0 0];
-                matlabbatch{1}.spm.spatial.realignunwarp.eoptions.weight = '';
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.basfcn = [12 12];
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.regorder = 1;
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.lambda = 100000;
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.jm = 0;
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.fot = [4 5];
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.sot = [];
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.uwfwhm = 4;
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.rem = 1;
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.noi = 5;
-                matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.expround = 'Average';
-                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.uwwhich = [2 1];
-                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.rinterp = 4;
-                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.wrap = [0 0 0];
-                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
-                matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
-                spm_jobman('run',matlabbatch)
-
-                fMRI=[];
-                for cc = 1:nvols
-                    fMRI{cc,1}  = [paths_source ids2{id} '/func/u' tmp(runs).name ',' num2str(cc)];
-                end
-                clear matlabbatch
-                spm_jobman('initcfg')
-                matlabbatch{1}.spm.temporal.st.scans = {fMRI};
-                matlabbatch{1}.spm.temporal.st.nslices = numSlice;
-                matlabbatch{1}.spm.temporal.st.tr = TR;
-                matlabbatch{1}.spm.temporal.st.ta = TR-(TR/numSlice);
-                matlabbatch{1}.spm.temporal.st.so = ENGRAMS_SliceOrder;
-                matlabbatch{1}.spm.temporal.st.refslice = refSlice;
-                matlabbatch{1}.spm.temporal.st.prefix = 'a';
-                spm_jobman('run',matlabbatch)
-
-            end
+        catch
+            warning(['no data origenc for ' ids2{id}])
         end
-    catch
-        warning(['no data origrec for ' ids2{id}])
     end
 
-    %% encoding
 
-    fprintf('\n****************** \n encoding(original) set \n ******************\n')
-
-    clear fMRI nvols tmp
-
-    try
-
-        eval(['!gzip -f -d ' paths_source ids2{id} '/func/' ids2{id} '_task-origenc_run-*_bold.nii.gz'])
-        tmp=dir([paths_source ids2{id} '/func/' ids2{id} '_task-origenc_run-*_bold.nii']);
-
-        % fmri
-        nvols           = length( spm_vol( [paths_source ids2{id} '/func/' tmp.name] ) );
-        fMRI=[];
-        for cc = 1:nvols
-            fMRI{cc,1}  = [paths_source ids2{id} '/func/' tmp.name ',' num2str(cc)];
-        end
-
-        % run
-
-        clear matlabbatch
-        spm_jobman('initcfg')
-        matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
-        matlabbatch{1}.spm.spatial.realignunwarp.data.pmscan = cellstr(VDM);
-        matlabbatch{1}.spm.spatial.realignunwarp.eoptions.quality = 0.9;
-        matlabbatch{1}.spm.spatial.realignunwarp.eoptions.sep = 1;
-        matlabbatch{1}.spm.spatial.realignunwarp.eoptions.fwhm = 2;
-        matlabbatch{1}.spm.spatial.realignunwarp.eoptions.rtm = 0;
-        matlabbatch{1}.spm.spatial.realignunwarp.eoptions.einterp = 4;
-        matlabbatch{1}.spm.spatial.realignunwarp.eoptions.ewrap = [0 0 0];
-        matlabbatch{1}.spm.spatial.realignunwarp.eoptions.weight = '';
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.basfcn = [12 12];
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.regorder = 1;
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.lambda = 100000;
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.jm = 0;
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.fot = [4 5];
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.sot = [];
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.uwfwhm = 4;
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.rem = 1;
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.noi = 5;
-        matlabbatch{1}.spm.spatial.realignunwarp.uweoptions.expround = 'Average';
-        matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.uwwhich = [2 1];
-        matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.rinterp = 4;
-        matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.wrap = [0 0 0];
-        matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
-        matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
-        spm_jobman('run',matlabbatch)
-
-        fMRI=[];
-        for cc = 1:nvols
-            fMRI{cc,1}  = [paths_source ids2{id} '/func/u' tmp.name ',' num2str(cc)];
-        end
-        clear matlabbatch
-        spm_jobman('initcfg')
-        matlabbatch{1}.spm.temporal.st.scans = {fMRI};
-        matlabbatch{1}.spm.temporal.st.nslices = numSlice;
-        matlabbatch{1}.spm.temporal.st.tr = TR;
-        matlabbatch{1}.spm.temporal.st.ta = TR-(TR/numSlice);
-        matlabbatch{1}.spm.temporal.st.so = ENGRAMS_SliceOrder;
-        matlabbatch{1}.spm.temporal.st.refslice = refSlice;
-        matlabbatch{1}.spm.temporal.st.prefix = 'a';
-        spm_jobman('run',matlabbatch)
-
-    catch
-        warning(['no data origenc for ' ids2{id}])
-    end
-
-     
     %% resting state
 
     fprintf('\n****************** \n resting state \n ******************\n')
@@ -365,17 +369,17 @@ for id=4:length(ids) % do 2:3 again
         phasemap        =  [paths_source ids{id} '/fmap/' ids{id} '_run-01_phasediff.nii,1'];
         magnitudemap1   =  [paths_source ids{id} '/fmap/' ids{id} '_run-01_magnitude1.nii,1'];
         magnitudemap2   =  [paths_source ids{id} '/fmap/' ids{id} '_run-01_magnitude2.nii,1'];
-%         magnitudemap    =  [paths_source ids{id} '/fmap/' ids{id} '_run-01_magnitude1.nii,1'];
+        %         magnitudemap    =  [paths_source ids{id} '/fmap/' ids{id} '_run-01_magnitude1.nii,1'];
         VDM             =  [paths_source ids{id} '/fmap/vdm5_sc' ids{id} '_run-01_phasediff.nii,1'];
 
         eval(['!gzip -f -d ' paths_source ids{id} '/fmap/' ids{id} '_run-01_phasediff.nii.gz'])
         eval(['!gzip -f -d ' paths_source ids{id} '/fmap/' ids{id} '_run-01_magnitude1.nii.gz'])
-        
+
     else
         phasemap        =  [paths_source ids{id} '/fmap/' ids{id} '_phasediff.nii,1'];
         magnitudemap1   =  [paths_source ids{id} '/fmap/' ids{id} '_magnitude1.nii,1'];
         magnitudemap2   =  [paths_source ids{id} '/fmap/' ids{id} '_magnitude2.nii,1'];
-%         magnitudemap    =  [paths_source ids{id} '/fmap/' ids{id} '_magnitude1.nii,1'];
+        %         magnitudemap    =  [paths_source ids{id} '/fmap/' ids{id} '_magnitude1.nii,1'];
         VDM             =  [paths_source ids{id} '/fmap/vdm5_sc' ids{id} '_phasediff.nii,1'];
 
         eval(['!gzip -f -d ' paths_source ids{id} '/fmap/' ids{id} '_phasediff.nii.gz'])
@@ -470,30 +474,30 @@ end
 %% smoothing
 
 
-for id=1:length(ids)
+for id=1%:length(ids)
 
     fprintf(['\n****************** \n smooting ' ids2{id} '! \n ******************\n'])
 
-    % autobio
-    clear fMRI nvols tmp matlabbatch
-
-    tmp=dir([paths_source ids2{id} '/func/au' ids2{id} '_task-autobio_run-*_bold.nii']);
-    fmri
-    nvols           = length( spm_vol( [paths_source ids2{id} '/func/' tmp.name] ) );
-    fMRI=[];
-    for cc = 1:nvols
-        fMRI{cc,1}  = [paths_source ids2{id} '/func/' tmp.name ',' num2str(cc)];
-    end
-
-    spm_jobman('initcfg')
-
-    matlabbatch{1}.spm.spatial.smooth.data = cellstr(fMRI);
-    matlabbatch{1}.spm.spatial.smooth.fwhm = [smoothingKernel smoothingKernel smoothingKernel];
-    matlabbatch{1}.spm.spatial.smooth.dtype = 0;
-    matlabbatch{1}.spm.spatial.smooth.im = 0;
-    matlabbatch{1}.spm.spatial.smooth.prefix = 's1pt2';
-
-    spm_jobman('run',matlabbatch)
+%     % autobio
+%     clear fMRI nvols tmp matlabbatch
+% 
+%     tmp=dir([paths_source ids2{id} '/func/au' ids2{id} '_task-autobio_run-*_bold.nii']);
+%     fmri
+%     nvols           = length( spm_vol( [paths_source ids2{id} '/func/' tmp.name] ) );
+%     fMRI=[];
+%     for cc = 1:nvols
+%         fMRI{cc,1}  = [paths_source ids2{id} '/func/' tmp.name ',' num2str(cc)];
+%     end
+% 
+%     spm_jobman('initcfg')
+% 
+%     matlabbatch{1}.spm.spatial.smooth.data = cellstr(fMRI);
+%     matlabbatch{1}.spm.spatial.smooth.fwhm = [smoothingKernel smoothingKernel smoothingKernel];
+%     matlabbatch{1}.spm.spatial.smooth.dtype = 0;
+%     matlabbatch{1}.spm.spatial.smooth.im = 0;
+%     matlabbatch{1}.spm.spatial.smooth.prefix = 's1pt2';
+% 
+%     spm_jobman('run',matlabbatch)
 
 
     %% enc
@@ -600,7 +604,7 @@ for id=1:length(ids)
         spm_jobman('run',matlabbatch)
 
     catch
-        warning(['no data origenc for ' ids{id}])
+        warning(['no data rest for ' ids{id}])
     end
 
     %% housekeeping

@@ -15,7 +15,7 @@ sessionTypes = {'AUTO','REST','ORIGENC','ORIGREC','ORIGREC1','ORIGREC2','RECOMBI
     'ListString', sessionTypes);
 
 % list subjects
-ID = {'102','104','105','106','107'};%,'108','109'};%,'202'};
+ID = {'202'};%{'102','104','106','107'};%,'108','109'};%,'202'};
 
 % fixed parametres
 nSlices=96;
@@ -27,7 +27,7 @@ disp('prep done')
 
 %% now parse
 
-for id=2%:length(ID)
+for id=length(ID)
 
     disp(['processing ID' ID{id}])
 
@@ -44,17 +44,31 @@ for id=2%:length(ID)
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
                     disp(['selected option ' sess]);
 
-                    clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*autobio*.nii']);
+                    clear tmpfmri f fpath hdr dims nVols
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*autobio*.nii*']);
                     if isempty(tmpfmri)
-                        disp('seems to be only compressed niftii file there - proceeding to decompress')
-                        clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*autobio*.nii.gz']);
-                        eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*autobio*.nii']);
+                        error('No NIfTI found for %s, ID %s', choice, ID{id});
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name ' -f'])
+                    f = tmpfmri(1);
+                    fpath = fullfile(f.folder, f.name);
+
+                    % read header only (works on .nii and .nii.gz)
+                    hdr   = niftiinfo(fpath);
+                    dims  = hdr.ImageSize;
+                    if numel(dims) >= 4
+                        nVols = dims(4);
+                    else
+                        nVols = 1;
+                    end
+%                     if isempty(tmpfmri)
+%                         disp('seems to be only compressed niftii file there - proceeding to decompress')
+%                         clear tmpfmri
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*autobio*.nii.gz']);
+%                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*autobio*.nii']);
+%                     end
+%                     nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name] ) );
+%                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
                     path_rawphysio=[path_raw ID{id} 'v2s2/physio/'];
@@ -63,17 +77,31 @@ for id=2%:length(ID)
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
                     disp(['selected option ' sess]);
 
-                    clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*rest*.nii']);
+                    clear tmpfmri f fpath hdr dims nVols
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*rest*.nii*']);
                     if isempty(tmpfmri)
-                        disp('seems to be only compressed niftii file there - proceeding to decompress')
-                        clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*rest*.nii.gz']);
-                        eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*rest*.nii']);
+                        error('No NIfTI found for %s, ID %s', choice, ID{id});
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name ' -f'])
+                    f = tmpfmri(1);
+                    fpath = fullfile(f.folder, f.name);
+
+                    % read header only (works on .nii and .nii.gz)
+                    hdr   = niftiinfo(fpath);
+                    dims  = hdr.ImageSize;
+                    if numel(dims) >= 4
+                        nVols = dims(4);
+                    else
+                        nVols = 1;
+                    end
+%                     if isempty(tmpfmri)
+%                         disp('seems to be only compressed niftii file there - proceeding to decompress')
+%                         clear tmpfmri
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*rest*.nii.gz']);
+%                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*rest*.nii']);
+%                     end
+%                     nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name] ) );
+%                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
                     path_rawphysio=[path_raw ID{id} 'v1s1/physio/'];
@@ -82,36 +110,72 @@ for id=2%:length(ID)
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
                     disp(['selected option ' sess]);
 
-                    clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii']);
-                    if isempty(tmpfmri)
-                        disp('seems to be only compressed niftii file there - proceeding to decompress')
-                        clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii.gz']);
-                        eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii']);
+                    clear tmpfmri f fpath hdr dims nVols
+                    if str2num(ID{id}(1))==2
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origenc*.nii*']);
+                    else
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii*'])
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name ' -f'])
+                    if isempty(tmpfmri)
+                        error('No NIfTI found for %s, ID %s', choice, ID{id});
+                    end
+                    f = tmpfmri(1);
+                    fpath = fullfile(f.folder, f.name);
+
+                    % read header only (works on .nii and .nii.gz)
+                    hdr   = niftiinfo(fpath);
+                    dims  = hdr.ImageSize;
+                    if numel(dims) >= 4
+                        nVols = dims(4);
+                    else
+                        nVols = 1;
+                    end
+%                     if isempty(tmpfmri)
+%                         disp('seems to be only compressed niftii file there - proceeding to decompress')
+%                         clear tmpfmri
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii.gz']);
+%                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii']);
+%                     end
+%                     nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name] ) );
+%                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
+                    if strcmp('2',ID{id}(1))
                     path_rawphysio=[path_raw ID{id} 'v1s1/physio/'];
+                    else
+                    path_rawphysio=[path_raw ID{id} 'v2s2/physio/'];
+                    end
 
                 case 'ORIGREC1'
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
                     disp(['selected option ' sess]);
                     
-                    clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origrec1*.nii']);
+                    clear tmpfmri f fpath hdr dims nVols
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origrec*.nii*']);
                     if isempty(tmpfmri)
-                        disp('seems to be only compressed niftii file there - proceeding to decompress')
-                        clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origrec1*.nii.gz']);
-                        eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origrec1*.nii']);
+                        error('No NIfTI found for %s, ID %s', choice, ID{id});
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name ' -f'])
+                    f = tmpfmri(1);
+                    fpath = fullfile(f.folder, f.name);
+
+                    % read header only (works on .nii and .nii.gz)
+                    hdr   = niftiinfo(fpath);
+                    dims  = hdr.ImageSize;
+                    if numel(dims) >= 4
+                        nVols = dims(4);
+                    else
+                        nVols = 1;
+                    end
+%                     if isempty(tmpfmri)
+%                         disp('seems to be only compressed niftii file there - proceeding to decompress')
+%                         clear tmpfmri
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origrec1*.nii.gz']);
+%                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origrec1*.nii']);
+%                     end
+%                     nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name] ) );
+%                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
                     path_rawphysio=[path_raw ID{id} 'v1s1/physio/'];
@@ -120,17 +184,31 @@ for id=2%:length(ID)
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
                     disp(['selected option ' sess]);
         
-                    clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*origrec2*.nii']);
+                    clear tmpfmri f fpath hdr dims nVols
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*origrec2*.nii*']);
                     if isempty(tmpfmri)
-                        disp('seems to be only compressed niftii file there - proceeding to decompress')
-                        clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*origrec2*.nii.gz']);
-                        eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*origrec2*.nii']);
+                        error('No NIfTI found for %s, ID %s', choice, ID{id});
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name ' -f'])
+                    f = tmpfmri(1);
+                    fpath = fullfile(f.folder, f.name);
+
+                    % read header only (works on .nii and .nii.gz)
+                    hdr   = niftiinfo(fpath);
+                    dims  = hdr.ImageSize;
+                    if numel(dims) >= 4
+                        nVols = dims(4);
+                    else
+                        nVols = 1;
+                    end
+%                     if isempty(tmpfmri)
+%                         disp('seems to be only compressed niftii file there - proceeding to decompress')
+%                         clear tmpfmri
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*origrec2*.nii.gz']);
+%                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*origrec2*.nii']);
+%                     end
+%                     nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name] ) );
+%                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
                     path_rawphysio=[path_raw ID{id} 'v2s1/physio/'];
@@ -139,17 +217,31 @@ for id=2%:length(ID)
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
                     disp(['selected option ' sess]);
     
-                    clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombienc*.nii']);
+                    clear tmpfmri f fpath hdr dims nVols
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombienc*.nii*']);
                     if isempty(tmpfmri)
-                        disp('seems to be only compressed niftii file there - proceeding to decompress')
-                        clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombienc*.nii.gz']);
-                        eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombienc*.nii']);
+                        error('No NIfTI found for %s, ID %s', choice, ID{id});
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name ' -f'])
+                    f = tmpfmri(1);
+                    fpath = fullfile(f.folder, f.name);
+
+                    % read header only (works on .nii and .nii.gz)
+                    hdr   = niftiinfo(fpath);
+                    dims  = hdr.ImageSize;
+                    if numel(dims) >= 4
+                        nVols = dims(4);
+                    else
+                        nVols = 1;
+                    end
+%                     if isempty(tmpfmri)
+%                         disp('seems to be only compressed niftii file there - proceeding to decompress')
+%                         clear tmpfmri
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombienc*.nii.gz']);
+%                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombienc*.nii']);
+%                     end
+%                     nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name] ) );
+%                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
                     path_rawphysio=[path_raw ID{id} 'v2s1/physio/'];
@@ -158,17 +250,31 @@ for id=2%:length(ID)
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
                     disp(['selected option ' sess]);
 
-                    clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombirec*.nii']);
+                    clear tmpfmri f fpath hdr dims nVols
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombirec*.nii*']);
                     if isempty(tmpfmri)
-                        disp('seems to be only compressed niftii file there - proceeding to decompress')
-                        clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombirec*.nii.gz']);
-                        eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombirec*.nii']);
+                        error('No NIfTI found for %s, ID %s', choice, ID{id});
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name ' -f'])
+                    f = tmpfmri(1);
+                    fpath = fullfile(f.folder, f.name);
+
+                    % read header only (works on .nii and .nii.gz)
+                    hdr   = niftiinfo(fpath);
+                    dims  = hdr.ImageSize;
+                    if numel(dims) >= 4
+                        nVols = dims(4);
+                    else
+                        nVols = 1;
+                    end
+%                     if isempty(tmpfmri)
+%                         disp('seems to be only compressed niftii file there - proceeding to decompress')
+%                         clear tmpfmri
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombirec*.nii.gz']);
+%                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s1/func/sub-*recombirec*.nii']);
+%                     end
+%                     nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name] ) );
+%                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s1/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
                     path_rawphysio=[path_raw ID{id} 'v2s1/physio/'];
@@ -177,17 +283,31 @@ for id=2%:length(ID)
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
                     disp(['selected option ' sess]);
 
-                    clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origrec*.nii']);
+                    clear tmpfmri f fpath hdr dims nVols
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origrec*.nii*']);
                     if isempty(tmpfmri)
-                        disp('seems to be only compressed niftii file there - proceeding to decompress')
-                        clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origrec*.nii.gz']);
-                        eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origrec*.nii']);
+                        error('No NIfTI found for %s, ID %s', choice, ID{id});
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name ' -f'])
+                    f = tmpfmri(1);
+                    fpath = fullfile(f.folder, f.name);
+
+                    % read header only (works on .nii and .nii.gz)
+                    hdr   = niftiinfo(fpath);
+                    dims  = hdr.ImageSize;
+                    if numel(dims) >= 4
+                        nVols = dims(4);
+                    else
+                        nVols = 1;
+                    end
+%                     if isempty(tmpfmri)
+%                         disp('seems to be only compressed niftii file there - proceeding to decompress')
+%                         clear tmpfmri
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origrec*.nii.gz']);
+%                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
+%                         tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origrec*.nii']);
+%                     end
+%                     nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name] ) );
+%                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
                     path_rawphysio=[path_raw ID{id} 'v2s2/physio/'];
@@ -203,11 +323,15 @@ for id=2%:length(ID)
             % extract the relevant files (PULS, RESP, AcquisitionInfo)
 
             % ==== reorganise PULS log
+            if str2num(ID{id})==202 && strcmpi(sessionTypes{i1},'origrec1')
+                warning('no PULS log for ID 202, for recognition original!')
+            else
             clear tmp1 tmp2 tmp3
             tmp1={files_logs.name}; tmp2=strfind(tmp1,'PULS'); tmp3=cellfun(@isempty,tmp2);
             indpuls=find(tmp3==0);
             % reorganise
             fixChannelFile(files_logs, 'PULS', [sessionTypes{i1} '_FIXED_PULS.log']);
+            end
 
             % ==== reorganise RESP log
             if str2num(ID{id})==109 && strcmpi(sessionTypes{i1},'auto')
@@ -232,6 +356,16 @@ for id=2%:length(ID)
                     {fullfile(path_rawphysio,[sessionTypes{i1} '_FIXED_AcquisitionInfo.log'])}, ...
                     lower(sessionTypes{i1}),...
                     nSlices, TR, nDummies,nVols,onsetSlice);
+                close all
+            elseif str2num(ID{id})==202 && strcmpi(sessionTypes{i1},'origrec1')
+                warning('no PULS log for ID 202, for recognition original!')
+                buildSPMphysio(path_rawphysio, ...
+                    [], ...
+                    {fullfile(path_rawphysio,[sessionTypes{i1} '_FIXED_RESP.log'])}, ...
+                    {fullfile(path_rawphysio,[sessionTypes{i1} '_FIXED_AcquisitionInfo.log'])}, ...
+                    lower(sessionTypes{i1}),...
+                    nSlices, TR, nDummies,nVols,onsetSlice);
+                close all
             else
                 buildSPMphysio(path_rawphysio, ...
                     {fullfile(path_rawphysio,[sessionTypes{i1} '_FIXED_PULS.log'])}, ...
@@ -239,6 +373,7 @@ for id=2%:length(ID)
                     {fullfile(path_rawphysio,[sessionTypes{i1} '_FIXED_AcquisitionInfo.log'])}, ...
                     lower(sessionTypes{i1}),...
                     nSlices, TR, nDummies,nVols,onsetSlice);
+                close all
             end
 
         end
@@ -267,8 +402,13 @@ disp([outName ' saved.']);
 end
 
 function fixAcquisitionInfo(fileStruct, outName)
-idx = find(contains({fileStruct.name},'AcquisitionInfo'));
+names      = {fileStruct.name};
+isInfo     = contains(names, 'AcquisitionInfo');
+isAlready  = contains(names, 'FIXED');
+idx        = find(isInfo & ~isAlready);
 if isempty(idx), return; end
+% idx = find(contains({fileStruct.name},'AcquisitionInfo'));
+% if isempty(idx), return; end
 inputFile = fullfile(fileStruct(idx).folder, fileStruct(idx).name);
 data = readmatrix(inputFile, 'Delimiter',' ', 'NumHeaderLines',1);
 echoID = data(:,2);   % ECO_ID

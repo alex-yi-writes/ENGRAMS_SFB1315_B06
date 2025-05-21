@@ -15,7 +15,7 @@ paths_behav     = '/Users/yyi/Desktop/ENGRAMS/raw/';
 paths_fx        = '/Users/yyi/Desktop/ENGRAMS/scripts/';
 
 % subjects
-ids={'sub-108v2s2'; 'sub-109v2s2'};
+ids={'sub-109v2s2'};%{'sub-108v2s2'; 'sub-109v2s2'};
 
 % scanning parameters
 TR              = 2;
@@ -75,8 +75,27 @@ for id=1:length(ids) % try 3 again
         fMRI{cc,1}  = [paths_fMRI ids{id} '/func/' tmp.name ',' num2str(cc)];
     end
 
-    % - realignment parameters
-    clear multireg; multireg=[paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
+    % make physio + realignment parameters
+    clear R realigndata realignFile physiodata physiodata2 physiodata physioFile physioFile2
+    
+    % read physio parameters
+    physioFile  = [paths_behav ids{id}(5:end) '/physio/multiple_regressors_auto.txt'];
+    physiodata  = importdata(physioFile);
+
+    % read realignment parameters
+    realignFile = [paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
+    realigndata = importdata(realignFile);
+
+    % concatenate and save
+    R = [physiodata realigndata];
+    save([paths_fMRI ids{id} '/func/reg_all_autobio.mat'],'R');
+
+    clear R realigndata realignFile physiodata physiodata physioFile
+
+    multireg=[paths_fMRI ids{id}  '/func/reg_all_autobio.mat'];
+
+%     % - realignment parameters
+%     clear multireg; multireg=[paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
 
     % setup workspace
     mkdir([paths_results ids{id} '/func/autobio/'])
@@ -198,10 +217,16 @@ for id=1:length(ids) % try 3 again
     matlabbatch{1}.spm.stats.fmri_spec.volt = 1;
     matlabbatch{1}.spm.stats.fmri_spec.global = 'None';
     matlabbatch{1}.spm.stats.fmri_spec.mthresh = 0.8;
-    matlabbatch{1}.spm.stats.fmri_spec.mask = {''};
+    matlabbatch{1}.spm.stats.fmri_spec.mask = {[paths_fMRI ids{id} '/func/autobio_mask.nii,1']};
     matlabbatch{1}.spm.stats.fmri_spec.cvi = 'AR(1)';
 
     spm_jobman('run', matlabbatch)
+
+    % manually set my own explicit mask
+    load([paths_results ids{id} '/func/autobio/SPM.mat'])
+    SPM.xM.VM=spm_vol([paths_fMRI ids{id} '/func/autobio_mask.nii']);
+    SPM.xM.TH=v2s2-Inf*ones(size(SPM.xY.P,1),1);
+    save([paths_results ids{id} '/func/autobio/SPM.mat'],'SPM')
 
     %% estimate
 
@@ -313,7 +338,7 @@ paths_behav     = '/Users/yyi/Desktop/ENGRAMS/raw/';
 paths_fx        = '/Users/yyi/Desktop/ENGRAMS/scripts/';
 
 % subjects
-ids={'sub-108v2s2'; 'sub-109v2s2'};
+ids={'sub-109v2s2'};
 
 % scanning parameters
 TR              = 2;
@@ -395,7 +420,7 @@ end
 
 %% run 1st-level GLM
 
-for id=1%:length(ids) 
+for id=1:length(ids) 
 
     % find files
     clear tmp; tmp=dir([paths_fMRI ids{id} '/func/s1pt2au' ids{id} '_task-origenc_run-*_bold.nii']);
@@ -407,8 +432,27 @@ for id=1%:length(ids)
         fMRI{cc,1}  = [paths_fMRI ids{id} '/func/' tmp.name ',' num2str(cc)];
     end
 
-    % - realignment parameters
-    clear multireg; multireg=[paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
+    % make physio + realignment parameters
+    clear R realigndata realignFile physiodata physiodata2 physiodata physioFile physioFile2
+    
+    % read physio parameters
+    physioFile  = [paths_behav ids{id}(5:end) '/physio/multiple_regressors_origenc.txt'];
+    physiodata  = importdata(physioFile);
+
+    % read realignment parameters
+    realignFile = [paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
+    realigndata = importdata(realignFile);
+
+    % concatenate and save
+    R = [physiodata realigndata];
+    save([paths_fMRI ids{id} '/func/reg_all_origenc.mat'],'R');
+
+    clear R realigndata realignFile physiodata physiodata physioFile
+
+    multireg=[paths_fMRI ids{id}  '/func/reg_all_origenc.mat'];
+
+%     % - realignment parameters
+%     clear multireg; multireg=[paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
 
     % setup workspace
     mkdir([paths_results ids{id} '/func/origenc/'])
@@ -490,11 +534,18 @@ for id=1%:length(ids)
     matlabbatch{1}.spm.stats.fmri_spec.bases.hrf.derivs = [0 0];
     matlabbatch{1}.spm.stats.fmri_spec.volt = 1;
     matlabbatch{1}.spm.stats.fmri_spec.global = 'None';
-    matlabbatch{1}.spm.stats.fmri_spec.mthresh = 0.8;
-    matlabbatch{1}.spm.stats.fmri_spec.mask = {''};
+    matlabbatch{1}.spm.stats.fmri_spec.mthresh = 0;
+    matlabbatch{1}.spm.stats.fmri_spec.mask =  {[paths_fMRI ids{id} '/func/origenc_mask.nii,1']}; % this ain't working
     matlabbatch{1}.spm.stats.fmri_spec.cvi = 'AR(1)';
 
     spm_jobman('run', matlabbatch)
+
+    % manually set my own explicit mask
+    load([paths_results ids{id} '/func/origenc/SPM.mat'])
+    SPM.xM.VM=spm_vol([paths_fMRI ids{id} '/func/origenc_mask.nii']);
+    SPM.xM.TH=-Inf*ones(size(SPM.xY.P,1),1);
+    save([paths_results ids{id} '/func/origenc/SPM.mat'],'SPM')
+
 
     %% estimate
 
@@ -593,10 +644,10 @@ for id=1%:length(ids)
 end
 
 
-%% recognition
+% recognition
 
 
-for id=1%:length(ids) % try 2 again
+for id=1:length(ids) % try 2 again
 
     % find files
     clear tmp; tmp=dir([paths_fMRI ids{id} '/func/s1pt2au' ids{id} '_task-origrec_run-*_bold.nii']);
@@ -608,8 +659,27 @@ for id=1%:length(ids) % try 2 again
         fMRI{cc,1}  = [paths_fMRI ids{id} '/func/' tmp.name ',' num2str(cc)];
     end
 
-    % - realignment parameters
-    clear multireg; multireg=[paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
+    % make physio + realignment parameters
+    clear R realigndata realignFile physiodata physiodata2 physiodata physioFile physioFile2
+    
+    % read physio parameters
+    physioFile  = [paths_behav ids{id}(5:end) '/physio/multiple_regressors_origrec.txt'];
+    physiodata  = importdata(physioFile);
+
+    % read realignment parameters
+    realignFile = [paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
+    realigndata = importdata(realignFile);
+
+    % concatenate and save
+    R = [physiodata realigndata];
+    save([paths_fMRI ids{id} '/func/reg_all_origrec.mat'],'R');
+
+    clear R realigndata realignFile physiodata physiodata physioFile
+
+    multireg=[paths_fMRI ids{id}  '/func/reg_all_origrec.mat'];
+
+%     % - realignment parameters
+%     clear multireg; multireg=[paths_fMRI ids{id} '/func/rp_' tmp.name(8:end-4) '.txt'];
 
     % setup workspace
     mkdir([paths_results ids{id} '/func/origrec/'])
@@ -832,10 +902,16 @@ for id=1%:length(ids) % try 2 again
     matlabbatch{1}.spm.stats.fmri_spec.volt = 1;
     matlabbatch{1}.spm.stats.fmri_spec.global = 'None';
     matlabbatch{1}.spm.stats.fmri_spec.mthresh = 0.8;
-    matlabbatch{1}.spm.stats.fmri_spec.mask = {''};
+    matlabbatch{1}.spm.stats.fmri_spec.mask = {[paths_fMRI ids{id} '/func/origrec_mask.nii,1']};
     matlabbatch{1}.spm.stats.fmri_spec.cvi = 'AR(1)';
 
     spm_jobman('run', matlabbatch)
+
+    % manually set my own explicit mask
+    load([paths_results ids{id} '/func/origrec/SPM.mat'])
+    SPM.xM.VM=spm_vol([paths_fMRI ids{id} '/func/origrec_mask.nii']);
+    SPM.xM.TH=-Inf*ones(size(SPM.xY.P,1),1);
+    save([paths_results ids{id} '/func/origrec/SPM.mat'],'SPM')
 
     %% estimate
 

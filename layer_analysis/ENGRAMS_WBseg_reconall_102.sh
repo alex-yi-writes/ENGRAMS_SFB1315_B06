@@ -8,6 +8,7 @@ do
 
 	export FREESURFER_HOME=/share/apps/freesurfer_7.1  
 	source $FREESURFER_HOME/SetUpFreeSurfer.sh
+	export ANTSPATH=/share/apps/ants/
 	export SUBJECTS_DIR=$path_src
 	
 	#mkdir /mnt/work/yyi/ENGRAMS/preproc/${ID}/anat/t1/${ID}
@@ -17,30 +18,31 @@ do
 	export SUBJECTS_DIR=$path_src
 
 	# stage 1
-	recon-all \
-		-s ${ID} \
-		-i ${t1w} \
-		-expert /mnt/work/yyi/ENGRAMS/hires_expert.txt \
-		-hires \
-		-autorecon1 \
-		-noskullstrip
-	mri_convert -it mgz -ot nii ${path_out}/orig.mgz ${path_src}/orig.nii.gz
-	antsRegistrationSyNQuick.sh -d 3 -t r -f ${path_src}/orig.nii.gz -m ${t1w} -o ${path_src}/FStoNat_
+	#recon-all \
+	#	-s ${ID} \
+	#	-i ${t1w} \
+	#	-expert /mnt/work/yyi/ENGRAMS/hires_expert.txt \
+	#	-hires \
+	#	-autorecon1 \
+	#	-noskullstrip
+	#mri_convert -it mgz -ot nii ${path_out}/orig.mgz ${path_src}/orig.nii.gz
+	/share/apps/ants/antsRegistrationSyNQuick.sh -d 3 -t r -f ${path_src}/orig.nii.gz -m ${t1w} -o ${path_src}/Nat2FS_
+	#/share/apps/ants/antsRegistrationSyNQuick.sh -d 3 -t r -m ${path_src}/orig.nii.gz -f ${t1w} -o ${path_src}/FS2Nat_
 	
-	# # stage 2
-	# antsApplyTransforms -d 3 -n Linear -i ${path_src}/brainmask.nii -r ${path_src}/orig.nii.gz -o ${path_out}/brainmask.nii.gz -t ${path_src}/FStoNat_0GenericAffine.mat
-	# mri_convert -it nii -ot mgz ${path_out}/brainmask.nii.gz ${path_out}/brainmask.mgz
+	# stage 2
+	/share/apps/ants/antsApplyTransforms -d 3 -n Linear -i ${path_src}/brainmask.nii -r ${path_src}/orig.nii.gz -o ${path_out}/brainmask.nii.gz -t ${path_src}/Nat2FS_0GenericAffine.mat
+	 mri_convert -it nii -ot mgz ${path_out}/brainmask.nii.gz ${path_out}/brainmask.mgz
 
-	# recon-all -s ${ID} \
-	#  	-expert /mnt/work/yyi/ENGRAMS/hires_expert.txt \
-	#  	-hires \
-	# 	-xopts-overwrite \
-	#  	-autorecon2
+	 recon-all -s ${ID} \
+	  	-expert /mnt/work/yyi/ENGRAMS/hires_expert.txt \
+	  	-hires \
+	 	-xopts-overwrite \
+	  	-autorecon2
 
-	# recon-all -s ${ID} \
-	#  	-expert /mnt/work/yyi/ENGRAMS/hires_expert.txt \
-	#  	-hires \
-	# 	-xopts-overwrite \
-	#  	-autorecon3
+	 recon-all -s ${ID} \
+	  	-expert /mnt/work/yyi/ENGRAMS/hires_expert.txt \
+	  	-hires \
+	 	-xopts-overwrite \
+	  	-autorecon3
 
 done

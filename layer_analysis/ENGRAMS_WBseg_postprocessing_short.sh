@@ -8,7 +8,7 @@ do
 	t1w=${path_out}/m${ID}_run-01_T1w_0pt35.nii.gz
 	fsorig=${path_out}/orig.nii.gz
 
-	antsRegistrationSyNQuick.sh -d 3 -t r -m ${t1w} -f ${fsorig} -o ${path_src}/Nat2FS_
+	antsRegistrationSyNQuick.sh -d 3 -t r -m ${t1w} -f ${fsorig} -o ${path_trx}/Nat2FS_
 	mri_convert -it mgz -ot nii ${path_src}/aparc+aseg.mgz ${path_out}/aparc+aseg.nii.gz
 	antsApplyTransforms -d 3 -n NearestNeighbor -i ${path_out}/aparc+aseg.nii.gz -r ${t1w} -o ${path_out}/aparc+aseg_nat.nii.gz -t [${path_trx}/Nat2FS_0GenericAffine.mat,1]
 	

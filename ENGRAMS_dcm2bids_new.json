@@ -86,26 +86,6 @@
       }
     },
     {
-      "id": "fmap_magnitude1",
-      "datatype": "fmap",
-      "suffix": "magnitude1",
-      "criteria": {
-        "SeriesDescription": "gre_field_mapping_sag",
-        "ImageType": ["ORIGINAL", "PRIMARY", "M", "DIS3D", "MFSPLIT"],
-        "EchoNumber": 1
-      }
-    },
-    {
-      "id": "fmap_magnitude2",
-      "datatype": "fmap",
-      "suffix": "magnitude2",
-      "criteria": {
-        "SeriesDescription": "gre_field_mapping_sag",
-        "ImageType": ["ORIGINAL", "PRIMARY", "M", "DIS3D", "MFSPLIT"],
-        "EchoNumber": 2
-      }
-    },
-    {
       "id": "fmap_phasediff",
       "datatype": "fmap",
       "suffix": "phasediff",
@@ -121,33 +101,6 @@
       "criteria": {
         "SeriesDescription": "gre_field_mapping_axial",
         "ImageType": ["ORIGINAL", "PRIMARY", "P", "NONE", "PHASE"]
-      }
-    },
-    {
-      "id": "fmap_phasediff",
-      "datatype": "fmap",
-      "suffix": "phasediff",
-      "criteria": {
-        "SeriesDescription": "gre_field_mapping_sag",
-        "ImageType": ["ORIGINAL", "PRIMARY", "P", "DIS3D", "DIS2D"]
-      }
-    },
-    {
-      "id": "fmap_phasediff",
-      "datatype": "fmap",
-      "suffix": "phasediff",
-      "criteria": {
-        "SeriesDescription": "gre_field_mapping_sag",
-        "ImageType": ["ORIGINAL", "PRIMARY", "P", "NONE", "PHASE"]
-      }
-    },
-    {
-      "id": "fmap_phasediff",
-      "datatype": "fmap",
-      "suffix": "phasediff",
-      "criteria": {
-        "SeriesDescription": "gre_field_mapping_sag",
-        "ImageType": ["ORIGINAL", "PRIMARY", "P", "DIS3D", "MFSPLIT", "PHASE"]
       }
     },
     {

@@ -23,6 +23,7 @@ smoothingKernel=1.2;
 
 flags=[];
 
+
 %% Memory: realign, unwarp, and SOcorrect
 
 
@@ -62,6 +63,7 @@ for id=1:length(ids)
     % run
 
     % calc vdm
+    flags{id,1}.rest.VBM=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.data.presubphasemag.phase = {phasemap};
@@ -76,8 +78,10 @@ for id=1:length(ids)
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.anat = '';
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.matchanat = 0;
     spm_jobman('run',matlabbatch)
+    flags{id,1}.rest.VBM=1;
 
     % unwarp
+    flags{id,1}.rest.unwarp=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
@@ -105,6 +109,7 @@ for id=1:length(ids)
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.rest.unwarp=1;
 
 
     % slice-time correction
@@ -112,6 +117,7 @@ for id=1:length(ids)
     for cc = 1:nvols
         fMRI{cc,1}  = [paths_source ids{id} 'v1s1/func/u' tmp.name ',' num2str(cc)];
     end
+    flags{id,1}.rest.SOcorr=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.temporal.st.scans = {fMRI};
@@ -122,6 +128,7 @@ for id=1:length(ids)
     matlabbatch{1}.spm.temporal.st.refslice = refSlice;
     matlabbatch{1}.spm.temporal.st.prefix = 'a';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.rest.SOcorr=1;
 
     %% original encoding
 
@@ -150,20 +157,8 @@ for id=1:length(ids)
 
 
     % run
-    clear matlabbatch
-    spm_jobman('initcfg')
-    % estimate realignment parameters
-    matlabbatch{1}.spm.spatial.realign.estimate.data = {fMRI};
-    matlabbatch{1}.spm.spatial.realign.estimate.eoptions.quality = 0.9;
-    matlabbatch{1}.spm.spatial.realign.estimate.eoptions.sep = 1;
-    matlabbatch{1}.spm.spatial.realign.estimate.eoptions.fwhm = 2;
-    matlabbatch{1}.spm.spatial.realign.estimate.eoptions.rtm = 0;
-    matlabbatch{1}.spm.spatial.realign.estimate.eoptions.interp = 4;
-    matlabbatch{1}.spm.spatial.realign.estimate.eoptions.wrap = [0 0 0];
-    matlabbatch{1}.spm.spatial.realign.estimate.eoptions.weight = '';
-    spm_jobman('run',matlabbatch)
-
     % calc vdm
+    flags{id,1}.origenc.VBM=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.data.presubphasemag.phase = {phasemap};
@@ -176,8 +171,10 @@ for id=1:length(ids)
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.anat = '';
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.matchanat = 0;
     spm_jobman('run',matlabbatch)
+    flags{id,1}.origenc.VBM=1;
 
     % unwarp
+    flags{id,1}.origenc.unwarp=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
@@ -205,6 +202,7 @@ for id=1:length(ids)
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.origenc.unwarp=1;
 
 
     % slice-time correction
@@ -212,6 +210,7 @@ for id=1:length(ids)
     for cc = 1:nvols
         fMRI{cc,1}  = [paths_source ids{id} 'v1s1/func/u' tmp.name ',' num2str(cc)];
     end
+    flags{id,1}.origenc.SOcorr=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.temporal.st.scans = {fMRI};
@@ -222,6 +221,7 @@ for id=1:length(ids)
     matlabbatch{1}.spm.temporal.st.refslice = refSlice;
     matlabbatch{1}.spm.temporal.st.prefix = 'a';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.origenc.SOcorr=1;
 
 
     %% recognition
@@ -244,6 +244,7 @@ for id=1:length(ids)
             end
 
             % run
+            flags{id,1}.origrec1.unwarp=0;
             clear matlabbatch
             spm_jobman('initcfg')
             matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
@@ -271,11 +272,13 @@ for id=1:length(ids)
             matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
             matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
             spm_jobman('run',matlabbatch)
+            flags{id,1}.origrec1.unwarp=1;
 
             fMRI=[];
             for cc = 1:nvols
                 fMRI{cc,1}  = [paths_source ids{id} 'v1s1/func/u' tmp.name ',' num2str(cc)];
             end
+            flags{id,1}.origrec1.SOcorr=0;
             clear matlabbatch
             spm_jobman('initcfg')
             matlabbatch{1}.spm.temporal.st.scans = {fMRI};
@@ -286,6 +289,7 @@ for id=1:length(ids)
             matlabbatch{1}.spm.temporal.st.refslice = refSlice;
             matlabbatch{1}.spm.temporal.st.prefix = 'a';
             spm_jobman('run',matlabbatch)
+            flags{id,1}.origrec1.SOcorr=1;
 
         else
             disp('multiple runs detected')
@@ -300,6 +304,7 @@ for id=1:length(ids)
                 end
 
                 % run
+                flags{id,1}.origrec1.unwarp=0;
                 clear matlabbatch
                 spm_jobman('initcfg')
                 matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
@@ -327,11 +332,13 @@ for id=1:length(ids)
                 matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
                 matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
                 spm_jobman('run',matlabbatch)
+                flags{id,1}.origrec1.unwarp=1;
 
                 fMRI=[];
                 for cc = 1:nvols
                     fMRI{cc,1}  = [paths_source ids{id} 'v1s1/func/u' tmp(runs).name ',' num2str(cc)];
                 end
+                flags{id,1}.origrec1.SOcorr=0;
                 clear matlabbatch
                 spm_jobman('initcfg')
                 matlabbatch{1}.spm.temporal.st.scans = {fMRI};
@@ -342,6 +349,7 @@ for id=1:length(ids)
                 matlabbatch{1}.spm.temporal.st.refslice = refSlice;
                 matlabbatch{1}.spm.temporal.st.prefix = 'a';
                 spm_jobman('run',matlabbatch)
+                flags{id,1}.origrec1.SOcorr=1;
 
             end
         end
@@ -377,6 +385,7 @@ for id=1:length(ids)
 
     % run
     % calc vdm
+    flags{id,1}.origrec2.VBM=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.data.presubphasemag.phase = {phasemap};
@@ -389,8 +398,10 @@ for id=1:length(ids)
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.anat = '';
     matlabbatch{1}.spm.tools.fieldmap.calculatevdm.subj.matchanat = 0;
     spm_jobman('run',matlabbatch)
+    flags{id,1}.origrec2.VBM=1;
 
     % unwarp
+    flags{id,1}.origrec2.unwarp=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
@@ -418,6 +429,7 @@ for id=1:length(ids)
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.origrec2.unwarp=1;
 
 
     % slice-time correction
@@ -425,6 +437,7 @@ for id=1:length(ids)
     for cc = 1:nvols
         fMRI{cc,1}  = [paths_source ids{id} 'v2s1/func/u' tmp.name ',' num2str(cc)];
     end
+    flags{id,1}.origrec2.SOcorr=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.temporal.st.scans = {fMRI};
@@ -435,6 +448,7 @@ for id=1:length(ids)
     matlabbatch{1}.spm.temporal.st.refslice = refSlice;
     matlabbatch{1}.spm.temporal.st.prefix = 'a';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.origrec2.SOcorr=1;
 
 
     %% encoding recombination
@@ -453,7 +467,7 @@ for id=1:length(ids)
     end
 
     % run
-
+    flags{id,1}.recombienc.unwarp=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
@@ -481,11 +495,13 @@ for id=1:length(ids)
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.recombienc.unwarp=1;
 
     fMRI=[];
     for cc = 1:nvols
         fMRI{cc,1}  = [paths_source ids{id} 'v2s1/func/u' tmp.name ',' num2str(cc)];
     end
+    flags{id,1}.recombienc.SOcorr=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.temporal.st.scans = {fMRI};
@@ -496,6 +512,7 @@ for id=1:length(ids)
     matlabbatch{1}.spm.temporal.st.refslice = refSlice;
     matlabbatch{1}.spm.temporal.st.prefix = 'a';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.recombienc.SOcorr=1;
 
 
     %% recognition recombination
@@ -514,6 +531,7 @@ for id=1:length(ids)
     end
 
     % run
+    flags{id,1}.recombirec.unwarp=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.spatial.realignunwarp.data.scans = fMRI;
@@ -541,11 +559,13 @@ for id=1:length(ids)
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.mask = 1;
     matlabbatch{1}.spm.spatial.realignunwarp.uwroptions.prefix = 'u';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.recombirec.unwarp=1;
 
     fMRI=[];
     for cc = 1:nvols
         fMRI{cc,1}  = [paths_source ids{id} 'v2s1/func/u' tmp.name ',' num2str(cc)];
     end
+    flags{id,1}.recombirec.SOcorr=0;
     clear matlabbatch
     spm_jobman('initcfg')
     matlabbatch{1}.spm.temporal.st.scans = {fMRI};
@@ -556,6 +576,7 @@ for id=1:length(ids)
     matlabbatch{1}.spm.temporal.st.refslice = refSlice;
     matlabbatch{1}.spm.temporal.st.prefix = 'a';
     spm_jobman('run',matlabbatch)
+    flags{id,1}.recombirec.SOcorr=1;
 
     %% housekeeping
 

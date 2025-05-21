@@ -15,7 +15,7 @@ sessionTypes = {'AUTO','REST','ORIGENC','ORIGREC','ORIGREC1','ORIGREC2','RECOMBI
     'ListString', sessionTypes);
 
 % list subjects
-ID = {'105','106','107','108','109'};%,'202'};
+ID = {'102','104','105','106','107'};%,'108','109'};%,'202'};
 
 % fixed parametres
 nSlices=96;
@@ -27,7 +27,7 @@ disp('prep done')
 
 %% now parse
 
-for id=5%1:length(ID)
+for id=2%:length(ID)
 
     disp(['processing ID' ID{id}])
 
@@ -36,7 +36,7 @@ for id=5%1:length(ID)
         % iterate through selected options
         for i1 = selected
 
-            choice = sessionTypes{selected(i1)};
+            choice = sessionTypes{i1};
 
             switch choice
                 case 'AUTO'
@@ -83,16 +83,16 @@ for id=5%1:length(ID)
                     disp(['selected option ' sess]);
 
                     clear tmpfmri
-                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origenc*.nii']);
+                    tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii']);
                     if isempty(tmpfmri)
                         disp('seems to be only compressed niftii file there - proceeding to decompress')
                         clear tmpfmri
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origenc*.nii.gz']);
+                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii.gz']);
                         eval(['!gzip -d ' fullfile(tmpfmri.folder,tmpfmri.name) ' -f'])
-                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v1s1/func/sub-*origenc*.nii']);
+                        tmpfmri = dir([path_preproc 'sub-' ID{id} 'v2s2/func/sub-*origenc*.nii']);
                     end
-                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name] ) );
-                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v1s1/func/' tmpfmri.name ' -f'])
+                    nVols   = length( spm_vol( [path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name] ) );
+                    eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
                     path_rawphysio=[path_raw ID{id} 'v1s1/physio/'];

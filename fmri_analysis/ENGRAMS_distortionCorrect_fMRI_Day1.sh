@@ -1,6 +1,4 @@
 #!/bin/bash
-# ENGRTOPUP_fMRI_pipeline.sh
-# Distortion-correct BOLD runs with FSL TOPUP (style matched to DWI script)
 
 export FSLDIR=/usr/local/fsl
 export PATH=$PATH:/usr/local/fsl/bin
@@ -11,7 +9,7 @@ SUBJECT="sub-201"   # TODO: update list
 echo "$SUBJECT"
 
 ##########################################################################
-#            TOPUP-based susceptibility correction for REST              #
+#                    TOPUP-based correction for REST                     #
 ##########################################################################
 
 # paths
@@ -22,6 +20,13 @@ OUTPUT_DIR="/Users/yyi/Desktop/ENGRAMS/preproc/${SUBJECT}v1s1/func"
 echo "extracting single-volume BOLD references"
 fslroi "$DATA_DIR/${SUBJECT}v1s1_task-rest_run-01_bold.nii.gz" "$OUTPUT_DIR/${SUBJECT}v1s1_rest_AP_b0.nii.gz" 0 1
 fslroi "$DATA_DIR/${SUBJECT}v1s1_antiPE_bold.nii.gz" "$OUTPUT_DIR/${SUBJECT}v1s1_PA_b0.nii.gz" 0 1
+
+for f in  "${SUBJECT}v1s1_rest_AP_b0.nii.gz" "${SUBJECT}v1s1_PA_b0.nii.gz"; do
+    fslreorient2std "$OUTPUT_DIR/$f" "${OUTPUT_DIR}/${f%.nii.gz}_std.nii.gz"
+    mv "${OUTPUT_DIR}/${f%.nii.gz}_std.nii.gz" "$OUTPUT_DIR/$f"
+done
+fslcpgeom "$OUTPUT_DIR/${SUBJECT}v1s1_rest_AP_b0.nii.gz" \
+          "$OUTPUT_DIR/${SUBJECT}v1s1_PA_b0.nii.gz"  -overwrite
 
 ####### ===== STEP 2: merge references ===== #######
 echo "merging references"
@@ -53,11 +58,11 @@ echo "applying TOPUP to full timeseries"
 applytopup --imain="$DATA_DIR/${SUBJECT}v1s1_task-rest_run-01_bold.nii.gz" \
            --datain="$OUTPUT_DIR/acqparams.txt" \
            --inindex=1 \
-           --topup="$OUTPUT_DIR/${SUBJECT}v1s1_topup_results" \
+           --topup="$OUTPUT_DIR/${SUBJECT}v1s1_rest_topup_results" \
            --method=jac \
            --out="$OUTPUT_DIR/${SUBJECT}v1s1_task-rest_run-01_bold_topup"
 
-echo "resting state done"
+echo "resting state processing done"
 
 
 

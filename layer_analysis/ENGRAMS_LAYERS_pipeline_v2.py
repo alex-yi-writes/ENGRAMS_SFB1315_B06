@@ -9,7 +9,9 @@ from scipy.ndimage import morphology, generate_binary_structure
 # 29-04-2025: 
 #   - alex started working on this pipeline (to-do: include coregistration step)
 #   - decided to write a separate pipeline for coregistration. perhaps it's 
-#     better to include a little bit of manual registration with itk-snap        
+#     better to include a little bit of manual registration with itk-snap
+# 22-05-2025:
+#   - let me try 15 layers        
 # ----------------------------------------------------------------------------- #
 
 
@@ -17,22 +19,20 @@ from scipy.ndimage import morphology, generate_binary_structure
 # prep
 # ----------------------------------------------------------------------------- #
 
-path_analysis = "/Volumes/korokdorf/ENGRAMS/preproc/"
+path_analysis = "/Users/alex/Dropbox/paperwriting/1315/data/segmentation/"
 laynii_path = "/Users/alex/LayNii_v2.7.0_Mac_M/"
 
-# subjects = [
-#     "sub-102v1s1",
-#     "sub-104v1s1",
-#     "sub-105v1s1",
-#     "sub-106v1s1",
-#     "sub-107v1s1",
-#     "sub-108v1s1",
-#     "sub-109v1s1",
-#     "sub-202v1s1"
-# ]
 subjects = [
+    "sub-109v1s1",
     "sub-202v1s1",
+    "sub-104v1s1",
+    "sub-107v1s1",
+    "sub-108v1s1",
+    "sub-106v1s1"
 ]
+# subjects = [
+#     "sub-109v1s1",
+# ]
 
 # ----------------------------------------------------------------------------- #
 # pipeline
@@ -45,14 +45,14 @@ for subject in subjects:
     try:
         print(f"--- processing {subject} ---")
 
-        path_subject = f"{subject}/anat/"
+        path_subject = f"{subject}/anat/t1/"
         IMG_stem = f"{subject}_run-01_T1w_0pt35"
 
         # ----------------------------------------------------------------------------- #
         # STEP 1: load tissue classes
         # ----------------------------------------------------------------------------- #
-        c1_file = path_analysis + path_subject + "p1" + IMG_stem + ".nii.gz" # GM
-        c2_file = path_analysis + path_subject + "p2" + IMG_stem + ".nii.gz" # WM
+        c1_file = path_analysis + path_subject + "p1m" + IMG_stem + ".nii.gz" # GM
+        c2_file = path_analysis + path_subject + "p2m" + IMG_stem + ".nii.gz" # WM
 
         THRESHOLD_GM = 0.3
         THRESHOLD_WM = 0.7 
@@ -114,17 +114,20 @@ for subject in subjects:
         # STEP 6: equi-voluming starts (takes super long)
         # ----------------------------------------------------------------------------- #
         rim_file = out_fname
+        midgm_file = rim_file.replace("_rim.nii.gz", "_rim_midGM_equidist.nii.gz")
         layers_file = rim_file.replace("_rim.nii.gz", "_rim_layers.nii.gz")
         leaky_layers_file = rim_file.replace("_rim.nii.gz", "_rim_leaky_layers.nii.gz")
         final_output_name = out_fname = path_analysis + path_subject + IMG_stem
 
         cmds = [
+            ["LN2_LAYERS", "-rim", rim_file, "-nr_layers", "3", "-no_smooth"],
+            ["LN2_COLUMNS", "-rim", rim_file, "-nr_columns", "300", "-midgm", midgm_file],
             ["LN_GROW_LAYERS", "-rim", rim_file, "-N", "500", "-vinc", "40", "-threeD"],
             ["LN_LEAKY_LAYERS", "-rim", rim_file, "-nr_layers", "500", "-iterations", "100"],
-            ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "0.5", "-nr_layers", "13", "-output", final_output_name]
+            ["LN_LOITUMA", "-equidist", layers_file, "-leaky", leaky_layers_file, "-FWHM", "0.35", "-nr_layers", "15", "-output", final_output_name]
         ]
         # why those parameters:
-        # after multiple testings with various values and seeing the test dataset provided by laynii (with 0.2mm isotropic voxel sizes), i needed to adjust (1) LN_GROW_LAYERS -N into 500, because it made rims too thin and noisy; (2) LN_GROW_LAYERS -vinc to 40 because i have bigger voxel dimensions; (3) LN_LOITUMA -FWHM to 0.7 to avoid blurring layers together; and (4) LN_LOITUMA -nr_layers to 13 because sharoh et al also used 13
+        # after multiple testings with various values and seeing the test dataset provided by laynii (with 0.2mm isotropic voxel sizes), i needed to adjust (1) LN_GROW_LAYERS -N into 500, because it made rims too thin and noisy; (2) LN_GROW_LAYERS -vinc to 40 because i have bigger voxel dimensions; (3) LN_LOITUMA -FWHM to 0.7 to avoid blurring layers together; and (4) LN_LOITUMA -nr_layers to 13 because sharoh et al also used 13 -> this now 15 because it didn't work very well either
 
         for cmd in cmds:
             subprocess.run(cmd, check=True)
@@ -162,9 +165,9 @@ for subject in subjects:
         # how i selected these thresholds: visually inspect, and bin layer I, II, and III into superficial layer; IV into middle layer; and V and VI into deep layer
         binned_layers = np.zeros_like(layer_data, dtype=np.int8)
         # binned_layers[(layer_data >= 4) & (layer_data <= 5)] = 1  # deep
-        binned_layers[(layer_data >= 4) & (layer_data <= 6)] = 1  # deep: this one looks too conservative but it is less wrong than the other option
+        binned_layers[(layer_data >= 3) & (layer_data <= 6)] = 1  # deep: this one looks too conservative but it is less wrong than the other option
         binned_layers[(layer_data >= 7) & (layer_data <= 10)] = 2  # middle
-        binned_layers[(layer_data >= 11) & (layer_data <= 12)] = 3  # superficial
+        binned_layers[(layer_data >= 11) & (layer_data <= 14)] = 3  # superficial
 
         # save
         out_file = layers_file.replace(".nii", "_bined_3layers.nii")

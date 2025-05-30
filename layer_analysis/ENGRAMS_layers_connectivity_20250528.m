@@ -98,7 +98,7 @@ for id=1%:length(ids)
             sub4.img = sub4.img(:,:,zidx,1:nVolumes);
             sz4      = size(sub4.img); % [X Y Zchunk T]
             sub4.hdr.dime.dim(2:5) = sz4;
-            save_untouch_nii(sub4, sprintf('chunk_fMRI_%s_%02d.nii', tasks{1}, i));
+            save_untouch_nii(sub4, sprintf('chunk_fMRI_%s_%02d.nii', tasks{t1}, i));
 
             % 3D layer chunk
             sub3     = layerNii;
@@ -106,7 +106,7 @@ for id=1%:length(ids)
             sz3full  = size(sub3.img); % [X Y Zchunk]
             if numel(sz3full)<3, sz3full(3)=1; end
             sub3.hdr.dime.dim(2:4) = sz3full(1:3);
-            save_untouch_nii(sub3, sprintf('chunk_layer_%s_%02d.nii', tasks{1}, i));
+            save_untouch_nii(sub3, sprintf('chunk_layer_%s_%02d.nii', tasks{t1}, i));
 
             clear sub3
             % 3D column chunk
@@ -115,7 +115,7 @@ for id=1%:length(ids)
             sz3full  = size(sub3.img); % [X Y Zchunk]
             if numel(sz3full)<3, sz3full(3)=1; end
             sub3.hdr.dime.dim(2:4) = sz3full(1:3);
-            save_untouch_nii(sub3, sprintf('chunk_columns_%s_%02d.nii', tasks{1}, i));
+            save_untouch_nii(sub3, sprintf('chunk_columns_%s_%02d.nii', tasks{t1}, i));
 
         end
     end
@@ -135,25 +135,27 @@ for id=1:length(ids)
 
     path_analyses   = [path_par subj 'v1s1/analyses/GM/'];
 
-    for ck=1:nChunks
-        % create ALF image (from laynii tutorial)
-        eval(['!/Users/alex/Dropbox/paperwriting/1315/script/ALF_melmac_ENGRAMS.sh ' path_analyses ...
-            'chunk_fMRI_origrec_0' num2str(ck) '.nii ' path_analyses])
+    for t1=1:numel(tasks)
 
-        % devein main command line
-        eval(['!LN2_DEVEIN '...
-            '-input ' path_analyses 'chunk_fMRI_origrec_0' num2str(ck) '.nii '... 
-            '-layer_file ' path_analyses 'chunk_layer_origrec_0' num2str(ck) '.nii '...
-            '-column_file ' path_analyses 'chunk_columns_origrec_0' num2str(ck) '.nii ' ...
-            '-ALF ' path_analyses 'AFL_chunk_fMRI_origrec_0' num2str(ck) '.nii.gz ' ...
-            '-output ' path_analyses 'chunk_fMRI_origrec_0' num2str(ck) '_linearDV.nii.gz'])
+        for ck=1:nChunks
+            % create ALF image (from laynii tutorial)
+            eval(['!/Users/alex/Dropbox/paperwriting/1315/script/ALF_melmac_ENGRAMS.sh ' path_analyses ...
+                'chunk_fMRI_' tasks{t1} '_0' num2str(ck) '.nii ' path_analyses])
+
+            % devein main command line
+            eval(['!LN2_DEVEIN '...
+                '-input ' path_analyses 'chunk_fMRI_' tasks{t1} '_0' num2str(ck) '.nii '...
+                '-layer_file ' path_analyses 'chunk_layer_' tasks{t1} '_0' num2str(ck) '.nii '...
+                '-column_file ' path_analyses 'chunk_columns_' tasks{t1} '_0' num2str(ck) '.nii ' ...
+                '-ALF ' path_analyses 'AFL_chunk_fMRI_' tasks{t1} '_0' num2str(ck) '.nii.gz ' ...
+                '-output ' path_analyses 'chunk_fMRI_' tasks{t1} '_0' num2str(ck) '_linearDV.nii.gz'])
+        end
+
+        % after deveining, assemble back and cleanup
+        eval(['!fslmerge -z ' path_analyses '/func_' tasks{t1} '_deveined.nii.gz '...
+            path_analyses 'chunk_fMRI_' tasks{t1} '_*_linearDV_deveinDeconv.nii.gz'])
     end
-
-    % after deveining, assemble back and cleanup
-    eval(['!fslmerge -z ' path_analyses '/func_origrec_deveined.nii.gz '...
-        path_analyses 'chunk_fMRI_origrec_*_linearDV_deveinDeconv.nii.gz'])
-    eval(['!gzip -f ' path_analyses '/*.nii'])
-
+        eval(['!gzip -f ' path_analyses '/*.nii'])
 end
 
 

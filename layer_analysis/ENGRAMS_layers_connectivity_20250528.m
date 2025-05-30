@@ -49,7 +49,7 @@ for id=1%:length(ids)
 
         % where are the files
         maskFile        = [path_roi 'rim_columns300_on_' tasks{t1} '_bin.nii.gz']; eval(['!gzip -d -f ' maskFile '.gz'])
-        clear tmp; tmp=dir([path_func 'au' subj 'v2s2_task-' tasks{t1} '_run-0*_bold.nii']);
+        clear tmp; tmp=dir([path_func 'au' subj 'v*s*_task-' tasks{t1} '_run-0*_bold.nii']);
         fmriFile        = [path_func tmp.name]; % dims X*Y*Z*T
         layerFile       = [path_roi 'equivol_on_' tasks{t1} '.nii.gz'];
 
@@ -57,12 +57,13 @@ for id=1%:length(ids)
         maskNii   = load_untouch_nii(maskFile);
         fmriNii   = load_untouch_nii(fmriFile); 
         layerNii  = load_untouch_nii(layerFile);
-        colNii    = load_untouch_nii([path_roi '/rim_columns300_on_' tasks{t1} '.nii.gz']); assert(size(colNii.img,3)==Z,'column z-dim mismatch');
+        colNii    = load_untouch_nii([path_roi '/rim_columns300_on_' tasks{t1} '.nii.gz']);
 
         % compute vol per z slice
         nVolumes  = size(fmriNii.img,4); % keep all timepoints
         mask3D    = maskNii.img>0;
         [~,~,Z]   = size(mask3D);
+        assert(size(colNii.img,3)==Z,'column z-dim mismatch');
         voxPerZ   = squeeze(sum(sum(mask3D,1),2));
         cumVox    = cumsum(voxPerZ);
         totalVox  = cumVox(end);

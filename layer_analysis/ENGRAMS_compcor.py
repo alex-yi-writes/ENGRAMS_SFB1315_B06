@@ -24,18 +24,21 @@ for x in ID:
     # maskpath   = parpath + id + mask # wb mask needs too much memory for any of my machine to handle
     outputpath  = parpath + id + "v1s1/func/compcor_csf_wm_rest.txt"
 
-    ccinterface = CompCor()
-    ccinterface.inputs.realigned_file       = fmripath
-    ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
-    ccinterface.inputs.merge_method         = 'none'
-    ccinterface.inputs.num_components       = 3
-    ccinterface.inputs.pre_filter           = 'polynomial'
-    ccinterface.inputs.regress_poly_degree  = 2
-    ccinterface.inputs.repetition_time      = TR
-    ccinterface.inputs.components_file      = outputpath
-    ccinterface.run()
+    try:
+        ccinterface = CompCor()
+        ccinterface.inputs.realigned_file       = fmripath
+        ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
+        ccinterface.inputs.merge_method         = 'none'
+        ccinterface.inputs.num_components       = 3
+        ccinterface.inputs.pre_filter           = 'polynomial'
+        ccinterface.inputs.regress_poly_degree  = 2
+        ccinterface.inputs.repetition_time      = TR
+        ccinterface.inputs.components_file      = outputpath
+        ccinterface.run()
+    except TraitError:
+        print("no resting state data for "+id) 
     
-    
+
 
     # print("original encoding")
 
@@ -50,16 +53,19 @@ for x in ID:
     # # maskpath   = parpath + id + mask # wb mask needs too much memory for any of my machine to handle
     # outputpath  = parpath + id + "v1s1/func/compcor_csf_wm_origenc.txt"
 
-    # ccinterface = CompCor()
-    # ccinterface.inputs.realigned_file       = fmripath
-    # ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
-    # ccinterface.inputs.merge_method         = 'none'
-    # ccinterface.inputs.num_components       = 3
-    # ccinterface.inputs.pre_filter           = 'polynomial'
-    # ccinterface.inputs.regress_poly_degree  = 2
-    # ccinterface.inputs.repetition_time      = TR
-    # ccinterface.inputs.components_file      = outputpath
-    # ccinterface.run()
+    # try:
+    #     ccinterface = CompCor()
+    #     ccinterface.inputs.realigned_file       = fmripath
+    #     ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
+    #     ccinterface.inputs.merge_method         = 'none'
+    #     ccinterface.inputs.num_components       = 3
+    #     ccinterface.inputs.pre_filter           = 'polynomial'
+    #     ccinterface.inputs.regress_poly_degree  = 2
+    #     ccinterface.inputs.repetition_time      = TR
+    #     ccinterface.inputs.components_file      = outputpath
+    #     ccinterface.run()
+    # except TraitError:
+    #     print("no original encoding data for "+id) 
 
 
 
@@ -76,13 +82,19 @@ for x in ID:
     # maskpath   = parpath + id + mask # wb mask needs too much memory for any of my machine to handle
     outputpath  = parpath + id + "v1s1/func/compcor_csf_wm_orirec.txt"
 
-    ccinterface = CompCor()
-    ccinterface.inputs.realigned_file       = fmripath
-    ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
-    ccinterface.inputs.merge_method         = 'none'
-    ccinterface.inputs.num_components       = 3
-    ccinterface.inputs.pre_filter           = 'polynomial'
-    ccinterface.inputs.regress_poly_degree  = 2
-    ccinterface.inputs.repetition_time      = TR
-    ccinterface.inputs.components_file      = outputpath
-    ccinterface.run()
+    try:
+        ccinterface = CompCor()
+        ccinterface.inputs.realigned_file       = fmripath
+        ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
+        ccinterface.inputs.merge_method         = 'none'
+        ccinterface.inputs.num_components       = 3
+        ccinterface.inputs.pre_filter           = 'polynomial'
+        ccinterface.inputs.regress_poly_degree  = 2
+        ccinterface.inputs.repetition_time      = TR
+        ccinterface.inputs.components_file      = outputpath
+        ccinterface.run()
+    except TraitError:
+        print("no original recognition data for "+id) 
+
+
+print("all done, don't forget to check the output")

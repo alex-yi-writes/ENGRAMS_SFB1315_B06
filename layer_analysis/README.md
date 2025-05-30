@@ -1,5 +1,9 @@
 ### how i'm doing things at the moment
 
+## to-do list (20250530)
+* data is noisy... think about how to scrub those confounds better
+* maybe it makes more sense to split `ENGRAMS_layers_connectivity_singleSubs_*.m` into two parts, the first with deveining and the second with actual computation
+
 ## requirements
 * laynii, freesurfer, spm12 (cat12 too!), fsl, synthstrip, ashs, nipype, ants, tapas physio toolbox
 

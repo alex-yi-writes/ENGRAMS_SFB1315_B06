@@ -1,5 +1,7 @@
 # CompCor loops
 from nipype.algorithms.confounds import CompCor
+# from traits.trait_errors import TraitError
+import os
 
 ID = ["sub-202"]
 parpath = "/Users/alex/Dropbox/paperwriting/1315/data/segmentation/"
@@ -24,7 +26,7 @@ for x in ID:
     # maskpath   = parpath + id + mask # wb mask needs too much memory for any of my machine to handle
     outputpath  = parpath + id + "v1s1/func/compcor_csf_wm_rest.txt"
 
-    try:
+    if all(os.path.exists(p) for p in [fmripath, csfpath, wmpath]):
         ccinterface = CompCor()
         ccinterface.inputs.realigned_file       = fmripath
         ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
@@ -35,7 +37,7 @@ for x in ID:
         ccinterface.inputs.repetition_time      = TR
         ccinterface.inputs.components_file      = outputpath
         ccinterface.run()
-    except TraitError:
+    else:
         print("no resting state data for "+id) 
     
 
@@ -53,7 +55,7 @@ for x in ID:
     # # maskpath   = parpath + id + mask # wb mask needs too much memory for any of my machine to handle
     # outputpath  = parpath + id + "v1s1/func/compcor_csf_wm_origenc.txt"
 
-    # try:
+    # if all(os.path.exists(p) for p in [fmripath, csfpath, wmpath]):
     #     ccinterface = CompCor()
     #     ccinterface.inputs.realigned_file       = fmripath
     #     ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
@@ -64,7 +66,7 @@ for x in ID:
     #     ccinterface.inputs.repetition_time      = TR
     #     ccinterface.inputs.components_file      = outputpath
     #     ccinterface.run()
-    # except TraitError:
+    # else:
     #     print("no original encoding data for "+id) 
 
 
@@ -82,7 +84,7 @@ for x in ID:
     # maskpath   = parpath + id + mask # wb mask needs too much memory for any of my machine to handle
     outputpath  = parpath + id + "v1s1/func/compcor_csf_wm_orirec.txt"
 
-    try:
+    if all(os.path.exists(p) for p in [fmripath, csfpath, wmpath]):
         ccinterface = CompCor()
         ccinterface.inputs.realigned_file       = fmripath
         ccinterface.inputs.mask_files           = [csfpath, wmpath] # always wrap it
@@ -93,7 +95,7 @@ for x in ID:
         ccinterface.inputs.repetition_time      = TR
         ccinterface.inputs.components_file      = outputpath
         ccinterface.run()
-    except TraitError:
+    else:
         print("no original recognition data for "+id) 
 
 

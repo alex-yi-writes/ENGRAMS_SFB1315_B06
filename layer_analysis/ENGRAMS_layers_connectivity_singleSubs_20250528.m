@@ -10,10 +10,14 @@
 
 clc;clear
 tasks   = {'rest','origenc','origrec'};
-% tasks   = {'rest','origenc'};
 ids     = {'sub-109','sub-202'};
 nChunks = 6; % 6 chunks
 
+% filters for cleanup (it's too aggressive, or maybe i'm not doing this right... let's not do this)
+hp=0.01; lp=0.1; TR=2;
+[b,a] = butter(5,[hp lp]*TR*0.5,'bandpass');
+
+% paths
 path_par='/Users/alex/Dropbox/paperwriting/1315/data/segmentation/';
 
 % set environments for the bash tools
@@ -163,7 +167,7 @@ end
 
 %%%%%%%%% choose one of those %%%%%%%%%
 
-for a1=1:4
+for a1=1:3%1:4
 
     if a1==1
         % ========== mPFC ========== %
@@ -227,14 +231,31 @@ for a1=1:4
             % so we need to orthogonalise
             if numel(rois)<=3 % for single within ROI connectivity
 
-                clear deep mid midresid
+                % approach 2
+                % clear deep mid midresid
 
-                deep = timeseries_mat(1,:)';
-                mid  = timeseries_mat(2,:)';
+                % deep = timeseries_mat(1,:)';
+                % mid  = timeseries_mat(2,:)';
+                % 
+                % beta_dm   = (deep\mid); % ls fit of deep -> mid
+                % mid_resid = mid - deep*beta_dm; % mid layer with deep component removed
+                % timeseries_mat(2,:) = mid_resid'; % replace row-2 with residual
 
-                beta_dm   = (deep\mid); % ls fit of deep -> mid
-                mid_resid = mid - deep*beta_dm; % mid layer with deep component removed
-                timeseries_mat(2,:) = mid_resid'; % replace row-2 with residual
+                % approach 3: qr decomposition
+                % alex/yeo-jin (20250530):
+                % we have big voxels for thin layers and because of this
+                % the 3 layers share lots of slow drift and vasc noise...
+                % stock exchange suggests using qr (i think it's like gram-schmidt way)
+                % basically we try to orthogonalise each signal of the layers that are
+                % messed about across each other and extract unique signals
+                % because the common signals that drive the extreme
+                % connectivity are probably some vascular noise or signals
+                % bleeding from one another because again we have big
+                % voxels
+                % anyway read this: https://doi.org/10.1145/2049662.2049670
+                X = zscore(timeseries_mat.',0,1);
+                [Q,~] = qr(X,0);
+                timeseries_mat = Q.';
 
             elseif numel(rois)==4 % for HPC subfields connectivity
                 % what do i do? idk, maybe let's orthogonalise everything?
@@ -259,34 +280,34 @@ for a1=1:4
 
             elseif numel(rois)>4 % for mPFC-RSC layer connectivity
 
-                % approach 1: orthogonalise symmetrically
-                % mPFC
-                D = timeseries_mat(1,:)';   % deep
-                M = timeseries_mat(2,:)';   % mid
-                S = timeseries_mat(3,:)';   % sup
-
-                M = M - (D\M)*D;            % mid ⟂ deep
-                D = D - (M\D)*M;            % deep ⟂ mid   (now symmetric)
-                X = [D M];
-                S = S - X*(X\S);            % sup ⟂ [deep mid]
-
-                timeseries_mat(1,:) = D';
-                timeseries_mat(2,:) = M';
-                timeseries_mat(3,:) = S';
-
-                % RSC
-                D = timeseries_mat(4,:)';
-                M = timeseries_mat(5,:)';
-                S = timeseries_mat(6,:)';
-
-                M = M - (D\M)*D;
-                D = D - (M\D)*M;
-                X = [D M];
-                S = S - X*(X\S);
-
-                timeseries_mat(4,:) = D';
-                timeseries_mat(5,:) = M';
-                timeseries_mat(6,:) = S';
+                % % approach 1: orthogonalise symmetrically
+                % % mPFC
+                % D = timeseries_mat(1,:)';   % deep
+                % M = timeseries_mat(2,:)';   % mid
+                % S = timeseries_mat(3,:)';   % sup
+                % 
+                % M = M - (D\M)*D;            % mid ⟂ deep
+                % D = D - (M\D)*M;            % deep ⟂ mid   (now symmetric)
+                % X = [D M];
+                % S = S - X*(X\S);            % sup ⟂ [deep mid]
+                % 
+                % timeseries_mat(1,:) = D';
+                % timeseries_mat(2,:) = M';
+                % timeseries_mat(3,:) = S';
+                % 
+                % % RSC
+                % D = timeseries_mat(4,:)';
+                % M = timeseries_mat(5,:)';
+                % S = timeseries_mat(6,:)';
+                % 
+                % M = M - (D\M)*D;
+                % D = D - (M\D)*M;
+                % X = [D M];
+                % S = S - X*(X\S);
+                % 
+                % timeseries_mat(4,:) = D';
+                % timeseries_mat(5,:) = M';
+                % timeseries_mat(6,:) = S';
 
 
                 % % approach 2
@@ -311,6 +332,19 @@ for a1=1:4
                 % mid_resid = mid - deep*beta_dm; % mid layer with deep component removed
                 % 
                 % timeseries_mat(5,:) = mid_resid'; % replace row-2 with residual
+
+
+                % approach 3
+                % mPFC
+                X = zscore(timeseries_mat(1:3,:).',0,1);
+                [Q,~] = qr(X,0);
+                timeseries_mat(1:3,:) = Q.';
+
+                % RSC
+                X = zscore(timeseries_mat(4:6,:).',0,1);
+                [Q,~] = qr(X,0);
+                timeseries_mat(4:6,:) = Q.';
+                
             end
 
             R = corrcoef(timeseries_mat'); % pearson
@@ -349,10 +383,10 @@ for a1=1:4
             if layerFlag
                 if numel(rois)<=3
                     sup_ts = timeseries_mat(3,:);
-                    confounds   = [nuisanceReg.R acompcor sup_ts'];
+                    confounds   = [nuisanceReg.R acompcor]; %sup_ts']; % we're using qr so we don't need the sup layer trace anymore
                 elseif numel(rois)>3
                     sup_ts = timeseries_mat([3 6],:);
-                    confounds   = [nuisanceReg.R acompcor sup_ts'];
+                    confounds   = [nuisanceReg.R acompcor];% sup_ts'];
                 end
             else
                 % for hippocampal subfields we do something else
@@ -364,6 +398,17 @@ for a1=1:4
             beta   = pinv(confounds)*timeseries_mat';
             cleaned= timeseries_mat' - confounds*beta; % residuals -> correlate
 
+            % bandpass and scrub
+            % rp  = nuisanceReg.R(:,1:6); % dx-dy-dz-pitch-roll-yaw (rad)
+            % rot = rp(:,4:6) * 50; % convert rotations to mm (50 mm radius)
+            % mpar = [rp(:,1:3) rot]; % now all in mm
+            % dpar = [zeros(1,6); diff(mpar)]; % f2f change
+            % fd   = sum(abs(dpar),2); % Power et al. 2012
+            % 
+            % cleaned = filtfilt(b,a,cleaned);
+            % cleaned(:,fd>0.3) = NaN;
+
+            
             R=corrcoef(cleaned);
             Z = atanh(R);
 
@@ -394,6 +439,7 @@ for a1=1:4
 
     end
 end
+
 %% inspect and visualise
 
 for a1=1:4
@@ -434,6 +480,10 @@ for a1=1:4
         subj = ids{id};
         disp(['connect ' subj])
         %%%%%%%%%%%%%%%
+
+        if strcmp(subj,'sub-202')
+            tasks   = {'rest','origenc'};
+        end
 
         for t1=1:numel(tasks)
             close all

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for ID in sub-104 sub-106 sub-107 sub-108 sub-109 
+for ID in sub-108
 do
 
 	# prep
@@ -19,30 +19,31 @@ do
 	    func_origrec=${path_func}/meanu${ID}v2s2_task-origrec_run-04_bold
 	fi
 	mkdir ${path_roi}
+	mkdir ${path_trx}
 
 	# # ======== strip skulls ======== #
 
-	mri_synthstrip -i ${t1w}.nii.gz -o ${t1w}_stripped.nii.gz
-	mri_synthstrip -i ${func_rest}.nii.gz -o ${func_rest}_stripped.nii.gz
-	mri_synthstrip -i ${func_origenc}.nii.gz -o ${func_origenc}_stripped.nii.gz
-	mri_synthstrip -i ${func_origrec}.nii.gz -o ${func_origrec}_stripped.nii.gz
+	# mri_synthstrip -i ${t1w}.nii.gz -o ${t1w}_stripped.nii.gz
+	# mri_synthstrip -i ${func_rest}.nii.gz -o ${func_rest}_stripped.nii.gz
+	# mri_synthstrip -i ${func_origenc}.nii.gz -o ${func_origenc}_stripped.nii.gz
+	# mri_synthstrip -i ${func_origrec}.nii.gz -o ${func_origrec}_stripped.nii.gz
 
 
-	# ======== move ASHS seg ======== #
+	# # ======== move ASHS seg ======== #
 
 	ASHSseg=$(find "${path_anat}/hpc" -type f -iname 'layer_002*' -print -quit) # which seg?
 
-	mkdir ${path_roi}/func
-	mkdir ${path_roi}/func/rest
-	mkdir ${path_roi}/func/origenc
-	mkdir ${path_roi}/func/origrec
+	# mkdir ${path_roi}/func
+	# mkdir ${path_roi}/func/rest
+	# mkdir ${path_roi}/func/origenc
+	# mkdir ${path_roi}/func/origrec
 
-	# use unstripped for HPC
+	# # use unstripped for HPC
 	antsRegistrationSyN.sh -d 3 -n 4 -t b -m ${func_rest}.nii.gz -f ${t2w}.nii.gz -o ${path_trx}/rest2hpc_
 	antsRegistrationSyN.sh -d 3 -n 4 -t b -m ${func_origenc}.nii.gz -f ${t2w}.nii.gz -o ${path_trx}/origenc2hpc_
 	antsRegistrationSyN.sh -d 3 -n 4 -t b -m ${func_origrec}.nii.gz -f ${t2w}.nii.gz -o ${path_trx}/origrec2hpc_
 
-	# move segs to each fMRI space
+	# # move segs to each fMRI space
 	antsApplyTransforms -d 3 -v 1 -i ${ASHSseg} -r ${func_rest}.nii.gz -o ${path_roi}/hpc_on_func-rest.nii.gz -n NearestNeighbor -t [${path_trx}/rest2hpc_0GenericAffine.mat,1] -t ${path_trx}/rest2hpc_1InverseWarp.nii.gz
 	antsApplyTransforms -d 3 -v 1 -i ${ASHSseg} -r ${func_origenc}.nii.gz -o ${path_roi}/hpc_on_func-origenc.nii.gz -n NearestNeighbor -t [${path_trx}/origenc2hpc_0GenericAffine.mat,1] -t ${path_trx}/origenc2hpc_1InverseWarp.nii.gz
 	antsApplyTransforms -d 3 -v 1 -i ${ASHSseg} -r ${func_origrec}.nii.gz -o ${path_roi}/hpc_on_func-origrec.nii.gz -n NearestNeighbor -t [${path_trx}/origrec2hpc_0GenericAffine.mat,1] -t ${path_trx}/origrec2hpc_1InverseWarp.nii.gz
@@ -53,70 +54,70 @@ do
 	/Users/alex/Dropbox/paperwriting/1315/script/ENGRAMS_binarise_ASHSseg_vf.sh ${path_roi}/hpc_on_func-origrec.nii.gz ${path_roi}/func/origrec
 
 
-	#======== move layer segs ======== #
-	#(run ENGRAMS_createROImasks.m first)
+	# #======== move layer segs ======== #
+	# #(run ENGRAMS_createROImasks.m first)
 
-	# to resting state
-	antsRegistrationSyN.sh -d 3 -n 4 -t s -r 3 -m ${t1w}_stripped.nii.gz -f ${func_rest}_stripped.nii.gz -o ${path_trx}/wb2rest_
-	antsApplyTransforms -d 3 \
-	   -i ${path_roi}/regmask/mPFC_dilated.nii.gz \
-	   -r ${func_rest}_stripped.nii.gz \
-	   -o ${path_roi}/regmask/mPFC_on_func_rest.nii.gz \
-	   -t ${path_trx}/wb2rest_1Warp.nii.gz \
-	   -t ${path_trx}/wb2rest_0GenericAffine.mat \
-	   -n NearestNeighbor
-	antsRegistration -d 3 \
-	  -o "[${path_trx}/mPFCref_rest_,${path_trx}/mPFCref_rest_Warped.nii.gz]" \
-	  --initial-moving-transform "${path_trx}/wb2rest_0GenericAffine.mat" \
-	  --initial-moving-transform "${path_trx}/wb2rest_1Warp.nii.gz" \
-	  -t "SyN[0.02,3,0]" \
-	  -m "CC[${func_rest}_stripped.nii.gz,${t1w}_stripped.nii.gz,1,4]" \
-	  -c "[500x250x0,1e-7,10]" \
-	  -s 2x1x0vox \
-	  -f 4x2x1 \
-	  -x "[${path_roi}/regmask/mPFC_on_func_rest.nii.gz,${path_roi}/regmask/mPFC_dilated.nii.gz]"
+	# # to resting state
+	# antsRegistrationSyN.sh -d 3 -n 4 -t s -r 3 -m ${t1w}_stripped.nii.gz -f ${func_rest}_stripped.nii.gz -o ${path_trx}/wb2rest_
+	# antsApplyTransforms -d 3 \
+	#    -i ${path_roi}/regmask/mPFC_dilated.nii.gz \
+	#    -r ${func_rest}_stripped.nii.gz \
+	#    -o ${path_roi}/regmask/mPFC_on_func_rest.nii.gz \
+	#    -t ${path_trx}/wb2rest_1Warp.nii.gz \
+	#    -t ${path_trx}/wb2rest_0GenericAffine.mat \
+	#    -n NearestNeighbor
+	# antsRegistration -d 3 \
+	#   -o "[${path_trx}/mPFCref_rest_,${path_trx}/mPFCref_rest_Warped.nii.gz]" \
+	#   --initial-moving-transform "${path_trx}/wb2rest_0GenericAffine.mat" \
+	#   --initial-moving-transform "${path_trx}/wb2rest_1Warp.nii.gz" \
+	#   -t "SyN[0.02,3,0]" \
+	#   -m "CC[${func_rest}_stripped.nii.gz,${t1w}_stripped.nii.gz,1,4]" \
+	#   -c "[500x250x0,1e-7,10]" \
+	#   -s 2x1x0vox \
+	#   -f 4x2x1 \
+	#   -x "[${path_roi}/regmask/mPFC_on_func_rest.nii.gz,${path_roi}/regmask/mPFC_dilated.nii.gz]"
 
-	# to origenc
-	antsRegistrationSyN.sh -d 3 -n 4 -t s -m ${t1w}_stripped.nii.gz -f ${func_origenc}_stripped.nii.gz -o ${path_trx}/wb2origenc_
-	antsApplyTransforms -d 3 \
-	   -v 1 \
-	   -i ${path_roi}/regmask/mPFC_dilated.nii.gz \
-	   -r ${func_origenc}_stripped.nii.gz \
-	   -o ${path_roi}/regmask/mPFC_on_func_origenc.nii.gz \
-	   -t ${path_trx}/wb2origenc_1Warp.nii.gz \
-	   -t ${path_trx}/wb2origenc_0GenericAffine.mat \
-	   -n NearestNeighbor
-	antsRegistration -d 3 \
-	  -o "[${path_trx}/mPFCref_origenc_,${path_trx}/mPFCref_origenc_Warped.nii.gz]" \
-	  --initial-moving-transform "${path_trx}/wb2origenc_0GenericAffine.mat" \
-	  --initial-moving-transform "${path_trx}/wb2origenc_1Warp.nii.gz" \
-	  -t "SyN[0.015,3,0]" \
-	  -m "CC[${func_origenc}_stripped.nii.gz,${t1w}_stripped.nii.gz,1,3]" \
-	  -c "[1000x500x250x100,1e-8,15]" \
-	  -s 3x1.5x1x0vox \
-	  -f 6x3x2x1 \
-	  -x "[${path_roi}/regmask/mPFC_on_func_origenc.nii.gz,${path_roi}/regmask/mPFC_bin.nii.gz]"
+	# # to origenc
+	# antsRegistrationSyN.sh -d 3 -n 4 -t s -m ${t1w}_stripped.nii.gz -f ${func_origenc}_stripped.nii.gz -o ${path_trx}/wb2origenc_
+	# antsApplyTransforms -d 3 \
+	#    -v 1 \
+	#    -i ${path_roi}/regmask/mPFC_dilated.nii.gz \
+	#    -r ${func_origenc}_stripped.nii.gz \
+	#    -o ${path_roi}/regmask/mPFC_on_func_origenc.nii.gz \
+	#    -t ${path_trx}/wb2origenc_1Warp.nii.gz \
+	#    -t ${path_trx}/wb2origenc_0GenericAffine.mat \
+	#    -n NearestNeighbor
+	# antsRegistration -d 3 \
+	#   -o "[${path_trx}/mPFCref_origenc_,${path_trx}/mPFCref_origenc_Warped.nii.gz]" \
+	#   --initial-moving-transform "${path_trx}/wb2origenc_0GenericAffine.mat" \
+	#   --initial-moving-transform "${path_trx}/wb2origenc_1Warp.nii.gz" \
+	#   -t "SyN[0.015,3,0]" \
+	#   -m "CC[${func_origenc}_stripped.nii.gz,${t1w}_stripped.nii.gz,1,3]" \
+	#   -c "[1000x500x250x100,1e-8,15]" \
+	#   -s 3x1.5x1x0vox \
+	#   -f 6x3x2x1 \
+	#   -x "[${path_roi}/regmask/mPFC_on_func_origenc.nii.gz,${path_roi}/regmask/mPFC_bin.nii.gz]"
 
-	# to origrec
-	antsRegistrationSyN.sh -d 3 -n 4 -t s -m ${t1w}_stripped.nii.gz -f ${func_origrec}_stripped.nii.gz -o ${path_trx}/wb2origrec_
-	antsApplyTransforms -d 3 \
-	   -v 1 \
-	   -i ${path_roi}/regmask/mPFC_dilated.nii.gz \
-	   -r ${func_origrec}_stripped.nii.gz \
-	   -o ${path_roi}/regmask/mPFC_on_func_origrec.nii.gz \
-	   -t ${path_trx}/wb2origrec_1Warp.nii.gz \
-	   -t ${path_trx}/wb2origrec_0GenericAffine.mat \
-	   -n NearestNeighbor
-	antsRegistration -d 3 \
-	  -o "[${path_trx}/mPFCref_origrec_,${path_trx}/mPFCref_origrec_Warped.nii.gz]" \
-	  --initial-moving-transform "${path_trx}/wb2origrec_0GenericAffine.mat" \
-	  --initial-moving-transform "${path_trx}/wb2origrec_1Warp.nii.gz" \
-	  -t "SyN[0.015,3,0]" \
-	  -m "CC[${func_origrec}_stripped.nii.gz,${t1w}_stripped.nii.gz,1,3]" \
-	  -c "[1000x500x250x100,1e-8,15]" \
-	  -s 3x1.5x1x0vox \
-	  -f 6x3x2x1 \
-	  -x "[${path_roi}/regmask/mPFC_on_func_origrec.nii.gz,${path_roi}/regmask/mPFC_bin.nii.gz]"
+	# # to origrec
+	# antsRegistrationSyN.sh -d 3 -n 4 -t s -m ${t1w}_stripped.nii.gz -f ${func_origrec}_stripped.nii.gz -o ${path_trx}/wb2origrec_
+	# antsApplyTransforms -d 3 \
+	#    -v 1 \
+	#    -i ${path_roi}/regmask/mPFC_dilated.nii.gz \
+	#    -r ${func_origrec}_stripped.nii.gz \
+	#    -o ${path_roi}/regmask/mPFC_on_func_origrec.nii.gz \
+	#    -t ${path_trx}/wb2origrec_1Warp.nii.gz \
+	#    -t ${path_trx}/wb2origrec_0GenericAffine.mat \
+	#    -n NearestNeighbor
+	# antsRegistration -d 3 \
+	#   -o "[${path_trx}/mPFCref_origrec_,${path_trx}/mPFCref_origrec_Warped.nii.gz]" \
+	#   --initial-moving-transform "${path_trx}/wb2origrec_0GenericAffine.mat" \
+	#   --initial-moving-transform "${path_trx}/wb2origrec_1Warp.nii.gz" \
+	#   -t "SyN[0.015,3,0]" \
+	#   -m "CC[${func_origrec}_stripped.nii.gz,${t1w}_stripped.nii.gz,1,3]" \
+	#   -c "[1000x500x250x100,1e-8,15]" \
+	#   -s 3x1.5x1x0vox \
+	#   -f 6x3x2x1 \
+	#   -x "[${path_roi}/regmask/mPFC_on_func_origrec.nii.gz,${path_roi}/regmask/mPFC_bin.nii.gz]"
 
 
 	# ~~~ everything ~~~ #
@@ -220,7 +221,7 @@ do
 
 
 
-	antsApplyTransforms -d 3 -v 1 -n Linear \
+	antsApplyTransforms -d 3 -v 1 -n NearestNeighbor \
 		-r ${func_origenc}_stripped.nii.gz \
 		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_rim_columns300.nii.gz \
 		-o ${path_roi}/func/origenc/rim_columns300_on_origenc.nii.gz \
@@ -228,7 +229,7 @@ do
   		-t ${path_trx}/wb2origenc_1Warp.nii.gz \
 		-t ${path_trx}/wb2origenc_0GenericAffine.mat
 
-	antsApplyTransforms -d 3 -v 1 -n Linear \
+	antsApplyTransforms -d 3 -v 1 -n NearestNeighbor \
 		-r ${func_origrec}_stripped.nii.gz \
 		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_rim_columns300.nii.gz \
 		-o ${path_roi}/func/origrec/rim_columns300_on_origrec.nii.gz \
@@ -236,7 +237,7 @@ do
   		-t ${path_trx}/wb2origrec_1Warp.nii.gz \
 		-t ${path_trx}/wb2origrec_0GenericAffine.mat
 
-	antsApplyTransforms -d 3 -v 1 -n Linear \
+	antsApplyTransforms -d 3 -v 1 -n NearestNeighbor \
 		-r ${func_rest}_stripped.nii.gz \
 		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_rim_columns300.nii.gz \
 		-o ${path_roi}/func/rest/rim_columns300_on_rest.nii.gz \

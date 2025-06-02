@@ -3,8 +3,8 @@
 %% prep
 
 clc;clear
-ids     = {'sub-202'};
-tasks   = {'rest','origenc'};%,'origrec'};
+ids     = {'sub-106'}; % do 'sub-106' later
+tasks   = {'rest','origenc','origrec'};
 path_par = '/Users/alex/Dropbox/paperwriting/1315/data/segmentation/';
 
 % set environments for the bash tools
@@ -71,10 +71,7 @@ end
 
 %% CSF mask for CompCor
 
-tasks   = {'rest','origenc','origrec'};
-ids     = {'sub-202','sub-104','sub-107','sub-108'};
-
-for id=1%:length(ids)
+for id=1:length(ids)
 
     %%%%%%%%%%%%%%%
     subj = ids{id};
@@ -148,4 +145,7 @@ for id=1%:length(ids)
 
        
     end
+    
 end
+
+%% after this, run CompCor

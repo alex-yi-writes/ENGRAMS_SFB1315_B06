@@ -10,7 +10,7 @@
 
 clc;clear
 tasks   = {'rest','origenc','origrec'};
-ids     = {'sub-109','sub-202'};
+ids     = {'sub-104','sub-106','sub-107','sub-108'};
 nChunks = 6; % 6 chunks
 
 % filters for cleanup (it's too aggressive, or maybe i'm not doing this right... let's not do this)
@@ -37,7 +37,7 @@ clear fsldir fsldirmpath;
 
 %% first, chunk data so that we can run LN2_DEVEIN (the file's too big)
 
-for id=1%:length(ids)
+for id=1:length(ids)
 
     %%%%%%%%%%%%%%%
     subj = ids{id};
@@ -59,7 +59,11 @@ for id=1%:length(ids)
 
         % load files
         maskNii   = load_untouch_nii(maskFile);
+        try
         fmriNii   = load_untouch_nii(fmriFile);
+        catch
+        fmriNii   = load_untouch_nii([fmriFile '.gz']);
+        end
         layerNii  = load_untouch_nii(layerFile);
         colNii    = load_untouch_nii([path_roi '/rim_columns300_on_' tasks{t1} '.nii.gz']);
 
@@ -167,7 +171,7 @@ end
 
 %%%%%%%%% choose one of those %%%%%%%%%
 
-for a1=1:3%1:4
+for a1=1:4
 
     if a1==1
         % ========== mPFC ========== %
@@ -200,10 +204,10 @@ for a1=1:3%1:4
     end
 
     for id=1%:length(ids)
-
+            
         %%%%%%%%%%%%%%%
         subj = ids{id};
-        disp(['connect ' subj])
+        disp(['connect ' subj ' in ' folderlabel])
         %%%%%%%%%%%%%%%
 
         if strcmp(subj,'sub-202')
@@ -222,6 +226,12 @@ for a1=1:3%1:4
 
             for r2 = 1:numel(rois)
                 mask   = niftiread([path_roi '/' rois{r2} '_GMmasked.nii.gz']) > 0;
+                clear nz
+                nz = nnz(niftiread([path_roi '/' rois{r2} '_GMmasked.nii.gz']));
+                if any(nz < 10)
+                    warning([rois{r2} ' with <10 voxels – exclude or re-draw'])
+                end
+
                 masktest{r2,1}=mask; % for diagnostics
                 voxels = V(repmat(mask, 1, 1, 1, size(V,4))); % apply mask through time
                 timeseries_mat(r2,:) = mean(reshape(voxels, [], size(V,4)), 1,'omitnan');
@@ -349,8 +359,10 @@ for a1=1:3%1:4
 
             R = corrcoef(timeseries_mat'); % pearson
             R = max(min(R,0.999999),-0.999999); % keep |R| < 1
-            Z = atanh(R); % fisher-z (now finite)
+            Z = atanh(R); % fisher-z
 
+            % preliminary report
+            disp(['>>> ' tasks{t1} ' <<<'])
             disp('raw R=')
             disp(R)
             disp('raw Z=')
@@ -505,6 +517,14 @@ for a1=1:4
             A     = R .* ~eye(nR);
             A(abs(A)<thr_r) = 0;
 
+            % A already has |r|<thr_r set to 0
+            [i,j,v] = find(triu(A,1));          % upper-tri only
+            fprintf('Edges kept for %s  %s\n', subj, tasks{t1});
+            for k = 1:numel(v)
+                fprintf('%s ↔ %s   r = %.6f\n', rois{i(k)}, rois{j(k)}, v(k));
+            end
+
+
             G     = graph(A, rois, 'upper');
             rvec  = G.Edges.Weight; % signed r values for surviving edges
 
@@ -555,7 +575,7 @@ for a1=1:4
             savefig([path_par subj 'v1s1/analyses/' folderlabel '/heatmap_' subj '_' tasks{t1} '.fig'])
 
             % summary printout: all lower-triangle pairs
-            clc
+            % clc
             fprintf('\n%s  ROI connectivity (fisher-z)\n', subj)
             for i = 2:nR
                 for j = 1:i-1

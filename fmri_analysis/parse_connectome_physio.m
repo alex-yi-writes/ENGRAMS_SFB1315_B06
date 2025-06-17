@@ -1,6 +1,7 @@
 %% parse connectome physio files (because somehow it's different from the previous Siemens-Tics formats)
 % requirements: - TAPAS physIO [https://github.com/translationalneuromodeling/tapas/tree/master/PhysIO]
 %               - SPM12 [https://www.fil.ion.ucl.ac.uk/spm/software/spm12/]
+% if you have questions please send an email to: ucjuyyi@ucl.ac.uk
 %% prep
 
 clc; clear;

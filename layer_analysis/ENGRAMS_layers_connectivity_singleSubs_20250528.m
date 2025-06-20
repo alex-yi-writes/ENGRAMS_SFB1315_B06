@@ -10,7 +10,7 @@
 
 clc;clear
 tasks   = {'rest','origenc','origrec'};
-ids     = {'sub-104','sub-106','sub-107','sub-108'};
+ids     = {'sub-205','sub-111'};%,'sub-101','sub-102'};
 nChunks = 6; % 6 chunks
 
 % filters for cleanup (it's too aggressive, or maybe i'm not doing this right... let's not do this)
@@ -52,8 +52,14 @@ for id=1:length(ids)
         path_analyses   = [path_par subj 'v1s1/analyses/GM/'];
 
         % where are the files
-        maskFile        = [path_roi 'rim_columns300_on_' tasks{t1} '_bin.nii.gz']; eval(['!gzip -d -f ' maskFile '.gz'])
-        clear tmp; tmp=dir([path_func 'au' subj 'v*s*_task-' tasks{t1} '_run-0*_bold.nii']);
+        maskFile        = [path_roi 'rim_columns300_on_' tasks{t1} '_bin.nii.gz']; %eval(['!gzip -d -f ' maskFile '.gz'])
+        if str2num(ids{id}(5:7))>110 && str2num(ids{id}(5:7))<200
+            clear tmp; tmp=dir([path_func 'ar' subj 'v*s*_task-' tasks{t1} '*_run-0*_bold_topup.nii.gz']);
+        elseif str2num(ids{id}(5:7))>200 && str2num(ids{id}(5:7))~=202
+            clear tmp; tmp=dir([path_func 'ar' subj 'v*s*_task-' tasks{t1} '*_run-0*_bold_topup.nii.gz']);
+        else
+            clear tmp; tmp=dir([path_func 'au' subj 'v*s*_task-' tasks{t1} '_run-0*_bold*.nii']);
+        end
         fmriFile        = [path_func tmp.name]; % dims X*Y*Z*T
         layerFile       = [path_roi 'equivol_on_' tasks{t1} '.nii.gz'];
 
@@ -64,6 +70,18 @@ for id=1:length(ids)
         catch
         fmriNii   = load_untouch_nii([fmriFile '.gz']);
         end
+
+        % if (str2num(ids{id}(5:7))>110 && str2num(ids{id}(5:7))<200)...
+        %     || (str2num(ids{id}(5:7))>200 && str2num(ids{id}(5:7))~=202)
+        %     img       = double(fmriNii.img)*fmriNii.hdr.dime.scl_slope ...
+        %         + fmriNii.hdr.dime.scl_inter;
+        %     fmriNii.img              = single(img);        % keep precision
+        %     fmriNii.hdr.dime.datatype = 16;  % float32
+        %     fmriNii.hdr.dime.bitpix   = 32;
+        %     fmriNii.hdr.dime.scl_slope = 1;
+        %     fmriNii.hdr.dime.scl_inter = 0;
+        % end
+
         layerNii  = load_untouch_nii(layerFile);
         colNii    = load_untouch_nii([path_roi '/rim_columns300_on_' tasks{t1} '.nii.gz']);
 
@@ -169,9 +187,7 @@ end
 
 %% calc connectivities
 
-%%%%%%%%% choose one of those %%%%%%%%%
-
-for a1=1:4
+for a1=1:5
 
     if a1==1
         % ========== mPFC ========== %
@@ -200,19 +216,22 @@ for a1=1:4
         layerFlag=0;
         folderlabel = 'HPC';
         % ========================== %
+   elseif a1==5
+
+        % ====== all cortices ====== %
+        rois   = {'mPFC_layer_deep','mPFC_layer_mid','mPFC_layer_sup','RSC_layer_deep','RSC_layer_mid','RSC_layer_sup','CA1','CA3','DG','Sub'};
+        layerFlag=1;
+        folderlabel = 'all_2';
+        % ========================== %
 
     end
 
-    for id=1%:length(ids)
+    for id=1:length(ids)
             
         %%%%%%%%%%%%%%%
         subj = ids{id};
         disp(['connect ' subj ' in ' folderlabel])
         %%%%%%%%%%%%%%%
-
-        if strcmp(subj,'sub-202')
-            tasks   = {'rest','origenc'};
-        end
 
         for t1=1:numel(tasks)
 
@@ -288,7 +307,7 @@ for a1=1:4
                 % pcR = max(min(pcR,0.999999),-0.999999);
                 % R   = pcR;  Z = atanh(R);  Z(1:5:end)=0;
 
-            elseif numel(rois)>4 % for mPFC-RSC layer connectivity
+            elseif numel(rois)==6 % for mPFC-RSC layer connectivity
 
                 % % approach 1: orthogonalise symmetrically
                 % % mPFC
@@ -354,6 +373,35 @@ for a1=1:4
                 X = zscore(timeseries_mat(4:6,:).',0,1);
                 [Q,~] = qr(X,0);
                 timeseries_mat(4:6,:) = Q.';
+
+                
+            elseif numel(rois) > 6
+
+                % approach 3
+                % mPFC
+                X = zscore(timeseries_mat(1:3,:).',0,1);
+                [Q,~] = qr(X,0);
+                timeseries_mat(1:3,:) = Q.';
+
+                % RSC
+                X = zscore(timeseries_mat(4:6,:).',0,1);
+                [Q,~] = qr(X,0);
+                timeseries_mat(4:6,:) = Q.';
+
+                % HPC
+                CA1 = timeseries_mat(7,:)';
+                CA3 = timeseries_mat(8,:)';
+                DG  = timeseries_mat(9,:)';
+                Sub = timeseries_mat(10,:)';
+
+                % remove shared CA1 component from CA3 and Sub
+                CA3 = CA3 - (CA1\CA3)*CA1;   % residual
+                Sub = Sub - (CA1\Sub)*CA1;
+                DG  = DG  - (CA1\DG )*CA1;
+
+                timeseries_mat(8,:) = CA3';
+                timeseries_mat(9,:) = DG';
+                timeseries_mat(10,:) = Sub';
                 
             end
 
@@ -389,7 +437,14 @@ for a1=1:4
             acompcor=dlmread([path_par subj...
                 'v1s1/func/compcor_csf_wm_' tasks{t1} '.txt'], '\t', 1, 0);
             % realignment regressors
-            nuisanceReg=load([path_par subj 'v1s1/func/reg_all_' tasks{t1} '.mat'],'R');
+
+            if strcmp('sub-202',subj) & strcmp('origrec',tasks{t1})
+                nuisanceReg=load([path_par subj 'v1s1/func/reg_all_' tasks{t1} '1.mat'],'R');
+            elseif strcmp('sub-205',subj) & strcmp('origrec',tasks{t1})
+                nuisanceReg=load([path_par subj 'v1s1/func/reg_all_' tasks{t1} '1.mat'],'R');
+            else
+                nuisanceReg=load([path_par subj 'v1s1/func/reg_all_' tasks{t1} '.mat'],'R');
+            end
 
             % assemble
             if layerFlag
@@ -454,7 +509,9 @@ end
 
 %% inspect and visualise
 
-for a1=1:4
+close all
+
+for a1=1:5
 
     if a1==1
         % ========== mPFC ========== %
@@ -483,6 +540,13 @@ for a1=1:4
         layerFlag=0;
         folderlabel = 'HPC';
         % ========================== %
+    elseif a1==5
+
+        % ====== all cortices ====== %
+        rois   = {'mPFC_layer_deep','mPFC_layer_mid','mPFC_layer_sup','RSC_layer_deep','RSC_layer_mid','RSC_layer_sup','CA1','CA3','DG','Sub'};
+        layerFlag=1;
+        folderlabel = 'all_2';
+        % ========================== %
 
     end
 
@@ -490,12 +554,10 @@ for a1=1:4
 
         %%%%%%%%%%%%%%%
         subj = ids{id};
-        disp(['connect ' subj])
+        disp(['connect ' subj 'in ' folderlabel])
         %%%%%%%%%%%%%%%
 
-        if strcmp(subj,'sub-202')
-            tasks   = {'rest','origenc'};
-        end
+     
 
         for t1=1:numel(tasks)
             close all
@@ -532,7 +594,7 @@ for a1=1:4
             theta = linspace(0,2*pi,nR+1); theta(end)=[];
             xy    = [cos(theta); sin(theta)];
 
-            figure;
+            fig1=figure;
             % make the fancy plot
             p = plot(G, ...
                 'XData',xy(1,:),'YData',xy(2,:), ...
@@ -563,16 +625,24 @@ for a1=1:4
 
             axis off equal
             title({['' subj ' : |pearson''s r| > 0.2  (red=pos, blue=neg)'],['phase: ' tasks{t1}]},'Fontsize',20,'FontWeight','bold')
-            savefig([path_par subj 'v1s1/analyses/' folderlabel '/connectivities_' subj '_' tasks{t1} '.fig'])
+            % savefig([path_par subj 'v1s1/analyses/' folderlabel '/connectivities_' subj '_' tasks{t1} '.fig'])
+            figPath1 = fullfile(path_par, [subj 'v1s1'], 'analyses', folderlabel, ...
+                       sprintf('connectivities_%s_%s.fig', subj, [tasks{t1} '_' folderlabel]));
+            savefig(fig1, figPath1)
+            saveas(fig1, strrep(figPath1, '.fig', '.jpg'), 'jpg')
 
             % heatmap
-            figure; imagesc(Z); axis square
+            fig2=figure; imagesc(Z); axis square
             set(gca,'XTick',1:nR,'XTickLabel',rois, ...
                 'YTick',1:nR,'YTickLabel',rois, ...
                 'TickLabelInterpreter', 'none');
             colormap(redblue);caxis([-1 1])
             colorbar; title({[subj '  ROI connectivity (fisher-z)'],['phase: ' tasks{t1}]})
-            savefig([path_par subj 'v1s1/analyses/' folderlabel '/heatmap_' subj '_' tasks{t1} '.fig'])
+            % savefig([path_par subj 'v1s1/analyses/' folderlabel '/heatmap_' subj '_' tasks{t1} '.fig'])
+            figPath2 = fullfile(path_par, [subj 'v1s1'], 'analyses', folderlabel, ...
+                       sprintf('heatmap_%s_%s.fig', subj, [tasks{t1} '_' folderlabel]));
+            savefig(fig2, figPath2)
+            saveas(fig2, strrep(figPath2, '.fig', '.jpg'), 'jpg')
 
             % summary printout: all lower-triangle pairs
             % clc

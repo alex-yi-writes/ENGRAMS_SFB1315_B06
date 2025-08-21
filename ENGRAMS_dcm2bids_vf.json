@@ -274,21 +274,6 @@
         "acq": "rec-orig"
       },
       "criteria": {
-        "ProtocolName": "*ep2d_bold_*rec*",
-        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
-      }
-    },
-    {
-      "id": "rec-orig",
-      "datatype": "func",
-      "suffix": "bold",
-      "custom_entities": "run-04_task-origrec",
-      "entities": {
-        "task": "recognition",
-        "rec": "orig",
-        "acq": "rec-orig"
-      },
-      "criteria": {
         "ProtocolName": "*ep2d_bold_*origrec",
         "SeriesDescription": "MoCoSeries"
       }
@@ -319,38 +304,8 @@
         "acq": "enc-recombi"
       },
       "criteria": {
-        "ProtocolName": "*ep2d_bold_*recombienc*",
-        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
-      }
-    },
-    {
-      "id": "enc-recombi",
-      "datatype": "func",
-      "suffix": "bold",
-      "custom_entities": "run-03_task-recombienc",
-      "entities": {
-        "task": "encoding",
-        "rec": "recombi",
-        "acq": "enc-recombi"
-      },
-      "criteria": {
-        "ProtocolName": "*ep2d_bold_*recombienc*",
+        "ProtocolName": "*ep2d_bold_*recombienc",
         "SeriesDescription": "MoCoSeries"
-      }
-    },
-    {
-      "id": "rec-recombi",
-      "datatype": "func",
-      "suffix": "bold",
-      "custom_entities": "run-04_task-recombirec",
-      "entities": {
-        "task": "recognition",
-        "rec": "recombi",
-        "acq": "rec-recombi"
-      },
-      "criteria": {
-        "ProtocolName": "*ep2d_bold_*recombirec*",
-        "ImageType": ["ORIGINAL", "PRIMARY", "M", "ND", "MOCO"]
       }
     },
     {
@@ -368,7 +323,6 @@
         "SeriesDescription": "MoCoSeries"
       }
     },
-
     {
       "id": "sale",
       "datatype": "func",
@@ -421,12 +375,44 @@
       }
     },
     {
+      "id": "dwi_AP",
+      "datatype": "dwi",
+      "suffix": "dwi_ph",
+      "custom_entities": "b1pt0k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*AP",
+        "ImageType": [
+        "ORIGINAL",
+        "PRIMARY",
+        "DIFFUSION",
+        "NONE",
+        "PHASE"
+        ]
+      }
+    },
+    {
       "id": "dwi_PA",
       "datatype": "dwi",
       "suffix": "dwi",
       "custom_entities": "b1pt0k-PA",
       "criteria": {
         "SeriesDescription": "*ep2d_diff_*b1pt0k*PA"
+      }
+    },
+    {
+      "id": "dwi_PA",
+      "datatype": "dwi",
+      "suffix": "dwi_ph",
+      "custom_entities": "b1pt0k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b1pt0k*PA",
+        "ImageType": [
+        "ORIGINAL",
+        "PRIMARY",
+        "DIFFUSION",
+        "NONE",
+        "PHASE"
+        ]
       }
     },
     {
@@ -547,12 +533,44 @@
       }
     },
     {
+      "id": "dwi_AP",
+      "datatype": "dwi",
+      "suffix": "dwi_ph",
+      "custom_entities": "b2pt5k-AP",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*AP",
+        "ImageType": [
+        "ORIGINAL",
+        "PRIMARY",
+        "DIFFUSION",
+        "NONE",
+        "PHASE"
+        ]
+      }
+    },
+    {
       "id": "dwi_PA",
       "datatype": "dwi",
       "suffix": "dwi",
       "custom_entities": "b2pt5k-PA",
       "criteria": {
         "SeriesDescription": "*ep2d_diff_*b2pt5k*PA"
+      }
+    },
+    {
+      "id": "dwi_PA",
+      "datatype": "dwi",
+      "suffix": "dwi_ph",
+      "custom_entities": "b2pt5k-PA",
+      "criteria": {
+        "SeriesDescription": "*ep2d_diff_*b2pt5k*PA",
+        "ImageType": [
+        "ORIGINAL",
+        "PRIMARY",
+        "DIFFUSION",
+        "NONE",
+        "PHASE"
+        ]
       }
     },
     {

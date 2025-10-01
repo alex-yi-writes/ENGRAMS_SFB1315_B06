@@ -5,7 +5,7 @@ raw_data_dir="/Users/yyi/Desktop/ENGRAMS/raw"    # Directory containing subject 
 extracted_dir="/Users/yyi/Desktop/ENGRAMS/preproc/tmp"   # Temporary directory for processing
 output_dir="/Users/yyi/Desktop/ENGRAMS/preproc"          # Target BIDS directory
 config_file="/Users/yyi/Desktop/ENGRAMS/scripts/ENGRAMS_dcm2bids_vf.json" # dcm2bids config file
-subject_ids=("205v1s1" "205v1s2") #("101v1s1" "101v1s2" "101v2s1" "101v2s2" "102v1s1" "102v1s2" "102v2s1" "102v2s2" "103v1s1" "103v1s2" "103v2s1" "103v2s2")                  # List of subject IDs
+subject_ids=("304v1s1" "304v1s2") #("101v1s1" "101v1s2" "101v2s1" "101v2s2" "102v1s1" "102v1s2" "102v2s1" "102v2s2" "103v1s1" "103v1s2" "103v2s1" "103v2s2")                  # List of subject IDs
 
 # loop over ids
 for subject in "${subject_ids[@]}"; do
@@ -21,7 +21,9 @@ for subject in "${subject_ids[@]}"; do
              -c "${config_file}" \
              -o "${output_dir}" 
              
-    rm -rf "${temp_dir}"
+
+    # rm -rf "${temp_dir}"
+    gzip ${output_dir}/${subject}/func/*.nii
 
     echo "finished processing subject $subject"
 done

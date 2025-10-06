@@ -159,46 +159,7 @@ for i = 1:length(results)
         results(i).orig_snr, results(i).nordic_snr, results(i).snr_improvement_pct);
 end
 
-%% make figs
-
-figure('Position', [100 100 1200 800]);
-
-for i = 1:length(acquisitions)
-    acq = acquisitions{i};
-    
-    % load data
-    original_file = fullfile(dwi_dir, sprintf('%s_%s_dwi.nii.gz', subj, acq));
-    nordic_file = fullfile(out_dir, sprintf('%s_%s_nordic.nii.gz', subj, acq));
-    
-    orig_data = double(niftiread(original_file));
-    nordic_data = double(niftiread(nordic_file));
-    
-    % better looking slice from b0 vol
-    mid_slice = round(size(orig_data, 3) / 2);
-    orig_slice = orig_data(:,:,mid_slice,1);
-    nordic_slice = nordic_data(:,:,mid_slice,1);
-    
-    % plot
-    subplot(2, 4, i);
-    imshow(orig_slice, []);
-    title(sprintf('%s original', acq));
-    colorbar;
-    
-    subplot(2, 4, i + 4);
-    imshow(nordic_slice, []);
-    title(sprintf('%s NORDIC', acq));
-    colorbar;
-end
-
-sgtitle(sprintf('%s: original vs NORDIC denoising', subj));
-
-% % save
-% saveas(gcf, fullfile(out_dir, sprintf('%s_quality_check.png', subj)));
-% fprintf('\nQA fig saved to: %s\n', ...
-%     fullfile(out_dir, sprintf('%s_quality_check.png', subj)));
-
-
-%% attempt 3
+%% attempt 3 (current winner)
 
 fprintf('\nQA start\n');
 
@@ -250,3 +211,42 @@ load(mat_file, 'ARG2');
 fprintf('g-factor stats:\n');
 fprintf('  noise estimate: %.3f\n', nanmean(ARG2.NOISE(:)));
 fprintf('  components removed: %.1f\n', nanmean(ARG2.Component_threshold(:)));
+%% make figs
+
+figure('Position', [100 100 1200 800]);
+
+for i = 1:length(acquisitions)
+    acq = acquisitions{i};
+    
+    % load data
+    original_file = fullfile(dwi_dir, sprintf('%s_%s_dwi.nii.gz', subj, acq));
+    nordic_file = fullfile(out_dir, sprintf('%s_%s_nordic.nii.gz', subj, acq));
+    
+    orig_data = double(niftiread(original_file));
+    nordic_data = double(niftiread(nordic_file));
+    
+    % better looking slice from b0 vol
+    mid_slice = round(size(orig_data, 3) / 2);
+    orig_slice = orig_data(:,:,mid_slice,1);
+    nordic_slice = nordic_data(:,:,mid_slice,1);
+    
+    % plot
+    subplot(2, 4, i);
+    imshow(orig_slice, []);
+    title(sprintf('%s original', acq));
+    colorbar;
+    
+    subplot(2, 4, i + 4);
+    imshow(nordic_slice, []);
+    title(sprintf('%s NORDIC', acq));
+    colorbar;
+end
+
+sgtitle(sprintf('%s: original vs NORDIC denoising', subj));
+
+% % save
+% saveas(gcf, fullfile(out_dir, sprintf('%s_quality_check.png', subj)));
+% fprintf('\nQA fig saved to: %s\n', ...
+%     fullfile(out_dir, sprintf('%s_quality_check.png', subj)));
+
+

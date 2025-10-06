@@ -3,24 +3,24 @@
 %% prep
 
 clc;clear
-ids={'sub-104','sub-106','sub-107','sub-108','sub-109'};
-path_par = '/Users/alex/Dropbox/paperwriting/1315/data/segmentation/';
+ids={'sub-207','sub-302','sub-303'};
+path_par = '/Users/yyi/Desktop/ENGRAMS/analyses/';
 
 % set environments for the bash tools
-setenv('PATH', [getenv('PATH') ':/Library/Apple/usr/bin:/Users/alex/LayNii_v2.9.0_Mac_M']);
-setenv('PATH', [getenv('PATH') ':/Applications/freesurfer/7.4.1/bin:/Applications/freesurfer/7.4.1/fsfast/bin:/Users/alex/fsl/bin:/Users/alex/fsl/share/fsl/bin:/Applications/freesurfer/7.4.1/mni/bin:/Applications/freesurfer/7.4.1:/usr/local/bin/python3/:/Library/Frameworks/Python.framework/Versions/3.12/bin:/Users/alex/fsl/share/fsl/bin:/Users/alex/fsl/share/fsl/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/alex/ants/bin/:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/X11/bin']);
-setenv('ANTSPATH','/Users/alex/ants/bin/')
-setenv('FS_LICENSE','/Applications/freesurfer/7.4.1/license.txt')
-setenv('FREESURFER_HOME','/Applications/freesurfer/7.4.1')
-!source /Applications/freesurfer/7.4.1/SetUpFreeSurfer.sh
-setenv( 'FSLDIR', '/Users/alex/fsl' );
+setenv('PATH', [getenv('PATH') ':/Library/Apple/usr/bin:/Users/yyi/LayNii_v2']);
+setenv('PATH', [getenv('PATH') ':/Users/yyi/anaconda3/bin:/Users/yyi/anaconda3/condabin:/Applications/freesurfer/7.2.0/bin:/Applications/freesurfer/7.2.0/fsfast/bin:/usr/local/fsl/bin:/usr/local/fsl/share/fsl/bin:/Applications/freesurfer/7.2.0/mni/bin:/usr/local/fsl/share/fsl/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin']);
+setenv('ANTSPATH','/usr/local/bin')
+setenv('FS_LICENSE','/Applications/freesurfer/7.2.0/license.txt')
+setenv('FREESURFER_HOME','/Applications/freesurfer/7.2.0')
+!source /Applications/freesurfer/SetUpFreeSurfer.sh
+setenv( 'FSLDIR', '/usr/local/fsl' );
 setenv('FSLOUTPUTTYPE', 'NIFTI_GZ');
 fsldir = getenv('FSLDIR');
 fsldirmpath = sprintf('%s/etc/matlab',fsldir);
 path(path, fsldirmpath);
 clear fsldir fsldirmpath;
 
-run
+%% run
 
 for id=1:length(ids)
 

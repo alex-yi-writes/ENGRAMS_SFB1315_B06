@@ -11,6 +11,8 @@ NORDIC_DIR="/mnt/work/yyi/ENGRAMS/analyses/${SUBJECT}/dwi/nordic"
 DWI_DIR="/mnt/work/yyi/ENGRAMS/preproc/${SUBJECT}/dwi"
 OUTPUT_DIR="/mnt/work/yyi/ENGRAMS/analyses/${SUBJECT}/dwi"
 
+export FREESURFER_HOME=/share/apps/freesurfer_7.3
+source $FREESURFER_HOME/SetUpFreeSurfer.sh
 export OMP_NUM_THREADS=8
 echo $OMP_NUM_THREADS
 

@@ -4,12 +4,12 @@
 # current workflow (20251004): nordic (done in MATLAB) -> gibbs (mrtrix3) -> TOPUP -> EDDY -> dtifit
 # read the manuals!: https://mrtrix.readthedocs.io/en/latest/
 
-SUBJECT="sub-302v1s1"
+SUBJECT="sub-302v1s2"
 
 # workspaces
-NORDIC_DIR="/Users/yyi/Desktop/ENGRAMS/analyses/${SUBJECT}/dwi/nordic"
-DWI_DIR="/Users/yyi/Desktop/ENGRAMS/preproc/${SUBJECT}/dwi"
-OUTPUT_DIR="/Users/yyi/Desktop/ENGRAMS/analyses/${SUBJECT}/dwi"
+NORDIC_DIR="/mnt/work/yyi/ENGRAMS/analyses/${SUBJECT}/dwi/nordic"
+DWI_DIR="/mnt/work/yyi/ENGRAMS/preproc/${SUBJECT}/dwi"
+OUTPUT_DIR="/mnt/work/yyi/ENGRAMS/analyses/${SUBJECT}/dwi"
 
 export OMP_NUM_THREADS=8
 echo $OMP_NUM_THREADS
@@ -25,7 +25,7 @@ echo "STEP 1: gibbs ringing removal"
 for acq in b1pt0k-AP b1pt0k-PA b2pt5k-AP b2pt5k-PA; do
     echo "proc ${acq}..."
     
-    mrdegibbs "${NORDIC_DIR}/${SUBJECT}_${acq}_nordic.nii.gz" \
+    singularity run -B /mnt/work/yyi /share/apps/images/mrtrix.simg mrdegibbs "${NORDIC_DIR}/${SUBJECT}_${acq}_nordic.nii.gz" \
               "${OUTPUT_DIR}/${SUBJECT}_${acq}_nordic_degibbs.nii.gz"
     
     # Copy bval and bvec files

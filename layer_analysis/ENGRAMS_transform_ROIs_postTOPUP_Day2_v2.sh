@@ -135,39 +135,39 @@ do
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_recombienc}_stripped.nii.gz \
-		-i ${path_anat}/t1/p1m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
+		-i ${path_anat}/t1/mri/p1m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
 		-o ${path_roi}/func/recombienc/GM.nii.gz \
 		-t ${path_trx}/wb2recombienc_0GenericAffine.mat
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_recombienc}_stripped.nii.gz \
-		-i ${path_anat}/t1/p2m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
+		-i ${path_anat}/t1/mri/p2m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
 		-o ${path_roi}/func/recombienc/WM.nii.gz \
 		-t ${path_trx}/wb2recombienc_0GenericAffine.mat
 
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_recombirec}_stripped.nii.gz \
-		-i ${path_anat}/t1/p1m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
+		-i ${path_anat}/t1/mri/p1m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
 		-o ${path_roi}/func/recombirec/GM.nii.gz \
 		-t ${path_trx}/wb2recombirec_0GenericAffine.mat
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_recombirec}_stripped.nii.gz \
-		-i ${path_anat}/t1/p2m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
+		-i ${path_anat}/t1/mri/p2m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
 		-o ${path_roi}/func/recombirec/WM.nii.gz \
 		-t ${path_trx}/wb2recombirec_0GenericAffine.mat
 
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_origrec2}_stripped.nii.gz \
-		-i ${path_anat}/t1/p1m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
+		-i ${path_anat}/t1/mri/p1m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
 		-o ${path_roi}/func/origrec2/GM.nii.gz \
 		-t ${path_trx}/wb2origrec2_0GenericAffine.mat
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_origrec2}_stripped.nii.gz \
-		-i ${path_anat}/t1/p2m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
+		-i ${path_anat}/t1/mri/p2m${ID}v1s1_run-01_T1w_0pt35_bin.nii.gz \
 		-o ${path_roi}/func/origrec2/WM.nii.gz \
 		-t ${path_trx}/wb2origrec2_0GenericAffine.mat
 

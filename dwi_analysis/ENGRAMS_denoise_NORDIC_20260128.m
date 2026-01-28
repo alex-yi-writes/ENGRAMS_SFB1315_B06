@@ -161,8 +161,8 @@ for s1 = 1:length(subjlist)
     fprintf('\nrunning nordic on combined data (%d volumes)...\n', total_vols);
     
     ARG = [];
-    ARG.temporal_phase = 1;          % use temporal phase information
-    ARG.phase_filter_width = 1;      % phase filter width
+    ARG.temporal_phase = 3;          % use temporal phase information (this used to be 1 which is default for fMRI but we change it to suit better for dMRI)
+    ARG.phase_filter_width = 3;      % phase filter width (this also used to be 1 which is default for fMRI but we change it to suit better for dMRI)
     ARG.DIROUT = [out_dir '/'];      % output directory (must end with /)
     ARG.save_add_info = 1;           % save additional info (g-factor maps, etc)
     ARG.write_gzipped_niftis = 1;    % compress output

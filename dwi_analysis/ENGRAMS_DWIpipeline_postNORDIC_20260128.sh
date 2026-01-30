@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# =============================================================================
+# ##############################################################
 # dwi preprocessing pipeline for ENGRAMS 
 #
 # workflow: NORDIC (MATLAB) -> Gibbs (MRtrix3) -> TOPUP -> EDDY -> N4 -> dtifit
@@ -16,10 +16,10 @@
 #
 # 20251004: alex: initial version
 # 20260127: alex: revised for combined NORDIC processing in MATLAB (for now)
-# =============================================================================
+# ##############################################################
 
-set -e  # Exit on error
-set -u  # Error on undefined variables
+set -e  # exit on error
+set -u  # error on undefined variables
 
 SUBJECT="sub-207v1s1"
 
@@ -38,9 +38,9 @@ echo "using ${OMP_NUM_THREADS} threads"
 mkdir -p "$OUTPUT_DIR"
 
 
-# =============================================================================
+# ##############################################################
 # STEP 0: before all this and that, did you actually run nordic?
-# =============================================================================
+# ##############################################################
 
 echo "------------------------------------------------------"
 echo "STEP 0: checking nordic output and volume information"
@@ -87,9 +87,9 @@ fi
 echo "volume count all good"
 
 
-# =============================================================================
+# ##############################################################
 # STEP 1: gibbs ringing removal on nordic denoised data
-# =============================================================================
+# ##############################################################
 
 echo "-----------------------------"
 echo "STEP 1: gibbs ringing removal"
@@ -105,9 +105,9 @@ else
 fi
 
 
-# =============================================================================
+# ##############################################################
 # STEP 2: concat bvecs and bvals in the same order as nordic input
-# =============================================================================
+# ##############################################################
 
 echo "------------------------------------"
 echo "STEP 2: concatenate bvecs and bvals"
@@ -135,9 +135,9 @@ awk '{printf "%s ", $0} END {print ""}' \
 echo "bvecs/bvals concatenated"
 
 
-# =============================================================================
+# ##############################################################
 # STEP 3: extract b0 images for TOPUP
-# =============================================================================
+# ##############################################################
 
 echo "-------------------------------------"
 echo "STEP 3: extract b=0 images for TOPUP"
@@ -169,9 +169,9 @@ fslroi "${DEGIBBS_OUTPUT}" \
 echo "b0 images extracted."
 
 
-# =============================================================================
+# ##############################################################
 # STEP 4: merge b0 images for TOPUP
-# =============================================================================
+# ##############################################################
 
 echo "-----------------------"
 echo "STEP 4: merge b0 images"
@@ -184,9 +184,9 @@ fslmerge -t "${OUTPUT_DIR}/${SUBJECT}_b0_AP_PA.nii.gz" \
 echo "b0 images merged."
 
 
-# =============================================================================
+# ##############################################################
 # STEP 5: create acquisition parameters file
-# =============================================================================
+# ##############################################################
 
 echo "----------------------------"
 echo "STEP 5: create acqparams.txt"
@@ -223,9 +223,9 @@ EOT
 echo "acqparams.txt created with total readout time: ${TOTAL_READOUT}"
 
 
-# =============================================================================
+# ##############################################################
 # STEP 6: run TOPUP
-# =============================================================================
+# ##############################################################
 
 echo "-----------------"
 echo "STEP 6: run TOPUP"
@@ -246,9 +246,9 @@ else
 fi
 
 
-# =============================================================================
+# ##############################################################
 # STEP 7: create brain mask
-# =============================================================================
+# ##############################################################
 
 echo "-------------------------"
 echo "STEP 7: create brain mask"
@@ -279,9 +279,9 @@ fi
 echo "brain tissue mask is made"
 
 
-# =============================================================================
+# ##############################################################
 # STEP 8: create index file for eddy
-# =============================================================================
+# ##############################################################
 
 echo "-----------------------------------"
 echo "STEP 8: create index file for EDDY"
@@ -329,13 +329,13 @@ if [ "${N_INDEX}" -ne "${N_TOTAL}" ]; then
 fi
 
 
-# =============================================================================
+# ##############################################################
 # STEP 9: run eddy
-# =============================================================================
+# ##############################################################
 
-echo "---------------------------------------------"
+echo "----------------"
 echo "STEP 9: Run EDDY (this takes super long time)"
-echo "---------------------------------------------"
+echo "----------------"
 
 # what each eddy switch means (from tutorial) #
 
@@ -381,9 +381,9 @@ else
 fi
 
 
-# =============================================================================
+# ##############################################################
 # STEP 10: bias field correction (N4 via ANTs)
-# =============================================================================
+# ##############################################################
 
 echo "------------------------------"
 echo "STEP 10: bias field correction"
@@ -413,9 +413,9 @@ mrconvert "${OUTPUT_DIR}/${SUBJECT}_preprocessed.mif" \
 echo "bias correction done"
 
 
-# =============================================================================
+# ##############################################################
 # STEP 11: dtifit
-# =============================================================================
+# ##############################################################
 
 echo "--------------------"
 echo "STEP 11: dtifit"
@@ -432,73 +432,73 @@ dtifit --data="${OUTPUT_DIR}/${SUBJECT}_preprocessed.nii.gz" \
 echo "dtifit done"
 
 
-# # =============================================================================
-# # STEP 12: QA (wip!!!!!! have to run something at SDFlex first!)
-# # =============================================================================
+# ##############################################################
+# STEP 12: QA
+# ##############################################################
 
-# echo "----------------------------------"
-# echo "STEP 12: QA summary for debugging"
-# echo "---------------------------------"
+echo "----------------------------------"
+echo "STEP 12: QA summary for debugging"
+echo "---------------------------------"
 
-# QA_FILE="${OUTPUT_DIR}/${SUBJECT}_qa_summary.txt"
+QA_FILE="${OUTPUT_DIR}/${SUBJECT}_qa_summary.txt"
 
-# cat <<EOT > "${QA_FILE}"
-# ================================================================================
-# DWI Preprocessing QA Summary for ${SUBJECT}
-# Generated: $(date)
-# ================================================================================
+cat <<EOT > "${QA_FILE}"
+##############################################################
+DWI Preprocessing QA Summary for ${SUBJECT}
+Generated: $(date)
+##############################################################
 
-# INPUT DATA
-# ----------
-# NORDIC input: ${NORDIC_INPUT}
-# Total volumes: ${N_TOTAL}
-#   - b1pt0k-AP: ${N_B1K_AP} volumes
-#   - b1pt0k-PA: ${N_B1K_PA} volumes
-#   - b2pt5k-AP: ${N_B2K_AP} volumes
-#   - b2pt5k-PA: ${N_B2K_PA} volumes
+INPUT DATA
+----------
+NORDIC input: ${NORDIC_INPUT}
+Total volumes: ${N_TOTAL}
+  - b1pt0k-AP: ${N_B1K_AP} volumes
+  - b1pt0k-PA: ${N_B1K_PA} volumes
+  - b2pt5k-AP: ${N_B2K_AP} volumes
+  - b2pt5k-PA: ${N_B2K_PA} volumes
 
-# ACQUISITION PARAMETERS
-# ----------------------
-# Total readout time: ${TOTAL_READOUT} s
-# Phase encoding: AP (0 -1 0) and PA (0 1 0)
+ACQUISITION PARAMETERS
+----------------------
+Total readout time: ${TOTAL_READOUT} s
+Phase encoding: AP (0 -1 0) and PA (0 1 0)
 
-# OUTPUT FILES
-# ------------
-# Preprocessed DWI: ${OUTPUT_DIR}/${SUBJECT}_preprocessed.nii.gz
-# Brain mask: ${OUTPUT_DIR}/${SUBJECT}_hifi_b0_brain_mask.nii.gz
-# DTI outputs: ${OUTPUT_DIR}/${SUBJECT}_dti_*
+OUTPUT FILES
+------------
+Preprocessed DWI: ${OUTPUT_DIR}/${SUBJECT}_preprocessed.nii.gz
+Brain mask: ${OUTPUT_DIR}/${SUBJECT}_hifi_b0_brain_mask.nii.gz
+DTI outputs: ${OUTPUT_DIR}/${SUBJECT}_dti_*
 
-# EDDY QA METRICS
-# ---------------
-# EOT
+EDDY QA METRICS
+---------------
+EOT
 
-# # append EDDY QA if available
-# if [ -f "${EDDY_OUTPUT}.eddy_movement_rms" ]; then
-#     echo "Movement RMS (first 5 volumes):" >> "${QA_FILE}"
-#     head -5 "${EDDY_OUTPUT}.eddy_movement_rms" >> "${QA_FILE}"
-# fi
+# append EDDY QA if available
+if [ -f "${EDDY_OUTPUT}.eddy_movement_rms" ]; then
+    echo "Movement RMS (first 5 volumes):" >> "${QA_FILE}"
+    head -5 "${EDDY_OUTPUT}.eddy_movement_rms" >> "${QA_FILE}"
+fi
 
-# if [ -f "${EDDY_OUTPUT}.eddy_outlier_report" ]; then
-#     echo "" >> "${QA_FILE}"
-#     echo "Outlier summary:" >> "${QA_FILE}"
-#     echo "Total outlier slices: $(wc -l < ${EDDY_OUTPUT}.eddy_outlier_report)" >> "${QA_FILE}"
-# fi
+if [ -f "${EDDY_OUTPUT}.eddy_outlier_report" ]; then
+    echo "" >> "${QA_FILE}"
+    echo "Outlier summary:" >> "${QA_FILE}"
+    echo "Total outlier slices: $(wc -l < ${EDDY_OUTPUT}.eddy_outlier_report)" >> "${QA_FILE}"
+fi
 
-# echo "QA summary saved to: ${QA_FILE}"
+echo "QA summary saved to: ${QA_FILE}"
 
 
-# =============================================================================
+# ##############################################################
 # Complete
-# =============================================================================
+# ##############################################################
 
 echo ""
-echo "========================================"
+echo "#####################################"
 echo "pipeline finally done for ${SUBJECT}"
-echo "========================================"
+echo "#####################################"
 echo ""
 echo "check the outputs:"
 echo "  - preprocessed DWI: ${OUTPUT_DIR}/${SUBJECT}_preprocessed.nii.gz"
 echo "  - FA map: ${OUTPUT_DIR}/${SUBJECT}_dti_FA.nii.gz"
 echo "  - MD map: ${OUTPUT_DIR}/${SUBJECT}_dti_MD.nii.gz"
-# echo "  - QA summary: ${QA_FILE}"
+echo "  - QA summary: ${QA_FILE}"
 echo ""

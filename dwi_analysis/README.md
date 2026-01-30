@@ -1,3 +1,4 @@
-at the moment, i'm looking into various denoising method. consider most of the codes in this folder deprecated (10-08-2025)
+Final game plan for the dMRI preprocessing:
+denoising with NORDIC ➡️ degibbs ➡️ TOPUP ➡️ EDDY ➡️ N4 (ants)
 
-my current game plan: denoising with NORDIC ➡️ degibbs ➡️ dwipreproc (topup and then eddy like in the previous code) ➡️ biascorrect (can this be done with ants?)
+segmentation-related codes and docs will be updated soon (in feb 2026)

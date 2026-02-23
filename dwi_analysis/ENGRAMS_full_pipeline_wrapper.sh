@@ -30,8 +30,8 @@ SCRIPTS_DIR="${BASE_DIR}/scripts"
 
 # NORDIC config
 USE_COMPILED=1
-MCR_PATH="/mnt/work/schuetzeh/images/mcr/R2023a" # have to change this!!
-COMPILED_NORDIC="${SCRIPTS_DIR}/compiled_nordic/run_run_nordic.sh"
+MCR_PATH="/mnt/work/yiy/ENGRAMS/scripts/MATLAB_Runtime_R2022a_Update_9_glnxa64/v912"
+COMPILED_NORDIC="${SCRIPTS_DIR}/compiled/run_ENGRAMS_denoise_NORDIC_compiled.sh"
 MATLAB_PATH="/share/apps/matlab/R2023a/bin/matlab" # for hydra, not SDFlex
 
 # NORDIC parameters (i'm experimenting for now)

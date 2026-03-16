@@ -51,8 +51,8 @@ LOG_FILE="${OUTPUT_DIR}/${SUBJECT}_pipeline.log"
 # tools
 SYNTHSTRIP="/mnt/work/schuetzeh/images/synthstrip.simg"
 MRtrix="/mnt/work/schuetzeh/images/mrtrix-3.0.7.simg"
-FSL="/mnt/work/schuetzeh/images/fsl-6.0.7.sif"
-FREESURFER="/mnt/work/schuetzeh/images/freesurfer_7.3.sif"
+FSL="/mnt/work/schuetzeh/images/fsl6_chandlerprince.sif"
+FREESURFER="/mnt/work/schuetzeh/images/freesurfer_8.1.sif"
 
 # create output directory
 mkdir -p "$OUTPUT_DIR"
@@ -108,7 +108,7 @@ N_TOTAL=$((N_B1K_AP + N_B1K_PA + N_B2K_AP + N_B2K_PA))
 echo "  total: ${N_TOTAL}"
 
 # verify against actual file
-N_ACTUAL=$(fslval "${NORDIC_INPUT}" dim4)
+N_ACTUAL=$(singularity run -B "${BASE_DIR}" "${FSL}" fslval "${NORDIC_INPUT}" dim4)
 if [ "${N_TOTAL}" -ne "${N_ACTUAL}" ]; then
     echo "error: volume count mismatch!"
     echo "  expected: ${N_TOTAL}, found: ${N_ACTUAL}"
@@ -374,7 +374,7 @@ EDDY_OUTPUT="${OUTPUT_DIR}/${SUBJECT}_eddy_corrected"
 if [ -f "${EDDY_OUTPUT}.nii.gz" ]; then
     echo "EDDY output already exists, skipping..."
 else
-    singularity run -B ${BASE_DIR} ${FSL} eddy \
+    singularity run -B ${BASE_DIR} ${FSL} eddy_openmp \
          --imain="${DEGIBBS_OUTPUT}" \
          --mask="${OUTPUT_DIR}/${SUBJECT}_hifi_b0_brain_mask.nii.gz" \
          --acqp="${OUTPUT_DIR}/acqparams.txt" \

@@ -40,7 +40,7 @@ do
 
 	if [[ $MacBookFlag -eq 1 ]]; then
 		echo "running on the new macbook"
-		fslmaths ${path_anat}/hpc/final/${ID: -3}_left_lfseg_corr_usegray.nii.gz -add ${path_anat}/hpc/final/${ID: -3}_right_lfseg_corr_usegray.nii.gz ${path_anat}/hpc/layer002.nii.gz
+		fslmaths ${path_anat}/hpc/final/${ID: -3}_left_lfseg_corr_usegray.nii.gz -add ${path_anat}/hpc/final/${ID: -3}_right_lfseg_corr_usegray.nii.gz ${path_anat}/hpc/layer_002.nii.gz
 	else
 		echo "running on imac"
 	fi
@@ -154,17 +154,17 @@ do
 	# ~~~ everything ~~~ #
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_rest}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_equi_volume_layers_bined_3layers.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_equi_volume_layers_bined_3layers.nii.gz \
 		-o ${path_roi}/equi_volume_layers_bined_3layers_on_rest.nii.gz \
 		-t ${path_trx}/wb2rest_0GenericAffine.mat
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_origenc}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_equi_volume_layers_bined_3layers.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_equi_volume_layers_bined_3layers.nii.gz \
 		-o ${path_roi}/equi_volume_layers_bined_3layers_on_origenc.nii.gz \
 		-t ${path_trx}/wb2origenc_0GenericAffine.mat
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_origrec}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_equi_volume_layers_bined_3layers.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_equi_volume_layers_bined_3layers.nii.gz \
 		-o ${path_roi}/equi_volume_layers_bined_3layers_on_origrec.nii.gz \
 		-t ${path_trx}/wb2origrec_0GenericAffine.mat
 
@@ -210,19 +210,19 @@ do
 
 	antsApplyTransforms -d 3 -v 0 -n Linear \
 		-r ${func_origenc}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_equi_volume_layers.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_equi_volume_layers.nii.gz \
 		-o ${path_roi}/func/origenc/equivol_on_origenc.nii.gz \
 		-t ${path_trx}/wb2origenc_0GenericAffine.mat
 
 	antsApplyTransforms -d 3 -v 0 -n Linear \
 		-r ${func_origrec}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_equi_volume_layers.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_equi_volume_layers.nii.gz \
 		-o ${path_roi}/func/origrec1/equivol_on_origrec.nii.gz \
 		-t ${path_trx}/wb2origrec_0GenericAffine.mat
 
 	antsApplyTransforms -d 3 -v 0 -n Linear \
 		-r ${func_rest}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_equi_volume_layers.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_equi_volume_layers.nii.gz \
 		-o ${path_roi}/func/rest/equivol_on_rest.nii.gz \
 		-t ${path_trx}/wb2rest_0GenericAffine.mat
 
@@ -230,19 +230,19 @@ do
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_origenc}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_rim_columns300.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_rim_columns300.nii.gz \
 		-o ${path_roi}/func/origenc/rim_columns300_on_origenc.nii.gz \
 		-t ${path_trx}/wb2origenc_0GenericAffine.mat
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_origrec}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_rim_columns300.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_rim_columns300.nii.gz \
 		-o ${path_roi}/func/origrec1/rim_columns300_on_origrec.nii.gz \
 		-t ${path_trx}/wb2origrec_0GenericAffine.mat
 
 	antsApplyTransforms -d 3 -v 0 -n NearestNeighbor \
 		-r ${func_rest}_stripped.nii.gz \
-		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_rim_columns300.nii.gz \
+		-i ${path_anat}/t1/${ID}v1s1_run-01_T1w_0pt35_bs_rim_columns300.nii.gz \
 		-o ${path_roi}/func/rest/rim_columns300_on_rest.nii.gz \
 		-t ${path_trx}/wb2rest_0GenericAffine.mat
 	

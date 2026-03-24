@@ -18,14 +18,14 @@ do
 	export SUBJECTS_DIR=$path_src
 
 	# stage 1
-	#recon-all \
-	#	-s ${ID} \
-	#	-i ${t1w} \
-	#	-expert /mnt/work/yyi/ENGRAMS/hires_expert.txt \
-	#	-hires \
-	#	-autorecon1 \
-	#	-noskullstrip
-	#mri_convert -it mgz -ot nii ${path_out}/orig.mgz ${path_src}/orig.nii.gz
+	recon-all \
+		-s ${ID} \
+		-i ${t1w} \
+		-expert /mnt/work/yyi/ENGRAMS/hires_expert.txt \
+		-hires \
+		-autorecon1 \
+		-noskullstrip
+	mri_convert -it mgz -ot nii ${path_out}/orig.mgz ${path_src}/orig.nii.gz
 	/share/apps/ants/antsRegistrationSyNQuick.sh -d 3 -t r -f ${path_src}/orig.nii.gz -m ${t1w} -o ${path_src}/Nat2FS_
 	#/share/apps/ants/antsRegistrationSyNQuick.sh -d 3 -t r -m ${path_src}/orig.nii.gz -f ${t1w} -o ${path_src}/FS2Nat_
 	

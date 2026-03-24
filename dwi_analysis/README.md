@@ -8,7 +8,7 @@
 
 this directory contains scripts for processing 7T multi-shell diffusion-weighted MRI data from the ENGRAMS study. the pipeline covers (almost😉) everything from raw data denoising through to roi-level MD extraction and stats. there are two computational environments engaged in my workflow: the Superdome Flex (SDFlex) cluster at DZNE for preprocessing (denoising and so on... anything that takes godforsakenly long time), and a local unix environment for postprocessing, roi transformation, and statistical analysis.
 
-the primary hypothesis and goal is to track microstructural changes (indexed by MD from dMRI) across four memory consolidation time points: baseline (BSL), early recognition (Early RCG), late recognition (Late RCG), and recognition after recombination of schematics (Recombi RCG).
+the primary hypothesis and goal are to track microstructural changes (indexed by MD from dMRI) across four memory consolidation time points: baseline (BSL), early recognition (Early RCG), late recognition (Late RCG), and recognition after recombination of consolidated representations (Recombi RCG).
 
 before you go in, (1) make sure your files structures are BIDS validated (all codes written here are based on that so having your data BIDS-validated will make your life so much easier), and (2) some steps, whole-brain parcellation to be specific, require outputs from the layer-specific fMRI pipeline; see [`layer_analysis/`](../layer_analysis/) for those scripts.
 

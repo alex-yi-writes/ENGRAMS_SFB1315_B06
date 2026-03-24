@@ -1,4 +1,4 @@
-# ENGRAMS DWI Analysis Pipeline
+# ENGRAMS dMRI Analysis Pipeline
 
 **contact:**  yeo-jin (alex) yi, yeo-jin.yi@med.ovgu.de  
 

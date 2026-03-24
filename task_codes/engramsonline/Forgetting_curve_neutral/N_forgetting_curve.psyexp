@@ -1,0 +1,849 @@
+﻿<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="2023.1.3">
+  <Settings>
+    <Param val="3" valType="str" updates="None" name="Audio latency priority"/>
+    <Param val="ptb" valType="str" updates="None" name="Audio lib"/>
+    <Param val="" valType="str" updates="None" name="Completed URL"/>
+    <Param val="auto" valType="str" updates="None" name="Data file delimiter"/>
+    <Param val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code" updates="None" name="Data filename"/>
+    <Param val="True" valType="bool" updates="None" name="Enable Escape"/>
+    <Param val="" valType="str" updates="None" name="End Message"/>
+    <Param val="{'participant': ''}" valType="code" updates="None" name="Experiment info"/>
+    <Param val="True" valType="bool" updates="None" name="Force stereo"/>
+    <Param val="True" valType="bool" updates="None" name="Full-screen window"/>
+    <Param val="" valType="str" updates="None" name="HTML path"/>
+    <Param val="" valType="str" updates="None" name="Incomplete URL"/>
+    <Param val="testMonitor" valType="str" updates="None" name="Monitor"/>
+    <Param val="['wasserturm.png', 'images/scenes/wasserturm.png']" valType="list" updates="None" name="Resources"/>
+    <Param val="False" valType="bool" updates="None" name="Save csv file"/>
+    <Param val="False" valType="bool" updates="None" name="Save excel file"/>
+    <Param val="False" valType="bool" updates="None" name="Save hdf5 file"/>
+    <Param val="True" valType="bool" updates="None" name="Save log file"/>
+    <Param val="True" valType="bool" updates="None" name="Save psydat file"/>
+    <Param val="True" valType="bool" updates="None" name="Save wide csv file"/>
+    <Param val="1" valType="num" updates="None" name="Screen"/>
+    <Param val="True" valType="bool" updates="None" name="Show info dlg"/>
+    <Param val="False" valType="bool" updates="None" name="Show mouse"/>
+    <Param val="height" valType="str" updates="None" name="Units"/>
+    <Param val="" valType="str" updates="None" name="Use version"/>
+    <Param val="[1680, 1050]" valType="list" updates="None" name="Window size (pixels)"/>
+    <Param val="fill" valType="str" updates="None" name="backgroundFit"/>
+    <Param val="images/background.bmp" valType="str" updates="None" name="backgroundImg"/>
+    <Param val="avg" valType="str" updates="None" name="blendMode"/>
+    <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+    <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+    <Param val="100.1.1.1" valType="str" updates="None" name="elAddress"/>
+    <Param val="FILTER_LEVEL_2" valType="str" updates="None" name="elDataFiltering"/>
+    <Param val="FILTER_LEVEL_OFF" valType="str" updates="None" name="elLiveFiltering"/>
+    <Param val="EYELINK 1000 DESKTOP" valType="str" updates="None" name="elModel"/>
+    <Param val="ELLIPSE_FIT" valType="str" updates="None" name="elPupilAlgorithm"/>
+    <Param val="PUPIL_AREA" valType="str" updates="None" name="elPupilMeasure"/>
+    <Param val="1000" valType="num" updates="None" name="elSampleRate"/>
+    <Param val="False" valType="bool" updates="None" name="elSimMode"/>
+    <Param val="RIGHT_EYE" valType="str" updates="None" name="elTrackEyes"/>
+    <Param val="PUPIL_CR_TRACKING" valType="str" updates="None" name="elTrackingMode"/>
+    <Param val="N_forgetting_curve" valType="str" updates="None" name="expName"/>
+    <Param val="on Sync" valType="str" updates="None" name="exportHTML"/>
+    <Param val="None" valType="str" updates="None" name="eyetracker"/>
+    <Param val="127.0.0.1" valType="str" updates="None" name="gpAddress"/>
+    <Param val="4242" valType="num" updates="None" name="gpPort"/>
+    <Param val="ioHub" valType="str" updates="None" name="keyboardBackend"/>
+    <Param val="exp" valType="code" updates="None" name="logging level"/>
+    <Param val="('MIDDLE_BUTTON',)" valType="list" updates="None" name="mgBlink"/>
+    <Param val="CONTINUOUS" valType="str" updates="None" name="mgMove"/>
+    <Param val="0.5" valType="num" updates="None" name="mgSaccade"/>
+    <Param val="0.6" valType="num" updates="None" name="plConfidenceThreshold"/>
+    <Param val="True" valType="bool" updates="None" name="plPupilCaptureRecordingEnabled"/>
+    <Param val="" valType="str" updates="None" name="plPupilCaptureRecordingLocation"/>
+    <Param val="127.0.0.1" valType="str" updates="None" name="plPupilRemoteAddress"/>
+    <Param val="50020" valType="num" updates="None" name="plPupilRemotePort"/>
+    <Param val="1000" valType="num" updates="None" name="plPupilRemoteTimeoutMs"/>
+    <Param val="False" valType="bool" updates="None" name="plPupillometryOnly"/>
+    <Param val="psychopy_iohub_surface" valType="str" updates="None" name="plSurfaceName"/>
+    <Param val="" valType="str" updates="None" name="tbLicenseFile"/>
+    <Param val="" valType="str" updates="None" name="tbModel"/>
+    <Param val="60" valType="num" updates="None" name="tbSampleRate"/>
+    <Param val="" valType="str" updates="None" name="tbSerialNo"/>
+    <Param val="pyglet" valType="str" updates="None" name="winBackend"/>
+  </Settings>
+  <Routines>
+    <Routine name="Start"/>
+    <Routine name="trial_2">
+      <TextComponent name="text_2" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="text_2" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0.1)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="How emotional was the picture on the bottom?&amp;#10;" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <ButtonComponent name="button_3" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="False" valType="bool" updates="constant" name="bold"/>
+        <Param val="None" valType="color" updates="constant" name="borderColor"/>
+        <Param val="0" valType="num" updates="constant" name="borderWidth"/>
+        <Param val="" valType="extendedCode" updates="constant" name="callback"/>
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="0.0000, 0.0000, 0.0000" valType="color" updates="constant" name="fillColor"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="False" valType="bool" updates="constant" name="italic"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="button_3" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="constant" name="oncePerClick"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="" valType="num" updates="constant" name="padding"/>
+        <Param val="(-0.2, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="every click" valType="str" updates="None" name="save"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.35, 0.35)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="not really" valType="str" updates="constant" name="text"/>
+        <Param val="button onset" valType="str" updates="constant" name="timeRelativeTo"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ButtonComponent>
+      <ButtonComponent name="button_4" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="False" valType="bool" updates="constant" name="bold"/>
+        <Param val="None" valType="color" updates="constant" name="borderColor"/>
+        <Param val="0" valType="num" updates="constant" name="borderWidth"/>
+        <Param val="" valType="extendedCode" updates="constant" name="callback"/>
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="0.0000, 0.0000, 0.0000" valType="color" updates="constant" name="fillColor"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="False" valType="bool" updates="constant" name="italic"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="button_4" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="constant" name="oncePerClick"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="" valType="num" updates="constant" name="padding"/>
+        <Param val="(0.2, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="every click" valType="str" updates="None" name="save"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.35, 0.35)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="very much" valType="str" updates="constant" name="text"/>
+        <Param val="button onset" valType="str" updates="constant" name="timeRelativeTo"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ButtonComponent>
+    </Routine>
+    <Routine name="encoding">
+      <PolygonComponent name="fixationcross" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="white" valType="color" updates="constant" name="fillColor"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="white" valType="color" updates="constant" name="lineColor"/>
+        <Param val="0.00001" valType="num" updates="constant" name="lineWidth"/>
+        <Param val="4" valType="int" updates="constant" name="nVertices"/>
+        <Param val="fixationcross" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="cross" valType="str" updates="None" name="shape"/>
+        <Param val="(0.04, 0.04)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="4" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="list" updates="constant" name="vertices"/>
+      </PolygonComponent>
+      <ImageComponent name="image" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="data/erholungswald-2048x1536.jpeg" valType="file" updates="constant" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.6, 0.45)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="4" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="2" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <ImageComponent name="image_2" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="data/erholungswald-2048x1536.jpeg" valType="file" updates="constant" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_2" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(-0.5, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.36, 0.3)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="6" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="2" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <ImageComponent name="image_3" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="data/erholungswald-2048x1536.jpeg" valType="file" updates="constant" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_3" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.6, 0.45)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="8" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="2" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <ImageComponent name="image_4" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="data/erholungswald-2048x1536.jpeg" valType="file" updates="constant" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_4" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(-0.5, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.36, 0.3)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="8" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="2" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <TextComponent name="text" plugin="None">
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="None" valType="str" updates="constant" name="flip"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="text" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0.1)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="10" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="How emotional was the picture on the top?" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="num" updates="constant" name="wrapWidth"/>
+      </TextComponent>
+      <ButtonComponent name="button" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="False" valType="bool" updates="constant" name="bold"/>
+        <Param val="0.9608, 0.8431, 0.6863" valType="color" updates="constant" name="borderColor"/>
+        <Param val="0" valType="num" updates="constant" name="borderWidth"/>
+        <Param val="" valType="extendedCode" updates="constant" name="callback"/>
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="0.0000, 0.0000, 0.0000" valType="color" updates="constant" name="fillColor"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="False" valType="bool" updates="constant" name="italic"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="button" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="constant" name="oncePerClick"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="" valType="num" updates="constant" name="padding"/>
+        <Param val="(-0.2, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="every click" valType="str" updates="None" name="save"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.35, 0.35)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="10" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="not really" valType="str" updates="constant" name="text"/>
+        <Param val="button onset" valType="str" updates="constant" name="timeRelativeTo"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ButtonComponent>
+      <ButtonComponent name="button_2" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="False" valType="bool" updates="constant" name="bold"/>
+        <Param val="0.9608, 0.8431, 0.6863" valType="color" updates="constant" name="borderColor"/>
+        <Param val="0" valType="num" updates="constant" name="borderWidth"/>
+        <Param val="" valType="extendedCode" updates="constant" name="callback"/>
+        <Param val="white" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="0.0000, 0.0000, 0.0000" valType="color" updates="constant" name="fillColor"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="True" valType="bool" updates="constant" name="forceEndRoutine"/>
+        <Param val="False" valType="bool" updates="constant" name="italic"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="button_2" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="constant" name="oncePerClick"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="" valType="num" updates="constant" name="padding"/>
+        <Param val="(0.2, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="every click" valType="str" updates="None" name="save"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.35, 0.35)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="10" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="very much" valType="str" updates="constant" name="text"/>
+        <Param val="button onset" valType="str" updates="constant" name="timeRelativeTo"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ButtonComponent>
+    </Routine>
+    <Routine name="introduction">
+      <TextboxComponent name="introduction_text" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="alignment"/>
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="True" valType="bool" updates="constant" name="autoLog"/>
+        <Param val="False" valType="bool" updates="constant" name="bold"/>
+        <Param val="None" valType="color" updates="constant" name="borderColor"/>
+        <Param val="2" valType="num" updates="constant" name="borderWidth"/>
+        <Param val="-1.0000, -1.0000, -1.0000" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="editable"/>
+        <Param val="0.3255, 0.3255, 0.3255" valType="color" updates="constant" name="fillColor"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="False" valType="bool" updates="constant" name="italic"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.037" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="1" valType="num" updates="constant" name="lineSpacing"/>
+        <Param val="introduction_text" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="visible" valType="str" updates="constant" name="overflow"/>
+        <Param val="0" valType="num" updates="constant" name="padding"/>
+        <Param val="Type here..." valType="str" updates="constant" name="placeholder"/>
+        <Param val="(0, 0.12)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(1.5, 0.5)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="list" updates="constant" name="speechPoint"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Willkommen zur Online-Version des Experiments! Die Online-Aufgabe ist ähnlich wie die zweite Aufgabe, die Sie vor Ort gemacht haben. Sie bekommen eine Szene dargestellt und sollen anschließend jenes Objekt durch Anklicken auswählen, das Ihrer Erinnerung nach mit der Szene verbunden war. Allerdings sehen Sie danach nicht mehr die richtige Lösung. Es handelt sich hierbei um die Verknüpfungen, die Sie beim zweiten Termin vor Ort gelernt haben.&amp;#10;Diese Aufgabe sollen Sie das erste Mal am nächsten Tag und dann alle drei Tage durchführen; d.h. über die kommenden 2 Wochen hinweg insgesamt 5-mal." valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </TextboxComponent>
+      <TextboxComponent name="text_introduction_button" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="alignment"/>
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="True" valType="bool" updates="constant" name="autoLog"/>
+        <Param val="False" valType="bool" updates="constant" name="bold"/>
+        <Param val="0.3255, 0.3255, 0.3255" valType="color" updates="constant" name="borderColor"/>
+        <Param val="2" valType="num" updates="constant" name="borderWidth"/>
+        <Param val="-1.0000, -1.0000, -1.0000" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="editable"/>
+        <Param val="0.3255, 0.3255, 0.3255" valType="color" updates="constant" name="fillColor"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="False" valType="bool" updates="constant" name="italic"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.04" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="1.0" valType="num" updates="constant" name="lineSpacing"/>
+        <Param val="text_introduction_button" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="visible" valType="str" updates="constant" name="overflow"/>
+        <Param val="0" valType="num" updates="constant" name="padding"/>
+        <Param val="Type here..." valType="str" updates="constant" name="placeholder"/>
+        <Param val="(0, -0.3)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.5, 0.25)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="list" updates="constant" name="speechPoint"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Drücken Sie hier, um anzufangen" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </TextboxComponent>
+      <MouseComponent name="mouse_1" plugin="None">
+        <Param val="text_introduction_button" valType="list" updates="constant" name="clickable"/>
+        <Param val="" valType="list" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="valid click" valType="str" updates="constant" name="forceEndRoutineOnPress"/>
+        <Param val="mouse_1" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="constant" name="newClicksOnly"/>
+        <Param val="on click" valType="str" updates="None" name="saveMouseState"/>
+        <Param val="name," valType="list" updates="constant" name="saveParamsClickable"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="False" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="mouse onset" valType="str" updates="constant" name="timeRelativeTo"/>
+      </MouseComponent>
+    </Routine>
+    <EyetrackerCalibrationRoutine name="calibration">
+      <Param name="borderColor" updates="None" val="black" valType="color"/>
+      <Param name="borderWidth" updates="None" val="2" valType="num"/>
+      <Param name="colorSpace" updates="None" val="rgb" valType="str"/>
+      <Param name="disabled" updates="None" val="False" valType="bool"/>
+      <Param name="expandDur" updates="None" val="1" valType="num"/>
+      <Param name="expandScale" updates="None" val="1.5" valType="num"/>
+      <Param name="fillColor" updates="None" val="" valType="color"/>
+      <Param name="innerBorderColor" updates="None" val="black" valType="color"/>
+      <Param name="innerBorderWidth" updates="None" val="2" valType="num"/>
+      <Param name="innerFillColor" updates="None" val="green" valType="color"/>
+      <Param name="innerRadius" updates="None" val="0.0035" valType="num"/>
+      <Param name="movementAnimation" updates="None" val="True" valType="bool"/>
+      <Param name="movementDur" updates="None" val="1.0" valType="num"/>
+      <Param name="name" updates="None" val="calibration" valType="code"/>
+      <Param name="outerRadius" updates="None" val="0.01" valType="num"/>
+      <Param name="progressMode" updates="None" val="time" valType="str"/>
+      <Param name="randomisePos" updates="None" val="True" valType="bool"/>
+      <Param name="targetDelay" updates="None" val="1.0" valType="num"/>
+      <Param name="targetDur" updates="None" val="1.5" valType="num"/>
+      <Param name="targetLayout" updates="None" val="THREE_POINTS" valType="str"/>
+      <Param name="textColor" updates="None" val="white" valType="color"/>
+      <Param name="units" updates="None" val="from exp settings" valType="str"/>
+    </EyetrackerCalibrationRoutine>
+    <EyetrackerValidationRoutine name="validation">
+      <Param name="borderColor" updates="None" val="black" valType="color"/>
+      <Param name="borderWidth" updates="None" val="2" valType="num"/>
+      <Param name="colorSpace" updates="None" val="rgb" valType="str"/>
+      <Param name="cursorFillColor" updates="None" val="green" valType="color"/>
+      <Param name="disabled" updates="None" val="False" valType="bool"/>
+      <Param name="expandDur" updates="None" val="1" valType="num"/>
+      <Param name="expandScale" updates="None" val="1.5" valType="num"/>
+      <Param name="fillColor" updates="None" val="" valType="color"/>
+      <Param name="innerBorderColor" updates="None" val="black" valType="color"/>
+      <Param name="innerBorderWidth" updates="None" val="2" valType="num"/>
+      <Param name="innerFillColor" updates="None" val="green" valType="color"/>
+      <Param name="innerRadius" updates="None" val="0.0035" valType="num"/>
+      <Param name="movementAnimation" updates="None" val="True" valType="bool"/>
+      <Param name="movementDur" updates="None" val="1.0" valType="num"/>
+      <Param name="name" updates="None" val="validation" valType="code"/>
+      <Param name="outerRadius" updates="None" val="0.01" valType="num"/>
+      <Param name="progressMode" updates="None" val="time" valType="str"/>
+      <Param name="randomisePos" updates="None" val="True" valType="bool"/>
+      <Param name="saveAsImg" updates="None" val="False" valType="bool"/>
+      <Param name="showResults" updates="None" val="True" valType="bool"/>
+      <Param name="targetDelay" updates="None" val="1.0" valType="num"/>
+      <Param name="targetDur" updates="None" val="1.5" valType="num"/>
+      <Param name="targetLayout" updates="None" val="THREE_POINTS" valType="str"/>
+      <Param name="targetPositions" updates="None" val="NINE_POINTS" valType="list"/>
+      <Param name="textColor" updates="None" val="auto" valType="color"/>
+      <Param name="units" updates="None" val="from exp settings" valType="str"/>
+    </EyetrackerValidationRoutine>
+    <Routine name="Ende"/>
+    <Routine name="end">
+      <TextboxComponent name="textbox_2" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="alignment"/>
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="True" valType="bool" updates="constant" name="autoLog"/>
+        <Param val="False" valType="bool" updates="constant" name="bold"/>
+        <Param val="None" valType="color" updates="constant" name="borderColor"/>
+        <Param val="2" valType="num" updates="constant" name="borderWidth"/>
+        <Param val="-1.0000, -1.0000, -1.0000" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="editable"/>
+        <Param val="0.3255, 0.3255, 0.3255" valType="color" updates="constant" name="fillColor"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="False" valType="bool" updates="constant" name="italic"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="1.0" valType="num" updates="constant" name="lineSpacing"/>
+        <Param val="textbox_2" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="visible" valType="str" updates="constant" name="overflow"/>
+        <Param val="0" valType="num" updates="constant" name="padding"/>
+        <Param val="Type here..." valType="str" updates="constant" name="placeholder"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.8, 0.3)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="list" updates="constant" name="speechPoint"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Der Durchgang ist beendet. Drücken Sie auf den roten Kreis, um das Experiment zu beenden." valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </TextboxComponent>
+      <PolygonComponent name="polygon" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="red" valType="color" updates="constant" name="fillColor"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="red" valType="color" updates="constant" name="lineColor"/>
+        <Param val="1" valType="num" updates="constant" name="lineWidth"/>
+        <Param val="4" valType="int" updates="constant" name="nVertices"/>
+        <Param val="polygon" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.75, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="circle" valType="str" updates="None" name="shape"/>
+        <Param val="(0.2, 0.2)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+        <Param val="" valType="list" updates="constant" name="vertices"/>
+      </PolygonComponent>
+      <MouseComponent name="mouse_3" plugin="None">
+        <Param val="polygon" valType="list" updates="constant" name="clickable"/>
+        <Param val="" valType="list" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="valid click" valType="str" updates="constant" name="forceEndRoutineOnPress"/>
+        <Param val="mouse_3" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="constant" name="newClicksOnly"/>
+        <Param val="on click" valType="str" updates="None" name="saveMouseState"/>
+        <Param val="name," valType="list" updates="constant" name="saveParamsClickable"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0.0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="False" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="mouse onset" valType="str" updates="constant" name="timeRelativeTo"/>
+      </MouseComponent>
+    </Routine>
+    <Routine name="recognition">
+      <CodeComponent name="behavioral" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="score = 0" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="score = 0;&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Auto-&gt;JS" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="ID = expInfo[&quot;participant&quot;];&amp;#10;condition = &quot;e&quot;;&amp;#10;stage = &quot;main&quot;;&amp;#10;round0 = 0;&amp;#10;scene = Picture_Recognition;&amp;#10;correct_object = Picture_Recognition_2;&amp;#10;if ((mouse.clicked_name[0] === &quot;image_left&quot;)) {&amp;#10;    memory_resp = Q1_l;&amp;#10;} else {&amp;#10;    if ((mouse.clicked_name[0] === &quot;image_middle&quot;)) {&amp;#10;        memory_resp = Q1_m;&amp;#10;    } else {&amp;#10;        if ((mouse.clicked_name[0] === &quot;image_right&quot;)) {&amp;#10;            memory_resp = Q1_r;&amp;#10;        } else {&amp;#10;            throw RuntimeError;&amp;#10;        }&amp;#10;    }&amp;#10;}&amp;#10;memory_rt = mouse.time[0];&amp;#10;if ((memory_resp === correct_object)) {&amp;#10;    accuracy = 1;&amp;#10;} else {&amp;#10;    accuracy = 0;&amp;#10;}&amp;#10;x = mouse.x;&amp;#10;y = mouse.y;&amp;#10;if ((accuracy === 1)) {&amp;#10;    this_feedback = &quot;Korrekt&quot;;&amp;#10;    score += 1;&amp;#10;} else {&amp;#10;    this_feedback = &quot;Nicht korrekt&quot;;&amp;#10;}&amp;#10;trials.addData(&quot;condition&quot;, condition);&amp;#10;trials.addData(&quot;stage&quot;, stage);&amp;#10;trials.addData(&quot;scene&quot;, scene);&amp;#10;trials.addData(&quot;correct object&quot;, correct_object);&amp;#10;trials.addData(&quot;left option&quot;, Q1_l);&amp;#10;trials.addData(&quot;middle option&quot;, Q1_m);&amp;#10;trials.addData(&quot;right option&quot;, Q1_r);&amp;#10;trials.addData(&quot;memory resp&quot;, memory_resp);&amp;#10;trials.addData(&quot;memory rt&quot;, memory_rt);&amp;#10;trials.addData(&quot;accuracy&quot;, accuracy);&amp;#10;trials.addData(&quot;score&quot;, score);&amp;#10;trials.addData(&quot;x mouse&quot;, x);&amp;#10;trials.addData(&quot;y mouse&quot;, y);&amp;#10;trials.addData(&quot;internal lure&quot;, internal_lure);&amp;#10;trials.addData(&quot;external lure&quot;, external_lure);&amp;#10;" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="ID = expInfo['participant']&amp;#10;condition = 'e'&amp;#10;stage = 'main'&amp;#10;round0 = 0&amp;#10;scene = Picture_Recognition&amp;#10;correct_object = Picture_Recognition_2&amp;#10;&amp;#10;if mouse.clicked_name[0] == 'image_left':&amp;#10;    memory_resp = Q1_l&amp;#10;elif mouse.clicked_name[0] == 'image_middle':&amp;#10;    memory_resp = Q1_m&amp;#10;elif mouse.clicked_name[0] == 'image_right':&amp;#10;    memory_resp = Q1_r&amp;#10;else:&amp;#10;    raise RuntimeError&amp;#10;memory_rt = mouse.time[0]&amp;#10;&amp;#10;if memory_resp == correct_object:&amp;#10;    accuracy = 1&amp;#10;else:&amp;#10;    accuracy = 0&amp;#10;x = mouse.x&amp;#10;y = mouse.y&amp;#10;&amp;#10;if accuracy == 1:&amp;#10;    this_feedback = 'Korrekt'&amp;#10;    score += 1&amp;#10;else:&amp;#10;    this_feedback = 'Nicht korrekt'&amp;#10;&amp;#10;trials.addData('condition', condition)&amp;#10;trials.addData('stage', stage)&amp;#10;trials.addData('scene', scene)&amp;#10;trials.addData('correct object', correct_object)&amp;#10;trials.addData('left option', Q1_l)&amp;#10;trials.addData('middle option', Q1_m)&amp;#10;trials.addData('right option', Q1_r)&amp;#10;trials.addData('memory resp', memory_resp)&amp;#10;trials.addData('memory rt', memory_rt)&amp;#10;trials.addData('accuracy', accuracy)&amp;#10;trials.addData('score', score)&amp;#10;trials.addData('x mouse', x)&amp;#10;trials.addData('y mouse', y)&amp;#10;trials.addData('internal lure', internal_lure)&amp;#10;trials.addData('external lure', external_lure)" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="behavioral" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+      <TextboxComponent name="question" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="alignment"/>
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="True" valType="bool" updates="constant" name="autoLog"/>
+        <Param val="False" valType="bool" updates="constant" name="bold"/>
+        <Param val="None" valType="color" updates="constant" name="borderColor"/>
+        <Param val="2" valType="num" updates="constant" name="borderWidth"/>
+        <Param val="-1.0000, -1.0000, -1.0000" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="editable"/>
+        <Param val="0.3255, 0.3255, 0.3255" valType="color" updates="constant" name="fillColor"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="Open Sans" valType="str" updates="constant" name="font"/>
+        <Param val="False" valType="bool" updates="constant" name="italic"/>
+        <Param val="LTR" valType="str" updates="None" name="languageStyle"/>
+        <Param val="0.05" valType="num" updates="constant" name="letterHeight"/>
+        <Param val="1.2" valType="num" updates="constant" name="lineSpacing"/>
+        <Param val="question" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="visible" valType="str" updates="constant" name="overflow"/>
+        <Param val="0" valType="num" updates="constant" name="padding"/>
+        <Param val="Type here..." valType="str" updates="constant" name="placeholder"/>
+        <Param val="(0, 0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.75, 0.2)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="list" updates="constant" name="speechPoint"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="2.1" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="Welches Bild war links unten?" valType="str" updates="constant" name="text"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </TextboxComponent>
+      <ImageComponent name="image_top" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="$Picture_Recognition" valType="file" updates="set every repeat" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_top" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.6, 0.45)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="1.6" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <ImageComponent name="image_left" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="$Q1_l" valType="file" updates="set every repeat" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_left" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(-0.6, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.5, 0.4)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="2.1" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <ImageComponent name="image_middle" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="$Q1_m" valType="file" updates="set every repeat" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_middle" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.5, 0.4)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="2.1" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <ImageComponent name="image_right" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="$[1,1,1]" valType="color" updates="constant" name="color"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="False" valType="bool" updates="constant" name="flipHoriz"/>
+        <Param val="False" valType="bool" updates="constant" name="flipVert"/>
+        <Param val="$Q1_r" valType="file" updates="set every repeat" name="image"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="" valType="str" updates="constant" name="mask"/>
+        <Param val="image_right" valType="code" updates="None" name="name"/>
+        <Param val="" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0.6, -0.2)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="(0.5, 0.4)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="2.1" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="128" valType="num" updates="constant" name="texture resolution"/>
+        <Param val="from exp settings" valType="str" updates="None" name="units"/>
+      </ImageComponent>
+      <MouseComponent name="mouse" plugin="None">
+        <Param val="image_left,image_middle,image_right" valType="list" updates="constant" name="clickable"/>
+        <Param val="" valType="list" updates="constant" name="correctAns"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="valid click" valType="str" updates="constant" name="forceEndRoutineOnPress"/>
+        <Param val="mouse" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="constant" name="newClicksOnly"/>
+        <Param val="on click" valType="str" updates="None" name="saveMouseState"/>
+        <Param val="name," valType="list" updates="constant" name="saveParamsClickable"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="time (s)" valType="str" updates="None" name="startType"/>
+        <Param val="2.1" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
+        <Param val="False" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="mouse onset" valType="str" updates="constant" name="timeRelativeTo"/>
+      </MouseComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <Routine name="introduction"/>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+      <Param name="conditions" updates="None" val="[{'Picture_Recognition': 'images/scenes/wasserturm.png', 'Picture_Recognition_2': 'images/objects/satellit.png', 'Q1_l': 'images/objects/satellit.png', 'Q1_m': 'images/objects/altes_telefon.png', 'Q1_r': 'images/objects/alte_holztur.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/altes_telefon.png', 'external_lure': 'images/objects/alte_holztur.png'}, {'Picture_Recognition': 'images/scenes/bushaltestelle.png', 'Picture_Recognition_2': 'images/objects/reisetasche.png', 'Q1_l': 'images/objects/kutsche.png', 'Q1_m': 'images/objects/schulbus.png', 'Q1_r': 'images/objects/reisetasche.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/kutsche.png', 'external_lure': 'images/objects/schulbus.png'}, {'Picture_Recognition': 'images/scenes/altstadt.png', 'Picture_Recognition_2': 'images/objects/glocken.png', 'Q1_l': 'images/objects/kopfsteinpflaster.png', 'Q1_m': 'images/objects/glocken.png', 'Q1_r': 'images/objects/wasche.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/wasche.png', 'external_lure': 'images/objects/kopfsteinpflaster.png'}, {'Picture_Recognition': 'images/scenes/fitnessstudio.png', 'Picture_Recognition_2': 'images/objects/fon.png', 'Q1_l': 'images/objects/gymnastikball.png', 'Q1_m': 'images/objects/schlusselbund.png', 'Q1_r': 'images/objects/fon.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/schlusselbund.png', 'external_lure': 'images/objects/gymnastikball.png'}, {'Picture_Recognition': 'images/scenes/esszimmer.png', 'Picture_Recognition_2': 'images/objects/reiskocher.png', 'Q1_l': 'images/objects/kurbis.png', 'Q1_m': 'images/objects/weinflasche.png', 'Q1_r': 'images/objects/reiskocher.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/kurbis.png', 'external_lure': 'images/objects/weinflasche.png'}, {'Picture_Recognition': 'images/scenes/arbeitszimmer.png', 'Picture_Recognition_2': 'images/objects/leselampe.png', 'Q1_l': 'images/objects/bonsai.png', 'Q1_m': 'images/objects/leselampe.png', 'Q1_r': 'images/objects/usb_stick.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/bonsai.png', 'external_lure': 'images/objects/usb_stick.png'}, {'Picture_Recognition': 'images/scenes/waschsalon.png', 'Picture_Recognition_2': 'images/objects/bademantel.png', 'Q1_l': 'images/objects/socken.png', 'Q1_m': 'images/objects/zeitschriften.png', 'Q1_r': 'images/objects/bademantel.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/zeitschriften.png', 'external_lure': 'images/objects/socken.png'}, {'Picture_Recognition': 'images/scenes/brucke.png', 'Picture_Recognition_2': 'images/objects/auto.png', 'Q1_l': 'images/objects/strassenbahn.png', 'Q1_m': 'images/objects/auto.png', 'Q1_r': 'images/objects/roller.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/roller.png', 'external_lure': 'images/objects/strassenbahn.png'}, {'Picture_Recognition': 'images/scenes/supermarkt.png', 'Picture_Recognition_2': 'images/objects/karotten.png', 'Q1_l': 'images/objects/karotten.png', 'Q1_m': 'images/objects/gabelstapler.png', 'Q1_r': 'images/objects/einkaufswagen.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/gabelstapler.png', 'external_lure': 'images/objects/einkaufswagen.png'}, {'Picture_Recognition': 'images/scenes/nagelstudio.png', 'Picture_Recognition_2': 'images/objects/geld.png', 'Q1_l': 'images/objects/leselampe.png', 'Q1_m': 'images/objects/nagelfeile.png', 'Q1_r': 'images/objects/geld.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/leselampe.png', 'external_lure': 'images/objects/nagelfeile.png'}, {'Picture_Recognition': 'images/scenes/strassenschilder.png', 'Picture_Recognition_2': 'images/objects/ziegelsteine.png', 'Q1_l': 'images/objects/stadtfahrrader.png', 'Q1_m': 'images/objects/ziegelsteine.png', 'Q1_r': 'images/objects/verkehrshutchen.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/stadtfahrrader.png', 'external_lure': 'images/objects/verkehrshutchen.png'}, {'Picture_Recognition': 'images/scenes/kirche.png', 'Picture_Recognition_2': 'images/objects/geige.png', 'Q1_l': 'images/objects/geige.png', 'Q1_m': 'images/objects/kreuz.png', 'Q1_r': 'images/objects/wasserspeier.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/wasserspeier.png', 'external_lure': 'images/objects/kreuz.png'}, {'Picture_Recognition': 'images/scenes/strand.png', 'Picture_Recognition_2': 'images/objects/schwimmflugel.png', 'Q1_l': 'images/objects/schwimmreifen.png', 'Q1_m': 'images/objects/schwimmflugel.png', 'Q1_r': 'images/objects/schlauchboot.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/schwimmreifen.png', 'external_lure': 'images/objects/schlauchboot.png'}, {'Picture_Recognition': 'images/scenes/see_mit_ruderboot.png', 'Picture_Recognition_2': 'images/objects/kajak.png', 'Q1_l': 'images/objects/kajak.png', 'Q1_m': 'images/objects/kaulquappen.png', 'Q1_r': 'images/objects/bademantel.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/bademantel.png', 'external_lure': 'images/objects/kaulquappen.png'}, {'Picture_Recognition': 'images/scenes/wald.png', 'Picture_Recognition_2': 'images/objects/wanderschuhe.png', 'Q1_l': 'images/objects/auto.png', 'Q1_m': 'images/objects/kastanien.png', 'Q1_r': 'images/objects/wanderschuhe.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/auto.png', 'external_lure': 'images/objects/kastanien.png'}, {'Picture_Recognition': 'images/scenes/berge_mit_schnee.png', 'Picture_Recognition_2': 'images/objects/schneemobil.png', 'Q1_l': 'images/objects/verschneiter_tannenbaum.png', 'Q1_m': 'images/objects/ski.png', 'Q1_r': 'images/objects/schneemobil.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/ski.png', 'external_lure': 'images/objects/verschneiter_tannenbaum.png'}, {'Picture_Recognition': 'images/scenes/see_mit_steg.png', 'Picture_Recognition_2': 'images/objects/seerose.png', 'Q1_l': 'images/objects/seerose.png', 'Q1_m': 'images/objects/libelle.png', 'Q1_r': 'images/objects/schwimmflugel.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/schwimmflugel.png', 'external_lure': 'images/objects/libelle.png'}, {'Picture_Recognition': 'images/scenes/haus.png', 'Picture_Recognition_2': 'images/objects/wasche.png', 'Q1_l': 'images/objects/gabel.png', 'Q1_m': 'images/objects/turmatte.png', 'Q1_r': 'images/objects/wasche.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/gabel.png', 'external_lure': 'images/objects/turmatte.png'}, {'Picture_Recognition': 'images/scenes/wolken_von_oben.png', 'Picture_Recognition_2': 'images/objects/riesenradgondel.png', 'Q1_l': 'images/objects/riesenradgondel.png', 'Q1_m': 'images/objects/heissluftballon.png', 'Q1_r': 'images/objects/reisetasche.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/reisetasche.png', 'external_lure': 'images/objects/heissluftballon.png'}, {'Picture_Recognition': 'images/scenes/berge_sommer.png', 'Picture_Recognition_2': 'images/objects/edelweiss.png', 'Q1_l': 'images/objects/edelweiss.png', 'Q1_m': 'images/objects/wanderhose.png', 'Q1_r': 'images/objects/milchkanne.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/milchkanne.png', 'external_lure': 'images/objects/wanderhose.png'}, {'Picture_Recognition': 'images/scenes/parkhaus.png', 'Picture_Recognition_2': 'images/objects/gabelstapler.png', 'Q1_l': 'images/objects/satellit.png', 'Q1_m': 'images/objects/schranke.png', 'Q1_r': 'images/objects/gabelstapler.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/satellit.png', 'external_lure': 'images/objects/schranke.png'}, {'Picture_Recognition': 'images/scenes/rolltreppen.png', 'Picture_Recognition_2': 'images/objects/fahrkarten.png', 'Q1_l': 'images/objects/flugzeug.png', 'Q1_m': 'images/objects/fahrkarten.png', 'Q1_r': 'images/objects/plakatsaule.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/flugzeug.png', 'external_lure': 'images/objects/plakatsaule.png'}, {'Picture_Recognition': 'images/scenes/fluss_mit_schnee.png', 'Picture_Recognition_2': 'images/objects/schneeschuhe.png', 'Q1_l': 'images/objects/schneeschuhe.png', 'Q1_m': 'images/objects/eisscholle.png', 'Q1_r': 'images/objects/schneemobil.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/schneemobil.png', 'external_lure': 'images/objects/eisscholle.png'}, {'Picture_Recognition': 'images/scenes/bergsee.png', 'Picture_Recognition_2': 'images/objects/picknickkorb.png', 'Q1_l': 'images/objects/seerose.png', 'Q1_m': 'images/objects/picknickkorb.png', 'Q1_r': 'images/objects/frosch.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/seerose.png', 'external_lure': 'images/objects/frosch.png'}, {'Picture_Recognition': 'images/scenes/burg.png', 'Picture_Recognition_2': 'images/objects/kutsche.png', 'Q1_l': 'images/objects/kronleuchter.png', 'Q1_m': 'images/objects/bauhelm.png', 'Q1_r': 'images/objects/kutsche.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/bauhelm.png', 'external_lure': 'images/objects/kronleuchter.png'}, {'Picture_Recognition': 'images/scenes/orchesterbuhne.png', 'Picture_Recognition_2': 'images/objects/scheinwerfer.png', 'Q1_l': 'images/objects/stockelschuhe.png', 'Q1_m': 'images/objects/scheinwerfer.png', 'Q1_r': 'images/objects/mikrofon.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/stockelschuhe.png', 'external_lure': 'images/objects/mikrofon.png'}, {'Picture_Recognition': 'images/scenes/tresor.png', 'Picture_Recognition_2': 'images/objects/schlusselbund.png', 'Q1_l': 'images/objects/smaragdring.png', 'Q1_m': 'images/objects/schlusselbund.png', 'Q1_r': 'images/objects/marmorskulptur.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/marmorskulptur.png', 'external_lure': 'images/objects/smaragdring.png'}, {'Picture_Recognition': 'images/scenes/sandkasten.png', 'Picture_Recognition_2': 'images/objects/sonnenschirm.png', 'Q1_l': 'images/objects/sonnenschirm.png', 'Q1_m': 'images/objects/kinder_schaufel.png', 'Q1_r': 'images/objects/picknickkorb.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/picknickkorb.png', 'external_lure': 'images/objects/kinder_schaufel.png'}, {'Picture_Recognition': 'images/scenes/spielplatz.png', 'Picture_Recognition_2': 'images/objects/fussball.png', 'Q1_l': 'images/objects/wippe.png', 'Q1_m': 'images/objects/fussball.png', 'Q1_r': 'images/objects/sonnenschirm.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/sonnenschirm.png', 'external_lure': 'images/objects/wippe.png'}, {'Picture_Recognition': 'images/scenes/picknickwiese.png', 'Picture_Recognition_2': 'images/objects/kletterhaus.png', 'Q1_l': 'images/objects/aufsitzrasenmaher.png', 'Q1_m': 'images/objects/federball.png', 'Q1_r': 'images/objects/kletterhaus.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/aufsitzrasenmaher.png', 'external_lure': 'images/objects/federball.png'}, {'Picture_Recognition': 'images/scenes/sushi_restaurant.png', 'Picture_Recognition_2': 'images/objects/gabel.png', 'Q1_l': 'images/objects/gabel.png', 'Q1_m': 'images/objects/sushi.png', 'Q1_r': 'images/objects/karotten.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/karotten.png', 'external_lure': 'images/objects/sushi.png'}, {'Picture_Recognition': 'images/scenes/garten.png', 'Picture_Recognition_2': 'images/objects/marmorskulptur.png', 'Q1_l': 'images/objects/marmorskulptur.png', 'Q1_m': 'images/objects/fussball.png', 'Q1_r': 'images/objects/blumenzwiebeln.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/fussball.png', 'external_lure': 'images/objects/blumenzwiebeln.png'}, {'Picture_Recognition': 'images/scenes/wilder_fluss.png', 'Picture_Recognition_2': 'images/objects/angel.png', 'Q1_l': 'images/objects/surfbretter.png', 'Q1_m': 'images/objects/treibholz.png', 'Q1_r': 'images/objects/angel.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/surfbretter.png', 'external_lure': 'images/objects/treibholz.png'}, {'Picture_Recognition': 'images/scenes/italienische_stadt.png', 'Picture_Recognition_2': 'images/objects/surfbretter.png', 'Q1_l': 'images/objects/crossaint.png', 'Q1_m': 'images/objects/surfbretter.png', 'Q1_r': 'images/objects/kajak.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/kajak.png', 'external_lure': 'images/objects/crossaint.png'}, {'Picture_Recognition': 'images/scenes/altstadtcafe.png', 'Picture_Recognition_2': 'images/objects/roller.png', 'Q1_l': 'images/objects/geige.png', 'Q1_m': 'images/objects/roller.png', 'Q1_r': 'images/objects/stehtisch.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/geige.png', 'external_lure': 'images/objects/stehtisch.png'}, {'Picture_Recognition': 'images/scenes/skigondel.png', 'Picture_Recognition_2': 'images/objects/rodel.png', 'Q1_l': 'images/objects/thermoskanne.png', 'Q1_m': 'images/objects/rodel.png', 'Q1_r': 'images/objects/schneeschuhe.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/schneeschuhe.png', 'external_lure': 'images/objects/thermoskanne.png'}, {'Picture_Recognition': 'images/scenes/spuren_im_schnee.png', 'Picture_Recognition_2': 'images/objects/schneemann.png', 'Q1_l': 'images/objects/schneemann.png', 'Q1_m': 'images/objects/rodel.png', 'Q1_r': 'images/objects/winterschuh.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/rodel.png', 'external_lure': 'images/objects/winterschuh.png'}, {'Picture_Recognition': 'images/scenes/teich.png', 'Picture_Recognition_2': 'images/objects/wasserspeier.png', 'Q1_l': 'images/objects/sandspielzeug.png', 'Q1_m': 'images/objects/koi.png', 'Q1_r': 'images/objects/wasserspeier.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/sandspielzeug.png', 'external_lure': 'images/objects/koi.png'}, {'Picture_Recognition': 'images/scenes/brandung.png', 'Picture_Recognition_2': 'images/objects/sandspielzeug.png', 'Q1_l': 'images/objects/muschel.png', 'Q1_m': 'images/objects/angel.png', 'Q1_r': 'images/objects/sandspielzeug.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/angel.png', 'external_lure': 'images/objects/muschel.png'}, {'Picture_Recognition': 'images/scenes/wochenmarkt.png', 'Picture_Recognition_2': 'images/objects/milchkanne.png', 'Q1_l': 'images/objects/brot.png', 'Q1_m': 'images/objects/milchkanne.png', 'Q1_r': 'images/objects/kasse.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/kasse.png', 'external_lure': 'images/objects/brot.png'}, {'Picture_Recognition': 'images/scenes/hochbeet.png', 'Picture_Recognition_2': 'images/objects/kurbis.png', 'Q1_l': 'images/objects/edelweiss.png', 'Q1_m': 'images/objects/kurbis.png', 'Q1_r': 'images/objects/radieschen.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/edelweiss.png', 'external_lure': 'images/objects/radieschen.png'}, {'Picture_Recognition': 'images/scenes/schaufenster.png', 'Picture_Recognition_2': 'images/objects/kasse.png', 'Q1_l': 'images/objects/gurtel.png', 'Q1_m': 'images/objects/einkaufstaschen.png', 'Q1_r': 'images/objects/kasse.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/einkaufstaschen.png', 'external_lure': 'images/objects/gurtel.png'}, {'Picture_Recognition': 'images/scenes/stadtbrunnen.png', 'Picture_Recognition_2': 'images/objects/stadtfahrrader.png', 'Q1_l': 'images/objects/stadtfahrrader.png', 'Q1_m': 'images/objects/osterschmuck.png', 'Q1_r': 'images/objects/riesenradgondel.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/riesenradgondel.png', 'external_lure': 'images/objects/osterschmuck.png'}, {'Picture_Recognition': 'images/scenes/flohmarkt.png', 'Picture_Recognition_2': 'images/objects/schlosser.png', 'Q1_l': 'images/objects/popcorn.png', 'Q1_m': 'images/objects/fotoalbum.png', 'Q1_r': 'images/objects/schlosser.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/popcorn.png', 'external_lure': 'images/objects/fotoalbum.png'}, {'Picture_Recognition': 'images/scenes/fussballplatz.png', 'Picture_Recognition_2': 'images/objects/aufsitzrasenmaher.png', 'Q1_l': 'images/objects/aufsitzrasenmaher.png', 'Q1_m': 'images/objects/trillerpfeife.png', 'Q1_r': 'images/objects/fahrkarten.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/fahrkarten.png', 'external_lure': 'images/objects/trillerpfeife.png'}, {'Picture_Recognition': 'images/scenes/volksfest.png', 'Picture_Recognition_2': 'images/objects/popcorn.png', 'Q1_l': 'images/objects/zuckerwatte.png', 'Q1_m': 'images/objects/popcorn.png', 'Q1_r': 'images/objects/kletterhaus.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/kletterhaus.png', 'external_lure': 'images/objects/zuckerwatte.png'}, {'Picture_Recognition': 'images/scenes/kinosaal.png', 'Picture_Recognition_2': 'images/objects/overhead.png', 'Q1_l': 'images/objects/overhead.png', 'Q1_m': 'images/objects/scheinwerfer.png', 'Q1_r': 'images/objects/nachos.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/scheinwerfer.png', 'external_lure': 'images/objects/nachos.png'}, {'Picture_Recognition': 'images/scenes/bibliothek.png', 'Picture_Recognition_2': 'images/objects/altes_telefon.png', 'Q1_l': 'images/objects/bibliotheksausweis.png', 'Q1_m': 'images/objects/altes_telefon.png', 'Q1_r': 'images/objects/teetasse.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/teetasse.png', 'external_lure': 'images/objects/bibliotheksausweis.png'}, {'Picture_Recognition': 'images/scenes/schwimmbad.png', 'Picture_Recognition_2': 'images/objects/schwimmreifen.png', 'Q1_l': 'images/objects/schwimmreifen.png', 'Q1_m': 'images/objects/handtuch.png', 'Q1_r': 'images/objects/boje.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/handtuch.png', 'external_lure': 'images/objects/boje.png'}, {'Picture_Recognition': 'images/scenes/skipiste.png', 'Picture_Recognition_2': 'images/objects/ski.png', 'Q1_l': 'images/objects/schneemann.png', 'Q1_m': 'images/objects/ski.png', 'Q1_r': 'images/objects/skistock.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/schneemann.png', 'external_lure': 'images/objects/skistock.png'}, {'Picture_Recognition': 'images/scenes/japanische_teestube.png', 'Picture_Recognition_2': 'images/objects/teetasse.png', 'Q1_l': 'images/objects/teetasse.png', 'Q1_m': 'images/objects/bambus.png', 'Q1_r': 'images/objects/reiskocher.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/reiskocher.png', 'external_lure': 'images/objects/bambus.png'}, {'Picture_Recognition': 'images/scenes/weltraum.png', 'Picture_Recognition_2': 'images/objects/flugzeug.png', 'Q1_l': 'images/objects/flugzeug.png', 'Q1_m': 'images/objects/geld.png', 'Q1_r': 'images/objects/raumschiff.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/geld.png', 'external_lure': 'images/objects/raumschiff.png'}, {'Picture_Recognition': 'images/scenes/friseursalon.png', 'Picture_Recognition_2': 'images/objects/zeitschriften.png', 'Q1_l': 'images/objects/stifte.png', 'Q1_m': 'images/objects/haarburste.png', 'Q1_r': 'images/objects/zeitschriften.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/stifte.png', 'external_lure': 'images/objects/haarburste.png'}, {'Picture_Recognition': 'images/scenes/kuhstall.png', 'Picture_Recognition_2': 'images/objects/kase.png', 'Q1_l': 'images/objects/melkmaschine.png', 'Q1_m': 'images/objects/wanderschuhe.png', 'Q1_r': 'images/objects/kase.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/wanderschuhe.png', 'external_lure': 'images/objects/melkmaschine.png'}, {'Picture_Recognition': 'images/scenes/klassenzimmer.png', 'Picture_Recognition_2': 'images/objects/stifte.png', 'Q1_l': 'images/objects/stifte.png', 'Q1_m': 'images/objects/schultute.png', 'Q1_r': 'images/objects/glocken.png', 'Feedback_l': 'Korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/glocken.png', 'external_lure': 'images/objects/schultute.png'}, {'Picture_Recognition': 'images/scenes/auto_innen.png', 'Picture_Recognition_2': 'images/objects/einkaufstaschen.png', 'Q1_l': 'images/objects/schlosser.png', 'Q1_m': 'images/objects/einkaufstaschen.png', 'Q1_r': 'images/objects/kupplung.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/schlosser.png', 'external_lure': 'images/objects/kupplung.png'}, {'Picture_Recognition': 'images/scenes/kaminfeuer.png', 'Picture_Recognition_2': 'images/objects/bonsai.png', 'Q1_l': 'images/objects/kuscheldecke.png', 'Q1_m': 'images/objects/bonsai.png', 'Q1_r': 'images/objects/kase.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/kase.png', 'external_lure': 'images/objects/kuscheldecke.png'}, {'Picture_Recognition': 'images/scenes/lagerhalle.png', 'Picture_Recognition_2': 'images/objects/bauhelm.png', 'Q1_l': 'images/objects/hebebuhne.png', 'Q1_m': 'images/objects/ziegelsteine.png', 'Q1_r': 'images/objects/bauhelm.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/ziegelsteine.png', 'external_lure': 'images/objects/hebebuhne.png'}, {'Picture_Recognition': 'images/scenes/sauna.png', 'Picture_Recognition_2': 'images/objects/handtuch.png', 'Q1_l': 'images/objects/fon.png', 'Q1_m': 'images/objects/duschgel.png', 'Q1_r': 'images/objects/handtuch.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Nicht_korrekt', 'Feedback_r': 'Korrekt', 'internal_lure': 'images/objects/fon.png', 'external_lure': 'images/objects/duschgel.png'}, {'Picture_Recognition': 'images/scenes/kunstgalerie.png', 'Picture_Recognition_2': 'images/objects/stockelschuhe.png', 'Q1_l': 'images/objects/podest.png', 'Q1_m': 'images/objects/stockelschuhe.png', 'Q1_r': 'images/objects/overhead.png', 'Feedback_l': 'Nicht_korrekt', 'Feedback_m': 'Korrekt', 'Feedback_r': 'Nicht_korrekt', 'internal_lure': 'images/objects/overhead.png', 'external_lure': 'images/objects/podest.png'}]" valType="str"/>
+      <Param name="conditionsFile" updates="None" val="Excel_forgetting_curve_neutral.xlsx" valType="file"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="loopType" updates="None" val="random" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+    </LoopInitiator>
+    <Routine name="recognition"/>
+    <LoopTerminator name="trials"/>
+    <Routine name="end"/>
+  </Flow>
+</PsychoPy2experiment>

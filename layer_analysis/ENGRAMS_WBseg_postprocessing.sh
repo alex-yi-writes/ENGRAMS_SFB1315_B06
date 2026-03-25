@@ -1,10 +1,10 @@
 #!/bin/bash
 
-for ID in sub-207v1s1 sub-302v1s1 sub-303v1s1 #sub-104v1s1 sub-105v1s1 sub-106v1s1
+for ID in sub-301v1s1 #sub-104v1s1 sub-105v1s1 sub-106v1s1
 do
 	path_src=/Users/yyi/Desktop/ENGRAMS/analyses/${ID}/anat/t1/${ID}/mri
 	path_out=/Users/yyi/Desktop/ENGRAMS/analyses/${ID}/anat/t1
-	path_trx=/Users/yyi/Desktop/ENGRAMS/analyses/${ID}/anat/transx
+	path_trx=/Users/yyi/Desktop/ENGRAMS/analyses/${ID}/transx
 	t1w=${path_out}/m${ID}_run-01_T1w_0pt35.nii.gz
 	fsorig=${path_out}/orig.nii.gz
 

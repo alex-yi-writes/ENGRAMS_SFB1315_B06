@@ -61,6 +61,8 @@ do
 	#======== move layer segs ======== #
 	#(run ENGRAMS_createROImasks.m first)
 
+	gzip ${path_anat}/t1/*.nii
+
 	# to original recognition late
 	antsRegistrationSyN.sh -d 3 -n 3 -t r -r 3 -m ${t1w}_stripped.nii.gz -f ${func_origrec2}_stripped.nii.gz -o ${path_trx}/wb2origrec2_
 	antsApplyTransforms -d 3 \
@@ -571,5 +573,8 @@ do
 		-i ${path_roi}/native/mPFC_layer_deep.nii.gz \
 		-o ${path_roi}/func/recombirec/mPFC_layer_deep.nii.gz \
 		-t ${path_trx}/wb2recombirec_0GenericAffine.mat
+
+
+	echo "${ID} done"
 
 done

@@ -6,16 +6,30 @@ paths_results='/Users/yyi/Desktop/ENGRAMS/analyses/';
 paths_source ='/Users/yyi/Desktop/ENGRAMS/preproc/';
 
 % load('/Users/yyi/Desktop/ENGRAMS/ids_engrams.mat');
-ids={'sub-101v1s1';'sub-102v1s1';'sub-104v1s1';'sub-105v1s1';'sub-106v1s1';'sub-107v1s1'}; % 'sub-109v1s1',
+ids={'sub-307v1s1'}; % 'sub-109v1s1',
+
+%% first-prep, resample image
+
+setenv('PATH', [getenv('PATH') ':/Applications/freesurfer/mni/bin:/usr/local/bin']);
+setenv('ANTSPATH','/usr/local/bin')
+
+for id=1:length(ids)
+
+    mkdir([paths_results ids{id} '/anat/t1/'])
+
+    eval(['!ResampleImage 3 ' paths_source ids{id} '/anat/' ids{id} '_run-01_T1w.nii.gz ' paths_source ids{id} '/anat/' ids{id} '_run-01_T1w_0pt35.nii.gz 0.35 0.35 0.35  4'])
+    disp('resampled')
+
+end
 
 %% first, b0 inhomogeneity correct
 
 for id=1:length(ids)
 
-    gunzip([ paths_source ids{id} '/anat/' ids{id} '_run-01_T1w.nii.gz' ])
+    gunzip([ paths_source ids{id} '/anat/' ids{id} '_run-01_T1w_0pt35.nii.gz' ])
 
     clear segmentbatch
-    segmentbatch{1}.spm.spatial.preproc.channel.vols = {[paths_source ids{id} '/anat/' ids{id} '_run-01_T1w.nii,1']};
+    segmentbatch{1}.spm.spatial.preproc.channel.vols = {[paths_source ids{id} '/anat/' ids{id} '_run-01_T1w_0pt35.nii,1']};
     segmentbatch{1}.spm.spatial.preproc.channel.biasreg = 0.0001;
     segmentbatch{1}.spm.spatial.preproc.channel.biasfwhm = 30;
     segmentbatch{1}.spm.spatial.preproc.channel.write = [0 1];
@@ -58,25 +72,64 @@ for id=1:length(ids)
 
 end
 
-%% resample image
 
-setenv('PATH', [getenv('PATH') ':/Applications/freesurfer/mni/bin:/usr/local/bin']);
-setenv('ANTSPATH','/usr/local/bin')
-
-for id=1:length(ids)
-
-    mkdir([paths_results ids{id} '/anat/t1/'])
-
-    eval(['!ResampleImage 3 ' paths_source ids{id} '/anat/m' ids{id} '_run-01_T1w.nii ' paths_results ids{id} '/anat/t1/mT1_0pt35.nii 0.35 0.35 0.35  4'])
-    disp('resampled')
-
-end
 
 %% CAT12
 
 for id=1:length(ids)
 
-    eval(['!gzip -d ' paths_results ids{id} '/anat/t1/m' ids{id} '_run-01_T1w_0pt35.nii.gz'])
+    try
+    gunzip([ paths_source ids{id} '/anat/m' ids{id} '_run-01_T1w_0pt35.nii.gz' ])
+    catch
+    end
+    % clear segmentbatch
+    % segmentbatch{1}.spm.spatial.preproc.channel.vols = {[paths_source ids{id} '/anat/m' ids{id} '_run-01_T1w_0pt35.nii,1']};
+    % segmentbatch{1}.spm.spatial.preproc.channel.biasreg = 0.0001;
+    % segmentbatch{1}.spm.spatial.preproc.channel.biasfwhm = 30;
+    % segmentbatch{1}.spm.spatial.preproc.channel.write = [0 1];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(1).tpm = {'/Applications/spm12/tpm/TPM.nii,1'};
+    % segmentbatch{1}.spm.spatial.preproc.tissue(1).ngaus = 1;
+    % segmentbatch{1}.spm.spatial.preproc.tissue(1).native = [1 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(1).warped = [0 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(2).tpm = {'/Applications/spm12/tpm/TPM.nii,2'};
+    % segmentbatch{1}.spm.spatial.preproc.tissue(2).ngaus = 1;
+    % segmentbatch{1}.spm.spatial.preproc.tissue(2).native = [1 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(2).warped = [0 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(3).tpm = {'/Applications/spm12/tpm/TPM.nii,3'};
+    % segmentbatch{1}.spm.spatial.preproc.tissue(3).ngaus = 2;
+    % segmentbatch{1}.spm.spatial.preproc.tissue(3).native = [1 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(3).warped = [0 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(4).tpm = {'/Applications/spm12/tpm/TPM.nii,4'};
+    % segmentbatch{1}.spm.spatial.preproc.tissue(4).ngaus = 3;
+    % segmentbatch{1}.spm.spatial.preproc.tissue(4).native = [1 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(4).warped = [0 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(5).tpm = {'/Applications/spm12/tpm/TPM.nii,5'};
+    % segmentbatch{1}.spm.spatial.preproc.tissue(5).ngaus = 4;
+    % segmentbatch{1}.spm.spatial.preproc.tissue(5).native = [1 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(5).warped = [0 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(6).tpm = {'/Applications/spm12/tpm/TPM.nii,6'};
+    % segmentbatch{1}.spm.spatial.preproc.tissue(6).ngaus = 2;
+    % segmentbatch{1}.spm.spatial.preproc.tissue(6).native = [0 0];
+    % segmentbatch{1}.spm.spatial.preproc.tissue(6).warped = [0 0];
+    % segmentbatch{1}.spm.spatial.preproc.warp.mrf = 1;
+    % segmentbatch{1}.spm.spatial.preproc.warp.cleanup = 1;
+    % segmentbatch{1}.spm.spatial.preproc.warp.reg = [0 0.001 0.5 0.05 0.2];
+    % segmentbatch{1}.spm.spatial.preproc.warp.affreg = 'mni';
+    % segmentbatch{1}.spm.spatial.preproc.warp.fwhm = 0;
+    % segmentbatch{1}.spm.spatial.preproc.warp.samp = 3;
+    % segmentbatch{1}.spm.spatial.preproc.warp.write = [0 0];
+    % segmentbatch{1}.spm.spatial.preproc.warp.vox = NaN;
+    % segmentbatch{1}.spm.spatial.preproc.warp.bb = [NaN NaN NaN
+    %     NaN NaN NaN];
+    % 
+    % spm_jobman('run',segmentbatch)
+    % 
+    mkdir([paths_results ids{id} '/anat/t1/'])
+
+    copyfile([paths_source ids{id} '/anat/m' ids{id} '_run-01_T1w_0pt35.nii'],...
+        [paths_results ids{id} '/anat/t1/m' ids{id} '_run-01_T1w_0pt35.nii'])
+
+%     eval(['!gzip -d ' paths_results ids{id} '/anat/t1/m' ids{id} '_run-01_T1w_0pt35.nii.gz'])
 
     clear cat12batch
     cat12batch{1}.spm.tools.cat.estwrite.data = {[paths_results ids{id} '/anat/t1/m' ids{id} '_run-01_T1w_0pt35.nii,1']};
@@ -154,21 +207,17 @@ for id=1:length(ids)
     cat12batch{1}.spm.tools.cat.estwrite.output.rmat = 0;
     spm_jobman('run',cat12batch)
 
-    eval(['!gzip ' paths_results ids{id} '/anat/t1/m' ids{id} '_run-01_T1w_0pt35.nii'])
+    eval(['!gzip -f ' paths_results ids{id} '/anat/t1/m' ids{id} '_run-01_T1w_0pt35.nii'])
 
 end
 
 
 %% binarise GM/WM
 
-for id=1:length(ids)
+for id=1:length(ids)  
 
     clear binbatch
-    try
-        gunzip([ paths_results ids{id} '/anat/t1/mri/p1mT1_0pt5.nii.gz'])
-    catch
-        disp('already decompressed')
-    end
+  
     binbatch{1}.spm.util.imcalc.input = {[ paths_results ids{id} '/anat/t1/mri/p1m' ids{id} '_run-01_T1w_0pt35.nii,1']};
     binbatch{1}.spm.util.imcalc.output = ['p1m' ids{id} '_run-01_T1w_0pt35_bin'];
     binbatch{1}.spm.util.imcalc.outdir = {[ paths_results ids{id} '/anat/t1/mri/']};
@@ -181,11 +230,7 @@ for id=1:length(ids)
     spm_jobman('run',binbatch)
 
     clear binbatch
-    try
-        gunzip([ paths_results ids{id} '/anat/t1/mri/p2mT1_0pt5.nii.gz'])
-    catch
-        disp('already decompressed')
-    end
+
     binbatch{1}.spm.util.imcalc.input = {[ paths_results ids{id} '/anat/t1/mri/p2m' ids{id} '_run-01_T1w_0pt35.nii,1']};
     binbatch{1}.spm.util.imcalc.output = ['p2m' ids{id} '_run-01_T1w_0pt35_bin'];
     binbatch{1}.spm.util.imcalc.outdir = {[ paths_results ids{id} '/anat/t1/mri/']};
@@ -202,7 +247,7 @@ end
 eval(['!gzip ' paths_results '*/anat/t1/mri/*.nii -f'])
 
 
-%% housekeeping
+% housekeeping
 
 for id=1:length(ids)
 
@@ -212,8 +257,8 @@ for id=1:length(ids)
 
 end
 
-%% make brain tissue mask for whole-brain segmentation: try using synthstrip
-
+% %% make brain tissue mask for whole-brain segmentation: try using synthstrip
+% 
 % setenv('PATH', [getenv('PATH') ':/Applications/freesurfer/mni/bin:/usr/local/bin:/usr/local/fsl']);
 % setenv('ANTSPATH','/usr/local/bin')
 % setenv('FSLDIR','/usr/local/fsl');  % this to tell where FSL folder is
@@ -222,7 +267,7 @@ end
 % for id=1:length(ids)
 % 
 % 
-% %     eval(['!gzip -d ' paths_results ids{id} '/anat/t1/m' ids{id} '_run-01_T1w_0pt35.nii.gz -f'])
+%     eval(['!gzip -d ' paths_results ids{id} '/anat/t1/m' ids{id} '_run-01_T1w_0pt35.nii.gz -f'])
 % % 
 % %     clear matlabbatch
 % %     spm_jobman('initcfg')
@@ -279,6 +324,7 @@ end
 % %     spm_jobman('run',matlabbatch)
 % 
 %     eval(['!gzip -d ' paths_results ids{id} '/anat/t1/mri/p0m' ids{id} '_run-01_T1w_0pt35.nii.gz -f'])
+% 
 % 
 %     clear binbatch
 %     spm_jobman('initcfg')

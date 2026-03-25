@@ -71,6 +71,8 @@ do
 	#======== move layer segs ======== #
 	#(run ENGRAMS_createROImasks.m first)
 
+	gzip ${path_anat}/t1/*.nii
+
 	# to resting state
 	antsRegistrationSyN.sh -d 3 -n 3 -t r -r 3 -m ${t1w}_stripped.nii.gz -f ${func_rest}_stripped.nii.gz -o ${path_trx}/wb2rest_
 	antsApplyTransforms -d 3 \
@@ -581,5 +583,7 @@ do
 		-i ${path_roi}/native/mPFC_layer_deep.nii.gz \
 		-o ${path_roi}/func/origrec1/mPFC_layer_deep.nii.gz \
 		-t ${path_trx}/wb2origrec_0GenericAffine.mat
+
+	echo "${ID} done"
 
 done

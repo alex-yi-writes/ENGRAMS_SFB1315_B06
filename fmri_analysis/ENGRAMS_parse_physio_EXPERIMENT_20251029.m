@@ -17,7 +17,7 @@ sessionTypes = {'AUTO','REST','ORIGENC','ORIGREC1','ORIGREC2','RECOMBIENC','RECO
     'ListString', sessionTypes);
 
 % list subjects
-ID = {'306'};%{'302','303','304'};%{'102','104','106','107'};%,'108','109'};%,'202'};
+ID = {'307'};%{'302','303','304'};%{'102','104','106','107'};%,'108','109'};%,'202'};
 
 % fixed parametres
 nSlices=96;
@@ -143,11 +143,11 @@ for id=1:length(ID)
 %                     eval(['!gzip ' path_preproc 'sub-' ID{id} 'v2s2/func/' tmpfmri.name ' -f'])
 
                     clear path_rawphysio
-                    if strcmp('2',ID{id}(1))
+                    % if strcmp('2',ID{id}(1))
                     path_rawphysio=[path_raw ID{id} 'v1s1/physio/'];
-                    else
-                    path_rawphysio=[path_raw ID{id} 'v1s1/physio/'];
-                    end
+                    % else
+                    % path_rawphysio=[path_raw ID{id} 'v1s1/physio/'];
+                    % end
 
                 case 'ORIGREC1'
                     sess    = lower(sessionTypes{i1}); % 'for pattern matching
@@ -318,7 +318,16 @@ for id=1:length(ID)
             % identify all log files
             clear tmpAll tmplogs tmplogs2 indlogs files_logs
             tmpAll = dir(fullfile(path_rawphysio,'*.log'));
-            tmplogs=strfind({tmpAll.name},lower(sessionTypes{i1}));tmplogs2=cellfun(@isempty,tmplogs);
+            % tmplogs=strfind({tmpAll.name},lower(sessionTypes{i1}));tmplogs2=cellfun(@isempty,tmplogs);
+            if strcmpi(lower(sessionTypes{i1}),'origrec1')
+                tmplogs=strfind({tmpAll.name},lower(sessionTypes{i1}));tmplogs2=cellfun(@isempty,tmplogs);
+                if mean(tmplogs2)==1
+                    tmplogs=strfind({tmpAll.name},lower(sessionTypes{i1}(1:end-1)));tmplogs2=cellfun(@isempty,tmplogs);
+                end
+            else
+                tmplogs=strfind({tmpAll.name},lower(sessionTypes{i1}));tmplogs2=cellfun(@isempty,tmplogs);
+            end
+
             if str2num(ID{id})==205 && strcmpi(sessionTypes{i1},'rest')
                 indlogs=[find(tmplogs2==0):find(tmplogs2==0)+2];
             else

@@ -7,7 +7,7 @@ export FSLMULTIFILEQUIT=TRUE
 source $FSLDIR/etc/fslconf/fsl.sh
 
 # ids
-SUBJECTS=("sub-207" "sub-302" "sub-303" "sub-304")
+SUBJECTS=("sub-301")
 
 # subject loop starts
 
@@ -119,43 +119,43 @@ EOT
 
 
 
-      ##########################################################################
-      #         TOPUP-based susceptibility correction for RECOMBIREC           #
-      ##########################################################################
+      # ##########################################################################
+      # #         TOPUP-based susceptibility correction for RECOMBIREC           #
+      # ##########################################################################
 
-      # paths
-      DATA_DIR="/Users/yyi/Desktop/ENGRAMS/preproc/${SUBJECT}v2s1/func"
-      OUTPUT_DIR="/Users/yyi/Desktop/ENGRAMS/preproc/${SUBJECT}v2s1/func"
+      # # paths
+      # DATA_DIR="/Users/yyi/Desktop/ENGRAMS/preproc/${SUBJECT}v2s1/func"
+      # OUTPUT_DIR="/Users/yyi/Desktop/ENGRAMS/preproc/${SUBJECT}v2s1/func"
 
-      ####### ===== STEP 1: extract single-volume references (AP & PA) ===== #######
-      echo "extracting single-volume BOLD references"
-      fslroi "$DATA_DIR/${SUBJECT}v2s1_task-recombirec_run-04_bold.nii" "$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_AP_b0.nii.gz" 0 1
+      # ####### ===== STEP 1: extract single-volume references (AP & PA) ===== #######
+      # echo "extracting single-volume BOLD references"
+      # fslroi "$DATA_DIR/${SUBJECT}v2s1_task-recombirec_run-04_bold.nii" "$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_AP_b0.nii.gz" 0 1
 
-      ####### ===== STEP 2: merge references ===== #######
-      echo "merging references"
-      fslmerge -t "$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_b0_AP_PA.nii.gz" \
-               "$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_AP_b0.nii.gz" \
-               "$OUTPUT_DIR/${SUBJECT}v2s1_PA_b0.nii.gz"
+      # ####### ===== STEP 2: merge references ===== #######
+      # echo "merging references"
+      # fslmerge -t "$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_b0_AP_PA.nii.gz" \
+      #          "$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_AP_b0.nii.gz" \
+      #          "$OUTPUT_DIR/${SUBJECT}v2s1_PA_b0.nii.gz"
 
-      # ####### ===== STEP 4: run TOPUP ===== #######
-      echo "running TOPUP"
-      topup --imain="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_b0_AP_PA.nii.gz" \
-            --datain="$OUTPUT_DIR/acqparams.txt" \
-            --config=b02b0.cnf \
-            --out="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_topup_results" \
-            --fout="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_fieldmap_Hz.nii.gz" \
-            --iout="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_unwarped_b0.nii.gz"
-      echo "TOPUP done"
+      # # ####### ===== STEP 4: run TOPUP ===== #######
+      # echo "running TOPUP"
+      # topup --imain="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_b0_AP_PA.nii.gz" \
+      #       --datain="$OUTPUT_DIR/acqparams.txt" \
+      #       --config=b02b0.cnf \
+      #       --out="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_topup_results" \
+      #       --fout="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_fieldmap_Hz.nii.gz" \
+      #       --iout="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_unwarped_b0.nii.gz"
+      # echo "TOPUP done"
 
-      ####### ===== STEP 5: apply correction to full BOLD runs ===== #######
-      echo "applying TOPUP to full timeseries"
-      applytopup --imain="$DATA_DIR/${SUBJECT}v2s1_task-recombirec_run-04_bold.nii" \
-                 --datain="$OUTPUT_DIR/acqparams.txt" \
-                 --inindex=1 \
-                 --topup="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_topup_results" \
-                 --method=jac \
-                 --out="$OUTPUT_DIR/${SUBJECT}v2s1_task-recombirec1_run-04_bold_topup"
+      # ####### ===== STEP 5: apply correction to full BOLD runs ===== #######
+      # echo "applying TOPUP to full timeseries"
+      # applytopup --imain="$DATA_DIR/${SUBJECT}v2s1_task-recombirec_run-04_bold.nii" \
+      #            --datain="$OUTPUT_DIR/acqparams.txt" \
+      #            --inindex=1 \
+      #            --topup="$OUTPUT_DIR/${SUBJECT}v2s1_recombirec_topup_results" \
+      #            --method=jac \
+      #            --out="$OUTPUT_DIR/${SUBJECT}v2s1_task-recombirec1_run-04_bold_topup"
 
-      echo "recognition (recombination) done"
+      # echo "recognition (recombination) done"
 
 done

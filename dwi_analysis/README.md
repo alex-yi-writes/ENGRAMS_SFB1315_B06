@@ -20,11 +20,11 @@ before you go in, (1) make sure your files structures are BIDS validated (all co
 [SDFlex cluster]
         |
         v
- (0) generate_parallel_commands.sh
-        |   generates per-subject command files for GNU parallel
-        v
- (0b) run_pipeline_parallel.sh
+ (0) run_pipeline_parallel.sh
         |   dispatches jobs via GNU parallel
+        v
+ (0b) generate_parallel_commands.sh
+        |   generates per-subject command files for GNU parallel
         v
  for each subj:
  (1) ENGRAMS_full_pipeline_wrapper.sh

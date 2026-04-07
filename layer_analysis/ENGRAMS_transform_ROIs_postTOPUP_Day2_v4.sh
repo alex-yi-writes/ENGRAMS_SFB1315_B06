@@ -3,12 +3,14 @@
 # source ~/anaconda3/etc/profile.d/conda.sh
 # conda activate hd-bet-env
 
+MacBookFlag=1
+
 for ID in sub-301 #sub-303 #sub-205 sub-304
 do
 
 	# prep
 	path_anat=/Users/yyi/Desktop/ENGRAMS/analyses/${ID}v1s1/anat
-	path_func=/Users/yyi/Desktop/ENGRAMS/preproc/${ID}v1s1/func
+	path_func=/Users/yyi/Desktop/ENGRAMS/preproc/${ID}v2s1/func
 	path_trx=/Users/yyi/Desktop/ENGRAMS/analyses/${ID}v1s1/transx
 	path_roi=/Users/yyi/Desktop/ENGRAMS/analyses/${ID}v1s1/anat/roi
 	t1w=${path_anat}/t1/m${ID}v1s1_run-01_T1w_0pt35
@@ -27,15 +29,19 @@ do
 	# ======== strip skulls ======== #
 	# 06-10-2025: alex: unfortunately either synthstrip or hd-bet doesn't work on my imac so i'm doing this specific step separately on another machine
 
-	# hd-bet -i ${t1w}.nii.gz -o ${t1w}_stripped.nii.gz -device cpu
-	# mri_synthstrip -i ${func_origrec2}.nii.gz -o ${func_origrec2}_stripped.nii.gz
-	# mri_synthstrip -i ${func_recombienc}.nii.gz -o ${func_recombienc}_stripped.nii.gz
-	# mri_synthstrip -i ${func_recombirec}.nii.gz -o ${func_recombirec}_stripped.nii.gz
+	mri_synthstrip -i ${func_origrec2}.nii.gz -o ${func_origrec2}_stripped.nii.gz
+	mri_synthstrip -i ${func_recombienc}.nii.gz -o ${func_recombienc}_stripped.nii.gz
+	mri_synthstrip -i ${func_recombirec}.nii.gz -o ${func_recombirec}_stripped.nii.gz
 
 
 	# ======== move ASHS seg ======== #
 
-	ASHSseg=$(find "${path_anat}/hpc" -type f -iname 'layer_002*' -print -quit) # which seg?
+	if [[ $MacBookFlag -eq 1 ]]; then
+		echo "running on the new macbook"
+		fslmaths ${path_anat}/hpc/final/${ID: -3}_left_lfseg_corr_usegray.nii.gz -add ${path_anat}/hpc/final/${ID: -3}_right_lfseg_corr_usegray.nii.gz ${path_anat}/hpc/layer_002.nii.gz
+	else
+		echo "running on imac"
+	fi
 
 	mkdir ${path_roi}/func
 	mkdir ${path_roi}/func/origrec2
@@ -53,9 +59,9 @@ do
 	antsApplyTransforms -d 3 -v 0 -i ${ASHSseg} -r ${func_recombirec}.nii.gz -o ${path_roi}/hpc_on_func-recombirec.nii.gz -n NearestNeighbor -t [${path_trx}/recombirec2hpc_0GenericAffine.mat,1] 
 
 	# extract
-	/Users/alex/Desktop/ENGRAMS/scripts/ENGRAMS_binarise_ASHSseg_vf.sh ${path_roi}/hpc_on_func-origrec2.nii.gz ${path_roi}/func/origrec2
-	/Users/alex/Desktop/ENGRAMS/scripts/ENGRAMS_binarise_ASHSseg_vf.sh ${path_roi}/hpc_on_func-recombienc.nii.gz ${path_roi}/func/recombienc
-	/Users/alex/Desktop/ENGRAMS/scripts/ENGRAMS_binarise_ASHSseg_vf.sh ${path_roi}/hpc_on_func-recombirec.nii.gz ${path_roi}/func/recombirec
+	/Users/yyi/Desktop/ENGRAMS/scripts/ENGRAMS_binarise_ASHSseg_vf.sh ${path_roi}/hpc_on_func-origrec2.nii.gz ${path_roi}/func/origrec2
+	/Users/yyi/Desktop/ENGRAMS/scripts/ENGRAMS_binarise_ASHSseg_vf.sh ${path_roi}/hpc_on_func-recombienc.nii.gz ${path_roi}/func/recombienc
+	/Users/yyi/Desktop/ENGRAMS/scripts/ENGRAMS_binarise_ASHSseg_vf.sh ${path_roi}/hpc_on_func-recombirec.nii.gz ${path_roi}/func/recombirec
 
 
 	#======== move layer segs ======== #

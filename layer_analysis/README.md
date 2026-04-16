@@ -17,6 +17,8 @@ also, wildcards are used in the script names here and there because i'm still tr
 **note on fMRI preprocessing:** the fMRI data (TOPUP distortion correction, realignment) must be preprocessed before this pipeline reaches step 10. for the TOPUP preprocessing script, see the [ENGRAMS_SFB1315 repository](https://github.com/alex-yi-writes/ENGRAMS_SFB1315/blob/main/fmri_analysis/ENGRAMS_distortionCorrect_fMRI_Day1.sh). smooth your data only for GLM analyses; use unsmoothed data for everything here.
 
 ---
+## 🔥🔥🔥 an update (16-04-2026): i have now uploaded a (hopefully) final workflow to this repository. if you order the scripts by filename, you can just run them from top to bottom sequentially.
+---
 
 ## workflow overview (it's a big one)
 

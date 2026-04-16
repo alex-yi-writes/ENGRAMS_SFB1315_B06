@@ -1,0 +1,58 @@
+%% merge brainstem masks in native spaces to the layer masks
+
+%% prep
+
+clc;clear
+
+tasks   = {'rest','origenc','origrec1','origrec2','recombienc','recombirec1'};%{'rest','origenc','origrec'};
+ids     = {'sub-308', 'sub-307'};%{'sub-101','sub-104','sub-106','sub-107',};%
+
+% paths
+path_par    = '/Users/yyi/Desktop/ENGRAMS/analyses/';
+
+
+%% loop
+
+for id=1:length(ids)
+
+    %%%%%%%%%%%%%%%
+    subj = ids{id};
+    disp(['merging ' subj])
+    %%%%%%%%%%%%%%%
+
+    path_natMask= [path_par subj 'v1s1/anat/roi/native/'];
+    path_GM     = [path_par subj 'v1s1/anat/t1/mri/'];
+
+    eval(['!gzip -d ' path_natMask 'SN.nii.gz'])
+    eval(['!gzip -d ' path_natMask 'LC.nii.gz'])
+    eval(['!gzip -d ' path_natMask 'VTA.nii.gz'])
+
+    eval(['!gzip -d ' path_GM 'p*m*_0pt35.*'])
+
+
+    clear matlabbatch
+    spm_jobman('initcfg')
+    matlabbatch{1}.spm.util.imcalc.input = {
+        [path_GM 'p1m' subj 'v1s1_run-01_T1w_0pt35.nii,1']
+        [path_natMask 'LC.nii,1']
+        [path_natMask 'SN.nii,1']
+        [path_natMask 'VTA.nii,1']
+        };
+    matlabbatch{1}.spm.util.imcalc.output = ['p1m' subj 'v1s1_run-01_T1w_0pt35_bs.nii'];
+    matlabbatch{1}.spm.util.imcalc.outdir = {path_GM};
+    matlabbatch{1}.spm.util.imcalc.expression = 'i1+i2+i3+i4';
+    matlabbatch{1}.spm.util.imcalc.var = struct('name', {}, 'value', {});
+    matlabbatch{1}.spm.util.imcalc.options.dmtx = 0;
+    matlabbatch{1}.spm.util.imcalc.options.mask = 0;
+    matlabbatch{1}.spm.util.imcalc.options.interp = 1;
+    matlabbatch{1}.spm.util.imcalc.options.dtype = 4;
+    spm_jobman('run',matlabbatch)
+
+    eval(['!gzip ' path_natMask 'SN.nii'])
+    eval(['!gzip ' path_natMask 'LC.nii'])
+    eval(['!gzip ' path_natMask 'VTA.nii'])
+
+    eval(['!gzip ' path_GM 'p*m*_0pt35.nii'])
+    eval(['!gzip ' path_GM 'p*m*_0pt35_bs.nii'])
+
+end

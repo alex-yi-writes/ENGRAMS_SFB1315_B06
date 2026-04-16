@@ -1,0 +1,3 @@
+/mnt/work/yyi/scripts/ry_run_ASHS_on_SGE2 -s all -i /mnt/work/yyi/ENGRAMS/ashs/in -o /mnt/work/yyi/ashs/out -1 T1 -2 T2 -a /share/apps/ashs/ashs_atlases/ashs_atlas_upennpmc_20170810
+
+/mnt/work/yyi/scripts/ry_run_ASHS_on_SGE2 -s all -i /mnt/work/yyi/ENGRAMS/ashs/in -o /mnt/work/yyi/ashs/out -1 T1 -2 T2

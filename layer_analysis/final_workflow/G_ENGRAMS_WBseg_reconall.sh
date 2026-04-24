@@ -27,7 +27,7 @@ do
 	antsRegistrationSyNQuick.sh -d 3 -t r -m ${path_src}/orig.nii.gz -f ${t1w} -o ${path_src}/Nat2FS_
 	
 	# stage 2
-	antsApplyTransforms -d 3 -n Linear -i ${path_src}/brainmask.nii -r ${path_src}/orig.nii.gz -o ${path_out}/brainmask.nii.gz -t ${path_src}/Nat2FS_0GenericAffine.mat
+	antsApplyTransforms -d 3 -n NearestNeighbor -i ${path_src}/brainmask.nii.gz -r ${path_src}/orig.nii.gz -o ${path_out}/brainmask.nii.gz -t ${path_src}/Nat2FS_0GenericAffine.mat
 	 mri_convert -it nii -ot mgz ${path_out}/brainmask.nii.gz ${path_out}/brainmask.mgz
 
 	 recon-all -s ${ID} \

@@ -1,1 +1,1 @@
--n 200
+mris_inflate -n 50
